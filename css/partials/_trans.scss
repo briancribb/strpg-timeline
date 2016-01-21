@@ -1,0 +1,19 @@
+// Transitions and Transformations
+// ================================
+
+.trans-left {
+	-webkit-transition:left .25s linear;
+	transition:left .25s linear;
+}
+.trans-right {
+	-webkit-transition:right .25s linear;
+	transition:right .25s linear;
+}
+.trans-padding {
+	-webkit-transition:padding .25s linear;
+	transition:padding .25s linear;
+}
+.trans-bg-position {
+	-webkit-transition:background-position .5s linear;
+	transition:background-position .5s linear;
+}

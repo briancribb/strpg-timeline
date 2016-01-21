@@ -1,0 +1,41 @@
+// Bootstrap overrides.
+// ================================
+
+
+
+.btn > .glyphicon, a > .glyphicon {
+	pointer-events:none; // The nested span can capture the click and screw up delegated event handlers.
+}
+.row.small-gutters {
+	margin-left:5px;
+	margin-right:5px;
+	& > [class^="col-"], & > [class*=" col-"] {
+		padding-right: 5px;
+		padding-left: 5px;
+	}
+}
+
+
+.list-group:last-child {
+	margin-bottom: 0;
+}
+.list-group a.list-group-item {
+	cursor:pointer;
+}
+.list-group .list-group-item .btn {
+	margin-top:-7px;
+}
+.list-group .list-group-item .btn-sm {
+	margin-top:-5px;
+}
+
+
+
+
+.list-group-item-btn {
+	padding-right:50px;
+	button.btn {
+		margin-right:-40px;
+		float:right;
+	}
+}

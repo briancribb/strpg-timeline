@@ -1,13 +1,37 @@
-html, body {
+html {
+  position: relative;
   min-height: 100%;
+  box-sizing: border-box;
+}
+
+/* apply a natural box layout model to all elements, but allowing components to change */
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 body {
   padding-top: 70px;
+  /* Margin bottom by footer height */
+  margin-bottom: 0;
 }
 
-canvas {
-  background: #000;
+.page-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: auto;
+  background-color: #f5f5f5;
+}
+
+.page-footer-content {
+  padding: 20px;
+}
+
+.site-header {
+  padding: 50px 0;
+  margin: 0;
+  background: #ddd;
 }
 
 /* http://bootsnipp.com/snippets/featured/timeline-responsive */
@@ -265,6 +289,6 @@ canvas {
   pointer-events: none !important;
 }
 
-.wa-capitalize {
+.capitalize {
   text-transform: Capitalize !important;
 }

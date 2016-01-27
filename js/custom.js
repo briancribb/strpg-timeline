@@ -16,6 +16,7 @@ internal methods are called.
 
 	var APP = {
 		resizeTasks : [],
+		data : {},
 		init : function() {
 			APP.props = {
 				$bodyElement		: $('body'),
@@ -55,6 +56,9 @@ internal methods are called.
 			};
 			initTasks.func(initTasks.args); // Initial call of initial resize task.
 			APP.addResizeTask(initTasks);
+
+
+			APP.getData();
 		},
 		addResizeTask : function(task) {
 			/*
@@ -82,23 +86,52 @@ internal methods are called.
 			 *  Using deferred objects with the social scripts so we can run 
 			 *  functions when any or all of them are finished loading.
 			*/
-			var dfd_UPF = $.Deferred();
-			kem.social.dfd_GooglePlusSDK = $.Deferred();
-			kem.social.dfd_TwitterSDK = $.Deferred();
+			var dfd_array = [],
+				sources = {
+					UFP: { path:'js/data/UFP.json' },
+					KLE: { path:'js/data/KLE.json' },
+					RSA: { path:'js/data/RSA.json' },
+					TRI: { path:'js/data/TRI.json' },
+					ORC: { path:'js/data/ORC.json' },
+					RFW: { path:'js/data/RFW.json' },
+					FYW: { path:'js/data/FYW.json' },
+					ST3: { path:'js/data/ST3.json' },
+					ST4: { path:'js/data/ST4.json' },
+					SFI: { path:'js/data/SFI.json' },
+					ITA: { path:'js/data/ITA.json' }
+				};
 
-			var sources = {
-				UFP: { path:'UFP.json', dfd:$.Deferred() },
-				KLE: { path:'KLE.json', dfd:$.Deferred() },
-				RSA: { path:'RSA.json', dfd:$.Deferred() },
-				TRI: { path:'TRI.json', dfd:$.Deferred() },
-				ORC: { path:'ORC.json', dfd:$.Deferred() },
-				RFW: { path:'RFW.json', dfd:$.Deferred() },
-				FYW: { path:'FYW.json', dfd:$.Deferred() },
-				ST3: { path:'ST3.json', dfd:$.Deferred() },
-				ST4: { path:'ST4.json', dfd:$.Deferred() },
-				SFI: { path:'SFI.json', dfd:$.Deferred() },
-				ITA: { path:'ITA.json', dfd:$.Deferred() }
-			};
+
+			$.each( sources, function( key, value ) {
+				//console.log( key + ": " + value.path );
+				value.dfd = $.Deferred();
+				value.dfd.done(function() {
+					console.log( key + ".dfd is resolved." );
+				});
+
+
+				dfd_array.push(key.dfd_array);
+
+				$.ajax({
+					url: value.path,
+					dataType: "json"
+				}).success(function(data) {
+					console.log(key + " ajax call is complete.");
+
+					APP.data[key] = data.feed.entry;
+
+
+
+					value.dfd.resolve();
+				});
+
+			});
+			/* http://stackoverflow.com/questions/5627284/pass-in-an-array-of-deferreds-to-when */
+			$.when.apply(null, dfd_array).done(function() {
+				console.log("All of the ajax calls are complete.");
+			});
+
+
 		},
 		manageResize : function() {
 			// Cycle through resize tasks.

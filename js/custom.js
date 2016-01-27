@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===================================================================================================
 This module declares top-level methods and instantiates the AE object. It must be loaded first.
 ===================================================================================================
@@ -75,6 +75,30 @@ internal methods are called.
 			//console.log('adding task');
 			task.args = task.args || [];
 			APP.resizeTasks.push(task);
+		},
+		getData : function() {
+
+			/*
+			 *  Using deferred objects with the social scripts so we can run 
+			 *  functions when any or all of them are finished loading.
+			*/
+			var dfd_UPF = $.Deferred();
+			kem.social.dfd_GooglePlusSDK = $.Deferred();
+			kem.social.dfd_TwitterSDK = $.Deferred();
+
+			var sources = {
+				UFP: { path:'UFP.json', dfd:$.Deferred() },
+				KLE: { path:'KLE.json', dfd:$.Deferred() },
+				RSA: { path:'RSA.json', dfd:$.Deferred() },
+				TRI: { path:'TRI.json', dfd:$.Deferred() },
+				ORC: { path:'ORC.json', dfd:$.Deferred() },
+				RFW: { path:'RFW.json', dfd:$.Deferred() },
+				FYW: { path:'FYW.json', dfd:$.Deferred() },
+				ST3: { path:'ST3.json', dfd:$.Deferred() },
+				ST4: { path:'ST4.json', dfd:$.Deferred() },
+				SFI: { path:'SFI.json', dfd:$.Deferred() },
+				ITA: { path:'ITA.json', dfd:$.Deferred() }
+			};
 		},
 		manageResize : function() {
 			// Cycle through resize tasks.

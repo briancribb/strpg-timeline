@@ -16,6 +16,8 @@ internal methods are called.
 
 	var APP = {
 		resizeTasks : [],
+		categories : {},
+		events : [],
 		data : {},
 		init : function() {
 			APP.props = {
@@ -81,45 +83,61 @@ internal methods are called.
 			APP.resizeTasks.push(task);
 		},
 		getData : function() {
-
 			/*
 			 *  Using deferred objects with the social scripts so we can run 
 			 *  functions when any or all of them are finished loading.
 			*/
 			var dfd_array = [],
 				sources = {
-					UFP: { path:'js/data/UFP.json' },
-					KLE: { path:'js/data/KLE.json' },
-					RSA: { path:'js/data/RSA.json' },
-					TRI: { path:'js/data/TRI.json' },
-					ORC: { path:'js/data/ORC.json' },
-					RFW: { path:'js/data/RFW.json' },
-					FYW: { path:'js/data/FYW.json' },
-					ST3: { path:'js/data/ST3.json' },
-					ST4: { path:'js/data/ST4.json' },
-					SFI: { path:'js/data/SFI.json' },
-					ITA: { path:'js/data/ITA.json' }
+					UFP: { path:'js/data/UFP.json', id: 'oesera6' },
+					KLE: { path:'js/data/KLE.json', id: 'o15noc3' },
+					RSA: { path:'js/data/RSA.json', id: 'or7u0kt' },
+					TRI: { path:'js/data/TRI.json', id: 'ol08r1n' },
+					ORC: { path:'js/data/ORC.json', id: 'ohu3d91' },
+					RFW: { path:'js/data/RFW.json', id: 'oypmvfb' },
+					FYW: { path:'js/data/FYW.json', id: 'oi1ju2s' },
+					ST3: { path:'js/data/ST3.json', id: 'o5oxeec' },
+					ST4: { path:'js/data/ST4.json', id: 'oxxpvso' },
+					SFI: { path:'js/data/SFI.json', id: 'ohqn30t' },
+					ITA: { path:'js/data/ITA.json', id: 'orojt89' }
 				};
-
 
 			$.each( sources, function( key, value ) {
 				//console.log( key + ": " + value.path );
 				value.dfd = $.Deferred();
+				dfd_array.push(value.dfd);
+
 				value.dfd.done(function() {
 					console.log( key + ".dfd is resolved." );
 				});
 
 
-				dfd_array.push(key.dfd_array);
-
 				$.ajax({
-					url: value.path,
+					url: 'https://spreadsheets.google.com/feeds/list/1ztvTpHjCrZhf3cHCZpyIa1-FHjMFh9MJsPNe6FN5HaQ/' + value.id + '/public/full?alt=json', /* value.path, */
+					/*url: value.path, */
 					dataType: "json"
 				}).success(function(data) {
-					console.log(key + " ajax call is complete.");
-
+					//console.log(key + " ajax call is complete.");
+					APP.categories[key] = true;
 					APP.data[key] = data.feed.entry;
 
+					/* Process data into the main timeline. */
+					for (var i = 0; i < data.feed.entry.length; i++) {
+						//var test = data.feed.entry[i].gsx$stardatestart;
+						var dateParts = starToDate( data.feed.entry[i].gsx$stardate.$t );
+
+						APP.events.push({
+							stardate	:	data.feed.entry[i].gsx$stardate.$t,
+							end			:	data.feed.entry[i].gsx$stardateend.$t || null,
+							year		:	dateParts.year,
+							month		:	dateParts.month,
+							date		:	dateParts.date,
+							source		:	data.feed.entry[i].gsx$source.$t,
+							full		:	(data.feed.entry[i].gsx$full.$t === "TRUE"),
+							desc		:	data.feed.entry[i].gsx$event.$t
+						});
+
+					};
 
 
 					value.dfd.resolve();
@@ -130,6 +148,26 @@ internal methods are called.
 			$.when.apply(null, dfd_array).done(function() {
 				console.log("All of the ajax calls are complete.");
 			});
+
+
+			function starToDate(stardate) {
+				/* format: CC/YYMM.DD */
+				var starSplit, dateSplit, dateParts;
+
+				starSplit = stardate.split('/');
+				dateParts =  {
+					year : 2000 + (Number(starSplit[0]) * 100) + Number(starSplit[1].substring(0,2))
+				}
+
+				if (starSplit[1].length > 2) {
+					dateSplit = starSplit[1].split('.');
+				}
+
+				dateParts.month = Number(dateSplit[0].substring(2,4));
+				dateParts.date = Number(dateSplit[1] || "00");
+
+				return dateParts;
+			}
 
 
 		},

@@ -132,13 +132,12 @@ internal methods are called.
 							year		:	dateParts.year,
 							month		:	dateParts.month,
 							date		:	dateParts.date,
-							source		:	data.feed.entry[i].gsx$source.$t,
+							source		:	data.feed.title.$t,
 							full		:	(data.feed.entry[i].gsx$full.$t === "TRUE"),
 							desc		:	data.feed.entry[i].gsx$event.$t
 						});
 
 					};
-
 
 					value.dfd.resolve();
 				});
@@ -165,7 +164,7 @@ internal methods are called.
 
 				dateParts.month = Number(dateSplit[0].substring(2,4));
 				dateParts.date = Number(dateSplit[1] || "00");
-
+				dateParts.date = ( dateParts.date == 0 ) ? 1 : dateParts.date
 				return dateParts;
 			}
 

@@ -146,6 +146,7 @@ internal methods are called.
 			/* http://stackoverflow.com/questions/5627284/pass-in-an-array-of-deferreds-to-when */
 			$.when.apply(null, dfd_array).done(function() {
 				console.log("All of the ajax calls are complete.");
+				TL.buildTimeline( $('#timeline') );
 			});
 
 
@@ -167,8 +168,46 @@ internal methods are called.
 				dateParts.date = ( dateParts.date == 0 ) ? 1 : dateParts.date
 				return dateParts;
 			}
+		},
+		buildTimeline : function($target) {
+			console.log('buildTimeline()');
+			console.log(APP.events);
+			/*
+			<li>
+				<div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
+				<div class="timeline-panel">
+					<div class="timeline-heading">
+						<h4 class="timeline-title">Mussum ipsum cacilds</h4>
+						<p><small class="timeline-subtext text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
+					</div>
+					<div class="timeline-body">
+						<p>Body stuff here.</p>
+					</div>
+				</div>
+			</li>
+			*/
 
+			var documentFragment = $(document.createDocumentFragment());
 
+			for (var i = 0; i < APP.events.length; ++i) {
+				console.log(i);
+				var $li = $("<li/>", { class: "timeline-event" }),
+					$badge = $("<div/>", { class: "timeline-badge" }),
+					$panel = $("<div/>", { class: "timeline-panel" }),
+					$heading = $("<div/>", { class: "timeline-heading" }),
+					$title = $("<h4/>", { class: "timeline-title", text: APP.events[i].stardate }),
+					$body = $("<div/>", { class: "timeline-body" });
+
+				/* Putting it all together. */
+				$badge.append( $("<i/>", { class: "glyphicon glyphicon-check" }) );
+				$heading.append( $title ).append( '<p><small class="timeline-subtext text-muted"><i class="glyphicon glyphicon-time"></i> ' + i + ' hours ago via Twitter' + '</small></p>' );
+				$body.append( APP.events[i].desc );
+				$panel.append( $heading ).append( $body );
+				$li.append( $badge ).append( $panel );
+
+				documentFragment.append($li);
+			}
+			$target.append(documentFragment);
 		},
 		manageResize : function() {
 			// Cycle through resize tasks.

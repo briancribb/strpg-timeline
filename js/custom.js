@@ -171,7 +171,6 @@ internal methods are called.
 		},
 		buildTimeline : function($target) {
 			console.log('buildTimeline()');
-			console.log(APP.events);
 			/*
 			<li>
 				<div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>

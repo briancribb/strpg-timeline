@@ -182,6 +182,89 @@ body {
 		margin-top: 5px;
 	}
 
+
+/* Contextual Stuff. */
+.timeline > .timeline-event {
+	display:none;
+}
+
+
+.timeline.UFP {
+	& > .timeline-event.UFP {
+		display:list-item;
+	}
+}
+.timeline.KLE {
+	& > .timeline-event.KLE {
+		display:list-item;
+	}
+}
+.timeline.RSA {
+	& > .timeline-event.RSA {
+		display:list-item;
+	}
+}
+.timeline.ORC {
+	& > .timeline-event.ORC {
+		display:list-item;
+	}
+}
+.timeline.RFW {
+	& > .timeline-event.RFW {
+		display:list-item;
+	}
+}
+.timeline.FYW {
+	& > .timeline-event.FYW {
+		display:list-item;
+	}
+}
+.timeline.ST3 {
+	& > .timeline-event.ST3 {
+		display:list-item;
+	}
+}
+.timeline.ST4 {
+	& > .timeline-event.ST4 {
+		display:list-item;
+	}
+}
+.timeline.SFI {
+	& > .timeline-event.SFI {
+		display:list-item;
+	}
+}
+.timeline.ITA {
+	& > .timeline-event.ITA {
+		display:list-item;
+	}
+}
+
+
+/* More Contextual stuff. */
+.timeline.KLE > .timeline-event.timeline-full-true,
+.timeline.RSA > .timeline-event.timeline-full-true,
+.timeline.ORC > .timeline-event.timeline-full-true {
+	display:none;
+}
+.timeline.KLE.KLE-full > .timeline-event.timeline-full-true,
+.timeline.RSA.RSA-full > .timeline-event.timeline-full-true,
+.timeline.ORC.ORC-full > .timeline-event.timeline-full-true {
+	display:list-item;
+}
+.timeline.KLE.KLE-full > .timeline-event.timeline-full-false,
+.timeline.RSA.RSA-full > .timeline-event.timeline-full-false,
+.timeline.ORC.ORC-full > .timeline-event.timeline-full-false {
+	display:none;
+}
+
+
+
+
+
+
+
+
 @media (max-width: 767px) {
 	ul.timeline:before {
 		left: 40px;

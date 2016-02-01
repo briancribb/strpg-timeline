@@ -14,14 +14,34 @@ internal methods are called.
 ;var TL = TL || (function(){
 	/* This is where we set variables and things that will only live inside the closure. */
 
+
+	var dfd_array = [],
+		dfd_sources = {
+			UFP: { path:'js/data/UFP.json', id: 'oesera6', name: 'United Federation of Planets' },
+			KLE: { path:'js/data/KLE.json', id: 'o15noc3', name: 'Klingon Empire' },
+			RSA: { path:'js/data/RSA.json', id: 'or7u0kt', name: 'Romulan Star Empire' },
+			TRI: { path:'js/data/TRI.json', id: 'ol08r1n', name: 'Triangle' },
+			ORC: { path:'js/data/ORC.json', id: 'ohu3d91', name: 'Orion Colonies' },
+			RFW: { path:'js/data/RFW.json', id: 'oypmvfb', name: 'Romulan/Federation War' },
+			FYW: { path:'js/data/FYW.json', id: 'oi1ju2s', name: 'Four Years War' },
+			ST3: { path:'js/data/ST3.json', id: 'o5oxeec', name: 'Star Trek 3 Update' },
+			ST4: { path:'js/data/ST4.json', id: 'oxxpvso', name: 'Star Trek 4 Update' },
+			SFI: { path:'js/data/SFI.json', id: 'ohqn30t', name: 'Starfleet Intelligence' },
+			ITA: { path:'js/data/ITA.json', id: 'orojt89', name: "UFP/Independent Traders' Association" }
+		};
+
+
+
+
 	var APP = {
 		resizeTasks : [],
-		categories : {},
 		events : [],
 		data : {},
 		init : function() {
 			APP.props = {
 				$bodyElement		: $('body'),
+				$sourceToolbar		: $('#source-toolbar'),
+				$timeline			: $('#timeline'),
 				$pageFooter			: $('#page-footer'),
 				$pageFooterContent	: $('#page-footer-content')
 			};
@@ -61,6 +81,7 @@ internal methods are called.
 
 
 			APP.getData();
+			APP.addListeners();
 		},
 		addResizeTask : function(task) {
 			/*
@@ -87,22 +108,8 @@ internal methods are called.
 			 *  Using deferred objects with the social scripts so we can run 
 			 *  functions when any or all of them are finished loading.
 			*/
-			var dfd_array = [],
-				sources = {
-					UFP: { path:'js/data/UFP.json', id: 'oesera6' },
-					KLE: { path:'js/data/KLE.json', id: 'o15noc3' },
-					RSA: { path:'js/data/RSA.json', id: 'or7u0kt' },
-					TRI: { path:'js/data/TRI.json', id: 'ol08r1n' },
-					ORC: { path:'js/data/ORC.json', id: 'ohu3d91' },
-					RFW: { path:'js/data/RFW.json', id: 'oypmvfb' },
-					FYW: { path:'js/data/FYW.json', id: 'oi1ju2s' },
-					ST3: { path:'js/data/ST3.json', id: 'o5oxeec' },
-					ST4: { path:'js/data/ST4.json', id: 'oxxpvso' },
-					SFI: { path:'js/data/SFI.json', id: 'ohqn30t' },
-					ITA: { path:'js/data/ITA.json', id: 'orojt89' }
-				};
 
-			$.each( sources, function( key, value ) {
+			$.each( dfd_sources, function( key, value ) {
 				//console.log( key + ": " + value.path );
 				value.dfd = $.Deferred();
 				dfd_array.push(value.dfd);
@@ -111,14 +118,12 @@ internal methods are called.
 					console.log( key + ".dfd is resolved." );
 				});
 
-
 				$.ajax({
 					url: 'https://spreadsheets.google.com/feeds/list/1ztvTpHjCrZhf3cHCZpyIa1-FHjMFh9MJsPNe6FN5HaQ/' + value.id + '/public/full?alt=json', /* value.path, */
 					/*url: value.path, */
 					dataType: "json"
 				}).success(function(data) {
 					//console.log(key + " ajax call is complete.");
-					APP.categories[key] = true;
 					APP.data[key] = data.feed.entry;
 
 					/* Process data into the main timeline. */
@@ -128,6 +133,7 @@ internal methods are called.
 
 						APP.events.push({
 							stardate	:	data.feed.entry[i].gsx$stardate.$t,
+							sortkey		:	Number(dateParts.year + '.' + dateParts.month + '' + dateParts.date),
 							end			:	data.feed.entry[i].gsx$stardateend.$t || null,
 							year		:	dateParts.year,
 							month		:	dateParts.month,
@@ -136,24 +142,26 @@ internal methods are called.
 							full		:	(data.feed.entry[i].gsx$full.$t === "TRUE"),
 							desc		:	data.feed.entry[i].gsx$event.$t
 						});
-
 					};
-
 					value.dfd.resolve();
 				});
 
 			});
 			/* http://stackoverflow.com/questions/5627284/pass-in-an-array-of-deferreds-to-when */
 			$.when.apply(null, dfd_array).done(function() {
-				console.log("All of the ajax calls are complete.");
-				TL.buildTimeline( $('#timeline') );
-			});
+				console.log("All of the ajax calls are complete. Length is " + APP.events.length);
 
+				APP.events = _.sortBy(APP.events, 'year');
+
+
+				APP.buildTimeline( $('#timeline') );
+			});
 
 			function starToDate(stardate) {
 				/* format: CC/YYMM.DD */
 				var starSplit, dateSplit, dateParts;
 
+				/* Split the year from the date. */
 				starSplit = stardate.split('/');
 				dateParts =  {
 					year : 2000 + (Number(starSplit[0]) * 100) + Number(starSplit[1].substring(0,2))
@@ -163,14 +171,22 @@ internal methods are called.
 					dateSplit = starSplit[1].split('.');
 				}
 
-				dateParts.month = Number(dateSplit[0].substring(2,4));
-				dateParts.date = Number(dateSplit[1] || "00");
-				dateParts.date = ( dateParts.date == 0 ) ? 1 : dateParts.date
+				dateParts.month = (dateSplit[0].substring(2,4));
+				dateParts.date = (dateSplit[1] || "00");
+
+				dateParts.month = ( dateParts.month === '00' ) ? '01' : dateParts.month
+				dateParts.date = ( dateParts.date === '00' ) ? '01' : dateParts.date
 				return dateParts;
 			}
 		},
 		buildTimeline : function($target) {
 			console.log('buildTimeline()');
+			var allKeys = _.allKeys(dfd_sources);
+
+			_.each(dfd_sources, function(value, key, list){
+				$target.addClass(key);
+			});
+
 			/*
 			<li>
 				<div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
@@ -189,8 +205,10 @@ internal methods are called.
 			var documentFragment = $(document.createDocumentFragment());
 
 			for (var i = 0; i < APP.events.length; ++i) {
-				console.log(i);
-				var $li = $("<li/>", { class: "timeline-event" }),
+
+				APP.events[i].id = i;
+
+				var $li = $("<li/>", { id: "timeline-event-" + i, class: "timeline-event " + APP.events[i].source + " timeline-full-" + APP.events[i].full }),
 					$badge = $("<div/>", { class: "timeline-badge" }),
 					$panel = $("<div/>", { class: "timeline-panel" }),
 					$heading = $("<div/>", { class: "timeline-heading" }),
@@ -199,7 +217,7 @@ internal methods are called.
 
 				/* Putting it all together. */
 				$badge.append( $("<i/>", { class: "glyphicon glyphicon-check" }) );
-				$heading.append( $title ).append( '<p><small class="timeline-subtext text-muted"><i class="glyphicon glyphicon-time"></i> ' + i + ' hours ago via Twitter' + '</small></p>' );
+				$heading.append( $title ).append( '<p><small class="timeline-subtext text-muted"><i class="glyphicon glyphicon-folder-open"></i> ' + dfd_sources[APP.events[i].source].name + '</small></p>' );
 				$body.append( APP.events[i].desc );
 				$panel.append( $heading ).append( $body );
 				$li.append( $badge ).append( $panel );
@@ -207,6 +225,86 @@ internal methods are called.
 				documentFragment.append($li);
 			}
 			$target.append(documentFragment);
+		},
+		addListeners : function() {
+
+			$( "#source-toggles" ).on( "click", function(event) {
+				console.log( event );
+				var $target = $(event.target);
+
+				switch (event.target.id) {
+
+					/* Major Governments */
+					case 'UFP-toggle':
+						toggleCategory('UFP');
+						break;
+					case 'KLE-toggle':
+						toggleCategory('KLE');
+						break;
+					case 'KLE-full':
+						toggleCategory('KLE-full');
+						break;
+
+
+					case 'RSA-toggle':
+						toggleCategory('RSA');
+						break;
+					case 'RSA-full':
+						toggleCategory('RSA-full');
+						break;
+
+
+					case 'ORC-toggle':
+						toggleCategory('ORC');
+						break;
+					case 'ORC-full':
+						toggleCategory('ORC-full');
+						break;
+
+
+					/* Miscellaneous */
+					case 'TRI-toggle':
+						toggleCategory('TRI');
+						break;
+					case 'ST3-toggle':
+						toggleCategory('ST3');
+						break;
+					case 'ST4-toggle':
+						toggleCategory('ST4');
+						break;
+					case 'SFI-toggle':
+						toggleCategory('SFI');
+						break;
+					case 'ITA-toggle':
+						toggleCategory('ITA');
+						break;
+
+
+					/* Wars */
+					case 'RFW-toggle':
+						toggleCategory('RFW');
+						break;
+					case 'FYW-toggle':
+						toggleCategory('FYW');
+						break;
+
+					default:
+						//Statements executed when none of the values match the value of the expression
+						break;
+				}
+
+				function toggleCategory(category) {
+					if ( $target.hasClass('active') ) {
+						$target.removeClass('active');
+						APP.props.$timeline.removeClass( category );
+					} else {
+						$target.addClass('active');
+						APP.props.$timeline.addClass(category);
+					}
+				}
+
+			});
+
 		},
 		manageResize : function() {
 			// Cycle through resize tasks.

@@ -162,7 +162,7 @@ internal methods are called.
 				var starSplit, dateSplit, dateParts;
 
 				/* Split the year from the date. */
-				starSplit = stardate.split('/');
+				starSplit = stardate.replace(/,/g, '').split('/');
 				dateParts =  {
 					year : 2000 + (Number(starSplit[0]) * 100) + Number(starSplit[1].substring(0,2))
 				}

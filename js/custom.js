@@ -6,7 +6,7 @@ This module declares top-level methods and instantiates the AE object. It must b
 
 
 /*
-The AE object will be the returned result of a self-invoked function. This allows us to expose methods 
+The TL object will be the returned result of a self-invoked function. This allows us to expose methods 
 for use by other modules while protecting some variables in a closure. If the APP.ui object is already 
 defined then it's not altered. This prevents us from running the entire function each time one of its 
 internal methods are called.
@@ -304,7 +304,6 @@ internal methods are called.
 				}
 
 			});
-
 		},
 		manageResize : function() {
 			// Cycle through resize tasks.

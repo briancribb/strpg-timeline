@@ -135,6 +135,7 @@ internal methods are called.
 							stardate	:	data.feed.entry[i].gsx$stardate.$t,
 							sortkey		:	Number(dateParts.year + '.' + dateParts.month + '' + dateParts.date),
 							end			:	data.feed.entry[i].gsx$stardateend.$t || null,
+							century		:	dateParts.century,
 							year		:	dateParts.year,
 							month		:	dateParts.month,
 							date		:	dateParts.date,
@@ -171,6 +172,7 @@ internal methods are called.
 					dateSplit = starSplit[1].split('.');
 				}
 
+				dateParts.century = starSplit[0];
 				dateParts.month = (dateSplit[0].substring(2,4));
 				dateParts.date = (dateSplit[1] || "00");
 
@@ -208,7 +210,11 @@ internal methods are called.
 
 				APP.events[i].id = i;
 
-				var $li = $("<li/>", { id: "timeline-event-" + i, class: "timeline-event " + APP.events[i].source + " timeline-full-" + APP.events[i].full }),
+				var $li = $("<li/>", { 
+										id: "timeline-event-" + i,
+				 						class: "timeline-event " + APP.events[i].source + " timeline-full-" + APP.events[i].full,
+				 						'data-century': APP.events[i].century
+				 					}),
 					$badge = $("<div/>", { class: "timeline-badge" }),
 					$panel = $("<div/>", { class: "timeline-panel" }),
 					$heading = $("<div/>", { class: "timeline-heading" }),
@@ -216,7 +222,7 @@ internal methods are called.
 					$body = $("<div/>", { class: "timeline-body" });
 
 				/* Putting it all together. */
-				$badge.append( $("<i/>", { class: "glyphicon glyphicon-check" }) );
+				//$badge.append( $("<i/>", { class: "glyphicon glyphicon-check" }) );
 				$heading.append( $title ).append( '<p><small class="timeline-subtext text-muted"><i class="glyphicon glyphicon-folder-open"></i> ' + dfd_sources[APP.events[i].source].name + '</small></p>' );
 				$body.append( APP.events[i].desc );
 				$panel.append( $heading ).append( $body );
@@ -225,13 +231,14 @@ internal methods are called.
 				documentFragment.append($li);
 			}
 			$target.append(documentFragment);
+			APP.alternateFloats();
 		},
 		addListeners : function() {
-
 			$( "#source-toggles" ).on( "click", function(event) {
 				console.log( event );
 				var $target = $(event.target);
 
+				/* Add or subtract category classes depending upon which button was clicked. */
 				switch (event.target.id) {
 
 					/* Major Governments */
@@ -292,6 +299,7 @@ internal methods are called.
 						//Statements executed when none of the values match the value of the expression
 						break;
 				}
+				APP.alternateFloats();
 
 				function toggleCategory(category) {
 					if ( $target.hasClass('active') ) {
@@ -302,7 +310,16 @@ internal methods are called.
 						APP.props.$timeline.addClass(category);
 					}
 				}
-
+			});
+		},
+		alternateFloats : function() {
+			/* Clear out the right-floats and reset them on every other visible timeline event. */
+			$('.timeline-inverted').removeClass('timeline-inverted');
+			$('.timeline-event:visible').each(function (i) {
+				/* Test for i+1 because i will start as zero. */
+				if ( (i+1) % 2 === 0) {
+					$(this).addClass('timeline-inverted');
+				}
 			});
 		},
 		manageResize : function() {

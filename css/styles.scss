@@ -1,3 +1,31 @@
+$colorBG--primary: #fff;
+$colorBG--panel: #fff;
+
+$ORC__badge--BG__color:#FF6000;
+$ORC__badge--BG__url:'../img/orion_logo.png';
+
+$KLE__badge--BG__color:#CC0000;
+$KLE__badge--BG__url:'../img/klingon_logo_white.png';
+
+$RSA__badge--BG__color:#A2059C;
+$RSA__badge--BG__url:'../img/romulan_logo_purple.png';
+
+$UFP__badge--BG__color:#5bc0de;
+$UFP__badge--BG__url:'../img/ufp_logo.png';
+
+$ST3__badge--BG__color:#5bc0de;
+$ST3__badge--BG__url:'../img/ufp_logo.png';
+
+$ST4__badge--BG__color:#5bc0de;
+$ST4__badge--BG__url:'../img/ufp_logo.png';
+
+$SFI__badge--BG__color:#888888;
+$SFI__badge--BG__url:'../img/sfi_logo.png';
+
+$TRI__badge--BG__color:#888888;
+$TRI__badge--BG__url:'../img/mantiev_logo.png';
+
+
 @import "partials/base";
 @import "partials/overrides";
 @import "partials/trans";

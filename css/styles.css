@@ -69,6 +69,7 @@ body {
   float: left;
   border: 1px solid #d4d4d4;
   border-radius: 2px;
+  background: white;
   padding: 20px;
   position: relative;
   -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
@@ -108,11 +109,7 @@ body {
   left: 50%;
   margin-left: -25px;
   background-color: #999999;
-  z-index: 100;
-  border-top-right-radius: 50%;
-  border-top-left-radius: 50%;
-  border-bottom-right-radius: 50%;
-  border-bottom-left-radius: 50%; }
+  z-index: 100; }
 
 .timeline > li.timeline-inverted > .timeline-panel {
   float: right; }
@@ -168,37 +165,37 @@ body {
 .timeline.UFP > .timeline-event.UFP {
   display: list-item; }
 .timeline.UFP > .timeline-event.UFP .timeline-badge {
-  background-color: #5bc0de; }
+  background: url("../img/ufp_logo.png"); }
 
 .timeline.ST3 > .timeline-event.ST3 {
   display: list-item; }
 .timeline.ST3 > .timeline-event.ST3 .timeline-badge {
-  background-color: #5bc0de; }
+  background: url("../img/ufp_logo.png"); }
 
 .timeline.ST4 > .timeline-event.ST4 {
   display: list-item; }
 .timeline.ST4 > .timeline-event.ST4 .timeline-badge {
-  background-color: #5bc0de; }
+  background: url("../img/ufp_logo.png"); }
 
 .timeline.KLE > .timeline-event.KLE {
   display: list-item; }
 .timeline.KLE > .timeline-event.KLE .timeline-badge {
-  background-color: #CC0000; }
+  background: url("../img/klingon_logo_white.png"); }
 
 .timeline.RSA > .timeline-event.RSA {
   display: list-item; }
 .timeline.RSA > .timeline-event.RSA .timeline-badge {
-  background-color: #A2059C; }
+  background: url("../img/romulan_logo_purple.png"); }
 
 .timeline.ORC > .timeline-event.ORC {
   display: list-item; }
 .timeline.ORC > .timeline-event.ORC .timeline-badge {
-  background-color: #FF6000; }
+  background: url("../img/orion_logo.png"); }
 
 .timeline.SFI > .timeline-event.SFI {
   display: list-item; }
 .timeline.SFI > .timeline-event.SFI .timeline-badge {
-  background-color: #888888; }
+  background: url("../img/sfi_logo.png"); }
 
 .timeline.ITA > .timeline-event.ITA {
   display: list-item; }
@@ -208,8 +205,7 @@ body {
 .timeline.TRI > .timeline-event.TRI {
   display: list-item; }
 .timeline.TRI > .timeline-event.TRI .timeline-badge {
-  background-color: #F5F51F;
-  color: #122590; }
+  background: url("../img/mantiev_logo.png"); }
 
 .timeline.RFW > .timeline-event.RFW {
   display: list-item; }
@@ -240,33 +236,38 @@ body {
   display: none; }
 
 @media (max-width: 767px) {
+  /*
   ul.timeline:before {
-    left: 40px; }
-
+  	left: 40px;
+  }
+  */
   ul.timeline > li > .timeline-panel {
-    width: calc(100% - 90px);
-    width: -moz-calc(100% - 90px);
-    width: -webkit-calc(100% - 90px); }
+    width: 100%;
+    margin-top: 90px; }
 
   ul.timeline > li > .timeline-badge {
-    left: 15px;
-    margin-left: 0;
-    top: 16px; }
+    top: 26px; }
 
   ul.timeline > li > .timeline-panel {
     float: right; }
 
   ul.timeline > li > .timeline-panel:before {
+    border: none;
+    /*
     border-left-width: 0;
     border-right-width: 15px;
     left: -15px;
-    right: auto; }
+    right: auto;
+    */ }
 
   ul.timeline > li > .timeline-panel:after {
+    border: none;
+    /*
     border-left-width: 0;
     border-right-width: 14px;
     left: -14px;
-    right: auto; } }
+    right: auto;
+    */ } }
 .btn > .glyphicon, a > .glyphicon {
   pointer-events: none; }
 

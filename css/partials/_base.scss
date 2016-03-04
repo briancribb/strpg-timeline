@@ -222,6 +222,9 @@ body {
 	}
 	& > .timeline-event.KLE .timeline-badge {
 		background: url($KLE__badge--BG__url);
+		background-color:#000000;
+		background-position-y: -2px;
+		border-radius:50%;
 	}
 }
 .timeline.RSA {
@@ -253,7 +256,7 @@ body {
 		display:list-item;
 	}
 	& > .timeline-event.ITA .timeline-badge {
-		background-color: #41A902;
+		background: url($ITA__badge--BG__url);
 	}
 }
 .timeline.TRI {
@@ -269,8 +272,7 @@ body {
 		display:list-item;
 	}
 	& > .timeline-event.RFW .timeline-badge {
-		background-color: #A2059C;
-		color:#EA77E6;
+		background: url($RFW__badge--BG__url);
 	}
 }
 .timeline.FYW {
@@ -278,8 +280,7 @@ body {
 		display:list-item;
 	}
 	& > .timeline-event.FYW .timeline-badge {
-		background-color: #CC0000;
-		color:#F18585;
+		background: url($FYW__badge--BG__url);
 	}
 }
 

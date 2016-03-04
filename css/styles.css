@@ -180,12 +180,15 @@ body {
 .timeline.KLE > .timeline-event.KLE {
   display: list-item; }
 .timeline.KLE > .timeline-event.KLE .timeline-badge {
-  background: url("../img/klingon_logo_white.png"); }
+  background: url("../img/klingon_logo_white.png");
+  background-color: #000000;
+  background-position-y: -2px;
+  border-radius: 50%; }
 
 .timeline.RSA > .timeline-event.RSA {
   display: list-item; }
 .timeline.RSA > .timeline-event.RSA .timeline-badge {
-  background: url("../img/romulan_logo_purple.png"); }
+  background: url("../img/romulan_logo.png"); }
 
 .timeline.ORC > .timeline-event.ORC {
   display: list-item; }
@@ -200,7 +203,7 @@ body {
 .timeline.ITA > .timeline-event.ITA {
   display: list-item; }
 .timeline.ITA > .timeline-event.ITA .timeline-badge {
-  background-color: #41A902; }
+  background: url("../img/ita_logo.png"); }
 
 .timeline.TRI > .timeline-event.TRI {
   display: list-item; }
@@ -210,14 +213,12 @@ body {
 .timeline.RFW > .timeline-event.RFW {
   display: list-item; }
 .timeline.RFW > .timeline-event.RFW .timeline-badge {
-  background-color: #A2059C;
-  color: #EA77E6; }
+  background: url("../img/rfw_logo.png"); }
 
 .timeline.FYW > .timeline-event.FYW {
   display: list-item; }
 .timeline.FYW > .timeline-event.FYW .timeline-badge {
-  background-color: #CC0000;
-  color: #F18585; }
+  background: url("../img/fyw_logo.png"); }
 
 /* More Contextual stuff. */
 .timeline.KLE > .timeline-event.KLE.timeline-full-true,

@@ -40,6 +40,8 @@ internal methods are called.
 		init : function() {
 			APP.props = {
 				$bodyElement		: $('body'),
+				$navbar				: $('#navbar'),
+				$centurySearch		: $('#century-search'),
 				$sourceToolbar		: $('#source-toolbar'),
 				$timeline			: $('#timeline'),
 				$pageFooter			: $('#page-footer'),
@@ -66,6 +68,10 @@ internal methods are called.
 					APP.props.$bodyElement.css( 'padding-bottom', footerHeight );
 
 					var siteSize = APP.getSiteViewType();
+
+					// Correct top body padding for navbar height
+					APP.props.$bodyElement.css( 'padding-top', APP.props.$navbar.outerHeight(true) );
+
 
 					// Support for CSS break-points
 					if ( siteSize === 'desk' || siteSize === 'deskWide' ) {
@@ -115,7 +121,7 @@ internal methods are called.
 				dfd_array.push(value.dfd);
 
 				value.dfd.done(function() {
-					console.log( key + ".dfd is resolved." );
+					//console.log( key + ".dfd is resolved." );
 				});
 
 				$.ajax({
@@ -150,7 +156,7 @@ internal methods are called.
 			});
 			/* http://stackoverflow.com/questions/5627284/pass-in-an-array-of-deferreds-to-when */
 			$.when.apply(null, dfd_array).done(function() {
-				console.log("All of the ajax calls are complete. Length is " + APP.events.length);
+				//console.log("All of the ajax calls are complete. Length is " + APP.events.length);
 
 				APP.events = _.sortBy(APP.events, 'year');
 
@@ -182,7 +188,6 @@ internal methods are called.
 			}
 		},
 		buildTimeline : function($target) {
-			console.log('buildTimeline()');
 			var allKeys = _.allKeys(dfd_sources);
 
 			_.each(dfd_sources, function(value, key, list){
@@ -234,8 +239,7 @@ internal methods are called.
 			APP.alternateFloats();
 		},
 		addListeners : function() {
-			$( "#source-toggles" ).on( "click", function(event) {
-				console.log( event );
+			APP.props.$bodyElement.on( "click", function(event) {
 				var $target = $(event.target);
 
 				/* Add or subtract category classes depending upon which button was clicked. */
@@ -295,11 +299,37 @@ internal methods are called.
 						toggleCategory('FYW');
 						break;
 
+					/* Return to the top */
+					case 'btn-return-top':
+						//window.scroll(0, 0);
+						APP.props.$bodyElement.animate({
+							scrollTop: 0,
+						}, 1000, function() {
+							// Animation complete.
+						});
+						break;
+
+					/* Search for Century */
+					case 'btn-search':
+						var century = APP.props.$centurySearch.val();
+						if ( century !== '' ) {
+							if ( Number(century) === NaN ) {
+								APP.props.$centurySearch.val('');
+							} else {
+								skipToCentury( century );
+							}
+						}
+						break;
+
 					default:
 						//Statements executed when none of the values match the value of the expression
 						break;
+
+
 				}
 				APP.alternateFloats();
+
+
 
 				function toggleCategory(category) {
 					if ( $target.hasClass('active') ) {
@@ -308,6 +338,25 @@ internal methods are called.
 					} else {
 						$target.addClass('active');
 						APP.props.$timeline.addClass(category);
+					}
+				}
+				function skipToCentury(targetCentury) {
+					var scrollTarget = null;
+					$('.timeline-event:visible').each(function (i) {
+						var currentCentury = $(this).data('century');
+						if ( currentCentury >= targetCentury ) {
+							scrollTarget = $(this).position().top;
+							return false;
+						}
+					});
+					if (scrollTarget !== null) {
+						APP.props.$bodyElement.animate({
+							scrollTop: scrollTarget,
+						}, 1000, function() {
+							// Animation complete.
+						});
+					} else {
+						console.log('scrollTarget = ' + scrollTarget);
 					}
 				}
 			});

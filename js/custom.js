@@ -41,9 +41,11 @@ internal methods are called.
 			APP.props = {
 				$bodyElement		: $('body'),
 				$navbar				: $('#navbar'),
-				$centurySearch		: $('#century-search'),
+				$inputCentury		: $('#century-search'),
+				$sourceToggles		: $('#source-toggles'),
 				$sourceToolbar		: $('#source-toolbar'),
 				$timeline			: $('#timeline'),
+				$pageHeader			: $('#page-header'),
 				$pageFooter			: $('#page-footer'),
 				$pageFooterContent	: $('#page-footer-content')
 			};
@@ -302,19 +304,15 @@ internal methods are called.
 					/* Return to the top */
 					case 'btn-return-top':
 						//window.scroll(0, 0);
-						APP.props.$bodyElement.animate({
-							scrollTop: 0,
-						}, 1000, function() {
-							// Animation complete.
-						});
+						APP.scrollToPosition(0);
 						break;
 
 					/* Search for Century */
 					case 'btn-search':
-						var century = APP.props.$centurySearch.val();
+						var century = APP.props.$inputCentury.val();
 						if ( century !== '' ) {
 							if ( Number(century) === NaN ) {
-								APP.props.$centurySearch.val('');
+								APP.props.$inputCentury.val('');
 							} else {
 								skipToCentury( century );
 							}
@@ -331,34 +329,46 @@ internal methods are called.
 
 
 
-				function toggleCategory(category) {
-					if ( $target.hasClass('active') ) {
-						$target.removeClass('active');
-						APP.props.$timeline.removeClass( category );
-					} else {
-						$target.addClass('active');
-						APP.props.$timeline.addClass(category);
-					}
+			});
+
+			APP.props.$inputCentury.on( "keypress", function(event) {
+				if (event.which == '13') {
+					event.preventDefault();
+					console.log('Hit enter key.');
 				}
-				function skipToCentury(targetCentury) {
-					var scrollTarget = null;
-					$('.timeline-event:visible').each(function (i) {
-						var currentCentury = $(this).data('century');
-						if ( currentCentury >= targetCentury ) {
-							scrollTarget = $(this).position().top;
-							return false;
-						}
-					});
-					if (scrollTarget !== null) {
-						APP.props.$bodyElement.animate({
-							scrollTop: scrollTarget,
-						}, 1000, function() {
-							// Animation complete.
-						});
-					} else {
-						console.log('scrollTarget = ' + scrollTarget);
-					}
+			});
+
+			function toggleCategory(category) {
+				if ( $target.hasClass('active') ) {
+					$target.removeClass('active');
+					APP.props.$timeline.removeClass( category );
+				} else {
+					$target.addClass('active');
+					APP.props.$timeline.addClass(category);
 				}
+			}
+			function skipToCentury(targetCentury) {
+				var scrollTarget = null,
+					offset =	APP.props.$pageHeader.outerHeight(true) + 
+								APP.props.$sourceToggles.outerHeight(true);
+
+				$('.timeline-event:visible').each(function (i) {
+					var currentCentury = $(this).data('century');
+					if ( currentCentury >= targetCentury ) {
+						scrollTarget = offset + $(this).position().top;
+						return false;
+					}
+				});
+				if (scrollTarget !== null) {
+					APP.scrollToPosition(scrollTarget);
+				}
+			}
+		},
+		scrollToPosition : function(position) {
+			$('body').animate({
+				scrollTop: position,
+			}, 1000, function() {
+				// Animation complete.
 			});
 		},
 		alternateFloats : function() {

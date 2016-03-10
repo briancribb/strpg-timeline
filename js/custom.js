@@ -306,17 +306,14 @@ internal methods are called.
 						//window.scroll(0, 0);
 						APP.scrollToPosition(0);
 						break;
+					case 'navbar-brand':
+						//window.scroll(0, 0);
+						window.scrollTo(0, 0);
+						break;
 
 					/* Search for Century */
 					case 'btn-search':
-						var century = APP.props.$inputCentury.val();
-						if ( century !== '' ) {
-							if ( Number(century) === NaN ) {
-								APP.props.$inputCentury.val('');
-							} else {
-								skipToCentury( century );
-							}
-						}
+						skipToCentury();
 						break;
 
 					default:
@@ -326,15 +323,13 @@ internal methods are called.
 
 				}
 				APP.alternateFloats();
-
-
-
 			});
 
 			APP.props.$inputCentury.on( "keypress", function(event) {
 				if (event.which == '13') {
 					event.preventDefault();
 					console.log('Hit enter key.');
+					skipToCentury();
 				}
 			});
 
@@ -347,20 +342,29 @@ internal methods are called.
 					APP.props.$timeline.addClass(category);
 				}
 			}
-			function skipToCentury(targetCentury) {
-				var scrollTarget = null,
-					offset =	APP.props.$pageHeader.outerHeight(true) + 
-								APP.props.$sourceToggles.outerHeight(true);
+			function skipToCentury() {
 
-				$('.timeline-event:visible').each(function (i) {
-					var currentCentury = $(this).data('century');
-					if ( currentCentury >= targetCentury ) {
-						scrollTarget = offset + $(this).position().top;
-						return false;
+				var century = APP.props.$inputCentury.val();
+				if ( century !== '' ) {
+					if ( Number(century) === NaN ) {
+						APP.props.$inputCentury.val('');
+					} else {
+						var scrollTarget = null,
+							offset =	APP.props.$pageHeader.outerHeight(true) + 
+										APP.props.$sourceToggles.outerHeight(true);
+
+						$('.timeline-event:visible').each(function (i) {
+							var currentCentury = $(this).data('century');
+							if ( currentCentury >= century ) {
+								scrollTarget = offset + $(this).position().top;
+								return false;
+							}
+						});
+						if (scrollTarget !== null) {
+							APP.scrollToPosition(scrollTarget);
+							APP.props.$inputCentury.val('');
+						}
 					}
-				});
-				if (scrollTarget !== null) {
-					APP.scrollToPosition(scrollTarget);
 				}
 			}
 		},

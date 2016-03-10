@@ -18,12 +18,11 @@
 	</head>
 
 	<body>
-
 		<!-- Fixed navbar -->
 		<nav id="navbar" class="navbar navbar-default navbar-fixed-top">
 			<div class="container">
 				<div class="col-xs-12 col-sm-6 col-md-8">
-					<a class="navbar-brand" href="#page-header">STRPG Timeline</a>
+					<a id="navbar-brand" class="navbar-brand" href="#">STRPG Timeline</a>
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-4">
 					<form class="navbar-form navbar-right" role="search">
@@ -44,75 +43,79 @@
 
 
 		<div class="container">
-
-
-
 			<div id="page-header" class="page-header">
 				<h1>Timeline</h1>
-			</div>
-			<div id="source-toggles" class="source-toggles">
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet risus leo. Suspendisse purus lorem, fermentum in leo rhoncus, convallis maximus nisi. Morbi neque purus, ornare quis viverra pharetra, pretium a dolor.</p>
-				<div class="well well-sm">
-					<p>Major Governments</p>
-					<div id="source-toolbar" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-						<div class="btn-group" role="group" aria-label="UFP">
-							<button id="UFP-toggle" type="button" class="btn btn-default active UFP">UFP</button>
-						</div>
+				<div id="source-toggles" class="source-toggles">
+					<p class="lead">Many things are possible. Let me be your gateway.</p>
+					<p>Use the toggle buttons below to toggle the various timelines. The <code>full</code> buttons toggle between the full account of events from the subject's perspective and what Starfleet knows about them. For an explanation of how stardates work, see the <a href="#page-footer">footer</a> of this page.</p>
+					<p>The search bar at the top has two functions:</p>
+					<ul class="list-unstyled">
+						<li><span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true" aria-label="Return to Top"></span> Return to the top.</li>
+						<li><span class="glyphicon glyphicon-search" aria-hidden="true" aria-label="Return to Top"></span> Scroll to the century listed in the search input.</li>
+					</ul>
+					<small><strong>Note:</strong> Certain events appear on more than one timeline, so there may be some repetition if you have more than one timeline active.</small>
+					<hr>
+					<div class="well well-sm">
+						<p>Major Governments</p>
+						<div id="source-toolbar" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+							<div class="btn-group" role="group" aria-label="UFP">
+								<button id="UFP-toggle" type="button" class="btn btn-default active UFP">UFP</button>
+							</div>
 
-						<div class="btn-group" role="group" aria-label="KLE">
-							<button id="KLE-toggle" type="button" class="btn btn-default active KLE">KLE</button>
-							<button id="KLE-full" type="button" class="btn btn-default KLE">Full</button>
-						</div>
+							<div class="btn-group" role="group" aria-label="KLE">
+								<button id="KLE-toggle" type="button" class="btn btn-default active KLE">KLE</button>
+								<button id="KLE-full" type="button" class="btn btn-default KLE">Full</button>
+							</div>
 
-						<div class="btn-group" role="group" aria-label="KLE">
-							<button id="RSA-toggle" type="button" class="btn btn-default active RSA">RSA</button>
-							<button id="RSA-full" type="button" class="btn btn-default RSA">Full</button>
-						</div>
+							<div class="btn-group" role="group" aria-label="KLE">
+								<button id="RSA-toggle" type="button" class="btn btn-default active RSA">RSA</button>
+								<button id="RSA-full" type="button" class="btn btn-default RSA">Full</button>
+							</div>
 
-						<div class="btn-group" role="group" aria-label="ORC">
-							<button id="ORC-toggle" type="button" class="btn btn-default active ORC">ORC</button>
-							<button id="ORC-full" type="button" class="btn btn-default ORC">Full</button>
+							<div class="btn-group" role="group" aria-label="ORC">
+								<button id="ORC-toggle" type="button" class="btn btn-default active ORC">ORC</button>
+								<button id="ORC-full" type="button" class="btn btn-default ORC">Full</button>
+							</div>
+						</div>
+						<div>
+							<span class="label label-default">UFP: United Federation of Planets</span>
+							<span class="label label-default">KLE: Klingon Empire</span>
+							<span class="label label-default">RSA: Romulan Star Empire</span>
 						</div>
 					</div>
-					<div>
-						<span class="label label-default">UFP: United Federation of Planets</span>
-						<span class="label label-default">KLE: Klingon Empire</span>
-						<span class="label label-default">RSA: Romulan Star Empire</span>
+					<div class="well well-sm">
+						<p>Misc</p>
+						<div id="source-toolbar" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+							<div class="btn-group" role="group" aria-label="First group">
+								<button id="TRI-toggle" type="button" class="btn btn-default active TRI">TRI</button>
+								<button id="SFI-toggle" type="button" class="btn btn-default active SFI">SFI</button>
+								<button id="ITA-toggle" type="button" class="btn btn-default active ITA">ITA</button>
+								<button id="ST3-toggle" type="button" class="btn btn-default active ST3">ST3</button>
+								<button id="ST4-toggle" type="button" class="btn btn-default active ST4">ST4</button>
+							</div>
+						</div>
+						<div>
+							<span class="label label-default">TRI: Triangle</span>
+							<span class="label label-default">SFI: Starfleet Intelligence</span>
+							<span class="label label-default">ITA: Independent Traders' Association</span>
+							<span class="label label-default">ST3: Star Trek III Update</span>
+							<span class="label label-default">ST4: Star Trek IV Update</span>
+						</div>
+					</div>
+					<div class="well well-sm">
+						<p>Wars</p>
+						<div id="source-toolbar" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+							<div class="btn-group" role="group" aria-label="First group">
+								<button id="RFW-toggle" type="button" class="btn btn-default active RFW">RFW</button>
+								<button id="FYW-toggle" type="button" class="btn btn-default active FYW">FYW</button>
+							</div>
+						</div>
+						<div>
+							<span class="label label-default">RFW: Romulan/Federation War</span>
+							<span class="label label-default">FYW: Four Years War</span>
+						</div>
 					</div>
 				</div>
-				<div class="well well-sm">
-					<p>Misc</p>
-					<div id="source-toolbar" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-						<div class="btn-group" role="group" aria-label="First group">
-							<button id="TRI-toggle" type="button" class="btn btn-default active TRI">TRI</button>
-							<button id="SFI-toggle" type="button" class="btn btn-default active SFI">SFI</button>
-							<button id="ITA-toggle" type="button" class="btn btn-default active ITA">ITA</button>
-							<button id="ST3-toggle" type="button" class="btn btn-default active ST3">ST3</button>
-							<button id="ST4-toggle" type="button" class="btn btn-default active ST4">ST4</button>
-						</div>
-					</div>
-					<div>
-						<span class="label label-default">TRI: Triangle</span>
-						<span class="label label-default">SFI: Starfleet Intelligence</span>
-						<span class="label label-default">ITA: Independent Traders' Association</span>
-						<span class="label label-default">ST3: Star Trek III Update</span>
-						<span class="label label-default">ST4: Star Trek IV Update</span>
-					</div>
-				</div>
-				<div class="well well-sm">
-					<p>Wars</p>
-					<div id="source-toolbar" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-						<div class="btn-group" role="group" aria-label="First group">
-							<button id="RFW-toggle" type="button" class="btn btn-default active RFW">RFW</button>
-							<button id="FYW-toggle" type="button" class="btn btn-default active FYW">FYW</button>
-						</div>
-					</div>
-					<div>
-						<span class="label label-default">RFW: Romulan/Federation War</span>
-						<span class="label label-default">FYW: Four Years War</span>
-					</div>
-				</div>
-				<hr>
 			</div>
 			<ul id="timeline" class="timeline"></ul>
 		</div>

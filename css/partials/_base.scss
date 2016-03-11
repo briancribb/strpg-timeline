@@ -197,6 +197,13 @@ body {
 	& > .timeline-event.UFP .timeline-badge {
 		background: url($UFP__badge--BG__url);
 	}
+	& > .timeline-event.UFP .timeline-panel {
+		background: $UFP__badge--BG__color;
+		&:after {
+			border-left-color:$UFP__badge--BG__color;
+			border-right-color:$UFP__badge--BG__color;
+		}
+	}
 }
 .timeline.ST3 {
 	& > .timeline-event.ST3 {
@@ -205,6 +212,13 @@ body {
 	& > .timeline-event.ST3 .timeline-badge {
 		background: url($ST3__badge--BG__url);
 	}
+	& > .timeline-event.ST3 .timeline-panel {
+		background: $ST3__badge--BG__color;
+		&:after {
+			border-left-color:$ST3__badge--BG__color;
+			border-right-color:$ST3__badge--BG__color;
+		}
+	}
 }
 .timeline.ST4 {
 	& > .timeline-event.ST4 {
@@ -212,6 +226,13 @@ body {
 	}
 	& > .timeline-event.ST4 .timeline-badge {
 		background: url($ST4__badge--BG__url);
+	}
+	& > .timeline-event.ST4 .timeline-panel {
+		background: $ST4__badge--BG__color;
+		&:after {
+			border-left-color:$ST4__badge--BG__color;
+			border-right-color:$ST4__badge--BG__color;
+		}
 	}
 }
 
@@ -225,6 +246,13 @@ body {
 		background-position-y: -2px;
 		border-radius:50%;
 	}
+	& > .timeline-event.KLE .timeline-panel {
+		background: $KLE__badge--BG__color;
+		&:after {
+			border-left-color:$KLE__badge--BG__color;
+			border-right-color:$KLE__badge--BG__color;
+		}
+	}
 }
 .timeline.RSA {
 	& > .timeline-event.RSA {
@@ -232,6 +260,13 @@ body {
 	}
 	& > .timeline-event.RSA .timeline-badge {
 		background: url($RSA__badge--BG__url);
+	}
+	& > .timeline-event.RSA .timeline-panel {
+		background: $RSA__badge--BG__color;
+		&:after {
+			border-left-color:$RSA__badge--BG__color;
+			border-right-color:$RSA__badge--BG__color;
+		}
 	}
 }
 .timeline.ORC {
@@ -241,6 +276,13 @@ body {
 	& > .timeline-event.ORC .timeline-badge {
 		background: url($ORC__badge--BG__url);
 	}
+	& > .timeline-event.ORC .timeline-panel {
+		background: $ORC__badge--BG__color;
+		&:after {
+			border-left-color:$ORC__badge--BG__color;
+			border-right-color:$ORC__badge--BG__color;
+		}
+	}
 }
 .timeline.SFI {
 	& > .timeline-event.SFI {
@@ -248,6 +290,13 @@ body {
 	}
 	& > .timeline-event.SFI .timeline-badge {
 		background: url($SFI__badge--BG__url);
+	}
+	& > .timeline-event.SFI .timeline-panel {
+		background: $SFI__badge--BG__color;
+		&:after {
+			border-left-color:$SFI__badge--BG__color;
+			border-right-color:$SFI__badge--BG__color;
+		}
 	}
 }
 .timeline.ITA {
@@ -257,6 +306,13 @@ body {
 	& > .timeline-event.ITA .timeline-badge {
 		background: url($ITA__badge--BG__url);
 	}
+	& > .timeline-event.ITA .timeline-panel {
+		background: $ITA__badge--BG__color;
+		&:after {
+			border-left-color:$ITA__badge--BG__color;
+			border-right-color:$ITA__badge--BG__color;
+		}
+	}
 }
 .timeline.TRI {
 	& > .timeline-event.TRI {
@@ -264,6 +320,13 @@ body {
 	}
 	& > .timeline-event.TRI .timeline-badge {
 		background: url($TRI__badge--BG__url);
+	}
+	& > .timeline-event.TRI .timeline-panel {
+		background: $TRI__badge--BG__color;
+		&:after {
+			border-left-color:$TRI__badge--BG__color;
+			border-right-color:$TRI__badge--BG__color;
+		}
 	}
 }
 .timeline.RFW {
@@ -273,6 +336,13 @@ body {
 	& > .timeline-event.RFW .timeline-badge {
 		background: url($RFW__badge--BG__url);
 	}
+	& > .timeline-event.RFW .timeline-panel {
+		background: $RFW__badge--BG__color;
+		&:after {
+			border-left-color:$RFW__badge--BG__color;
+			border-right-color:$RFW__badge--BG__color;
+		}
+	}
 }
 .timeline.FYW {
 	& > .timeline-event.FYW {
@@ -280,6 +350,13 @@ body {
 	}
 	& > .timeline-event.FYW .timeline-badge {
 		background: url($FYW__badge--BG__url);
+	}
+	& > .timeline-event.FYW .timeline-panel {
+		background: $FYW__badge--BG__color;
+		&:after {
+			border-left-color:$FYW__badge--BG__color;
+			border-right-color:$FYW__badge--BG__color;
+		}
 	}
 }
 

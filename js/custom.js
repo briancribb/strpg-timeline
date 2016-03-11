@@ -127,8 +127,8 @@ internal methods are called.
 				});
 
 				$.ajax({
-					url: 'https://spreadsheets.google.com/feeds/list/1ztvTpHjCrZhf3cHCZpyIa1-FHjMFh9MJsPNe6FN5HaQ/' + value.id + '/public/full?alt=json', /* value.path, */
-					/*url: value.path, */
+					//url: 'https://spreadsheets.google.com/feeds/list/1ztvTpHjCrZhf3cHCZpyIa1-FHjMFh9MJsPNe6FN5HaQ/' + value.id + '/public/full?alt=json', /* value.path, */
+					url: value.path,
 					dataType: "json"
 				}).success(function(data) {
 					//console.log(key + " ajax call is complete.");
@@ -311,6 +311,12 @@ internal methods are called.
 						window.scrollTo(0, 0);
 						break;
 
+					/* Return to the top */
+					case 'btn-footer':
+						//window.scroll(0, 0);
+						APP.scrollToPosition( APP.props.$pageFooter.position().top );
+						break;
+
 					/* Search for Century */
 					case 'btn-search':
 						skipToCentury();
@@ -319,10 +325,19 @@ internal methods are called.
 					default:
 						//Statements executed when none of the values match the value of the expression
 						break;
-
-
 				}
 				APP.alternateFloats();
+
+				/* This function must be inside the on() block because it uses the event target's jQuery collection. */
+				function toggleCategory(category) {
+					if ( $target.hasClass('active') ) {
+						$target.removeClass('active');
+						APP.props.$timeline.removeClass( category );
+					} else {
+						$target.addClass('active');
+						APP.props.$timeline.addClass(category);
+					}
+				}
 			});
 
 			APP.props.$inputCentury.on( "keypress", function(event) {
@@ -333,15 +348,6 @@ internal methods are called.
 				}
 			});
 
-			function toggleCategory(category) {
-				if ( $target.hasClass('active') ) {
-					$target.removeClass('active');
-					APP.props.$timeline.removeClass( category );
-				} else {
-					$target.addClass('active');
-					APP.props.$timeline.addClass(category);
-				}
-			}
 			function skipToCentury() {
 
 				var century = APP.props.$inputCentury.val();

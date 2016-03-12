@@ -319,7 +319,7 @@ internal methods are called.
 
 					/* Search for Century */
 					case 'btn-search':
-						skipToCentury();
+						scrollToCentury();
 						break;
 
 					default:
@@ -344,11 +344,11 @@ internal methods are called.
 				if (event.which == '13') {
 					event.preventDefault();
 					console.log('Hit enter key.');
-					skipToCentury();
+					scrollToCentury();
 				}
 			});
 
-			function skipToCentury() {
+			function scrollToCentury() {
 
 				var century = APP.props.$inputCentury.val();
 				if ( century !== '' ) {
@@ -356,8 +356,8 @@ internal methods are called.
 						APP.props.$inputCentury.val('');
 					} else {
 						var scrollTarget = null,
-							offset =	APP.props.$pageHeader.outerHeight(true) + 
-										APP.props.$sourceToggles.outerHeight(true);
+							offset =	APP.props.$pageHeader.outerHeight(true);// + 
+										//APP.props.$sourceToggles.outerHeight(true);
 
 						$('.timeline-event:visible').each(function (i) {
 							var currentCentury = $(this).data('century');

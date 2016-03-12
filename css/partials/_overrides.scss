@@ -1,7 +1,13 @@
 // Bootstrap overrides.
 // ================================
 
-
+.navbar-info {
+	background-color:#d9edf7;
+	border-bottom: 1px solid #337ab7;
+}
+.hr-primary {
+	border-top: 1px solid #337ab7;
+}
 
 .btn > .glyphicon, a > .glyphicon {
 	pointer-events:none; // The nested span can capture the click and screw up delegated event handlers.
@@ -29,9 +35,6 @@
 	margin-top:-5px;
 }
 
-
-
-
 .list-group-item-btn {
 	padding-right:50px;
 	button.btn {
@@ -39,3 +42,12 @@
 		float:right;
 	}
 }
+
+.panel {
+	border-radius:0;
+}
+.label {
+	font-weight:normal;
+	padding: .3em .7em .4em;
+}
+

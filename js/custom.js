@@ -15,6 +15,10 @@ internal methods are called.
 	/* This is where we set variables and things that will only live inside the closure. */
 
 
+	/*
+	The id value is to identify the worksheets within the Google Sheet that this data came from. Since the data is unlikely to 
+	change, I just put the current response into some json files and called them locally.
+	*/ 
 	var dfd_array = [],
 		dfd_sources = {
 			UFP: { path:'js/data/UFP.json', id: 'oesera6', name: 'United Federation of Planets' },
@@ -60,18 +64,21 @@ internal methods are called.
 			APP.manageResize();
 
 
-			/* Initial resize tasks */
+			/*
+			Initial resize tasks. For this small project, all tasks are in here, but for larger projects we could have additional tasks 
+			added by other modules.
+			 */
 			var initTasks = {
 				func: function(){
 
-					// Correct footer height
+					/* Correct footer height upon resize */
 					var footerHeight = APP.props.$pageFooterContent.outerHeight(true);
 					APP.props.$pageFooter.height( footerHeight );
 					APP.props.$bodyElement.css( 'padding-bottom', footerHeight );
 
 					var siteSize = APP.getSiteViewType();
 
-					// Correct top body padding for navbar height
+					/* Correct top body padding for navbar height */
 					APP.props.$bodyElement.css( 'padding-top', APP.props.$navbar.outerHeight(true) );
 
 
@@ -107,15 +114,11 @@ internal methods are called.
 			APP.addResizeTask( { func: function(){console.log("I'm resizing!")} } );
 			*/
 
-			//console.log('adding task');
 			task.args = task.args || [];
 			APP.resizeTasks.push(task);
 		},
 		getData : function() {
-			/*
-			 *  Using deferred objects with the social scripts so we can run 
-			 *  functions when any or all of them are finished loading.
-			*/
+			/* Using deferred objects to make sure we get everything before proceeding. */
 
 			$.each( dfd_sources, function( key, value ) {
 				//console.log( key + ": " + value.path );
@@ -127,7 +130,6 @@ internal methods are called.
 				});
 
 				$.ajax({
-					//url: 'https://spreadsheets.google.com/feeds/list/1ztvTpHjCrZhf3cHCZpyIa1-FHjMFh9MJsPNe6FN5HaQ/' + value.id + '/public/full?alt=json', /* value.path, */
 					url: value.path,
 					dataType: "json"
 				}).success(function(data) {
@@ -136,7 +138,7 @@ internal methods are called.
 
 					/* Process data into the main timeline. */
 					for (var i = 0; i < data.feed.entry.length; i++) {
-						//var test = data.feed.entry[i].gsx$stardatestart;
+
 						var dateParts = starToDate( data.feed.entry[i].gsx$stardate.$t );
 
 						APP.events.push({
@@ -154,15 +156,11 @@ internal methods are called.
 					};
 					value.dfd.resolve();
 				});
-
 			});
 			/* http://stackoverflow.com/questions/5627284/pass-in-an-array-of-deferreds-to-when */
 			$.when.apply(null, dfd_array).done(function() {
 				//console.log("All of the ajax calls are complete. Length is " + APP.events.length);
-
 				APP.events = _.sortBy(APP.events, 'year');
-
-
 				APP.buildTimeline( $('#timeline') );
 			});
 
@@ -238,13 +236,23 @@ internal methods are called.
 				documentFragment.append($li);
 			}
 			$target.append(documentFragment);
+
+			/*
+			Remove the "loading" class to reveal the timeline and hide the spinner.
+
+			Webkit browsers don't animate until the page is loaded, resulting in no spin for me because the local 
+			content comes in pretty quick. Firefox spins immediately. This but isn't important enough for me to chase 
+			down right now, but I wanted to make a note of it.
+			*/
+			APP.props.$bodyElement.removeClass('loading');
 			APP.alternateFloats();
 		},
 		addListeners : function() {
+			/* One body listener controls the entire app. */
 			APP.props.$bodyElement.on( "click", function(event) {
 				var $target = $(event.target);
 
-				/* Add or subtract category classes depending upon which button was clicked. */
+				/* Add or subtract category classes depending upon which button was clicked or scroll to a position. */
 				switch (event.target.id) {
 
 					/* Major Governments */
@@ -323,7 +331,7 @@ internal methods are called.
 						break;
 
 					default:
-						//Statements executed when none of the values match the value of the expression
+						/* If there's no id or it doesn't match anything, then do nothing. */
 						break;
 				}
 				APP.alternateFloats();
@@ -343,7 +351,6 @@ internal methods are called.
 			APP.props.$inputCentury.on( "keypress", function(event) {
 				if (event.which == '13') {
 					event.preventDefault();
-					console.log('Hit enter key.');
 					scrollToCentury();
 				}
 			});
@@ -375,11 +382,7 @@ internal methods are called.
 			}
 		},
 		scrollToPosition : function(position) {
-			$('body').animate({
-				scrollTop: position,
-			}, 1000, function() {
-				// Animation complete.
-			});
+			$('body').animate( { scrollTop: position }, 1000 );
 		},
 		alternateFloats : function() {
 			/* Clear out the right-floats and reset them on every other visible timeline event. */
@@ -392,7 +395,7 @@ internal methods are called.
 			});
 		},
 		manageResize : function() {
-			// Cycle through resize tasks.
+			/* Cycle through resize tasks. */
 			for (var i = 0; i < APP.resizeTasks.length; i++) {
 				var task = APP.resizeTasks[i];
 				task.func.apply(this, task.args);
@@ -401,10 +404,10 @@ internal methods are called.
 		getSiteViewType : function() {
 			var sizes = {
 				/*
-				Support for CSS break-points. If you change them in the variables Sass file, then 
-				you need to change them here as well. This function should be used in harmony with css.
+				Support for CSS break-points, set to match Bootstrap default values. If you change the breakpoints in your 
+				CSS then you need to change them here as well. This function should be used in harmony with CSS, making 
+				whatever adjustments are needed as the window size changes.
 				*/
-
 					xs		: 480,
 					sm		: 768,
 					md		: 992,

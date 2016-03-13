@@ -28,6 +28,20 @@ body {
   margin: 0;
   background: #ddd; }
 
+/* Loading Spinner */
+.page-load-message {
+  font-size: 20px;
+  display: none; }
+
+.page-load-spinner {
+  font-size: 100px;
+  margin-top: 40px; }
+
+.loading .page-header, .loading .timeline {
+  display: none; }
+.loading .page-load-message {
+  display: block; }
+
 /* http://bootsnipp.com/snippets/featured/timeline-responsive */
 .timeline {
   list-style: none;
@@ -297,12 +311,15 @@ body {
   	left: 40px;
   }
   */
+  .navbar-form {
+    margin-top: 0px; }
+
   ul.timeline > li > .timeline-panel {
     width: 100%;
     margin-top: 90px; }
 
   ul.timeline > li > .timeline-badge {
-    top: 26px; }
+    top: 32px; }
 
   ul.timeline > li > .timeline-panel {
     float: right; }
@@ -340,6 +357,9 @@ body {
   .row.small-gutters > [class^="col-"], .row.small-gutters > [class*=" col-"] {
     padding-right: 5px;
     padding-left: 5px; }
+
+.page-header {
+  margin-top: 0; }
 
 .list-group:last-child {
   margin-bottom: 0; }
@@ -381,6 +401,43 @@ body {
 .trans-bg-position {
   -webkit-transition: background-position .5s linear;
   transition: background-position .5s linear; }
+
+.trans-spin {
+  background-position: #ddd;
+  -webkit-animation: infiniteSpin 1s linear infinite;
+  /* Safari 4+ */
+  -moz-animation: infiniteSpin 1s linear infinite;
+  /* Fx 5+ */
+  -o-animation: infiniteSpin 1s linear infinite;
+  /* Opera 12+ */
+  animation: infiniteSpin 1s linear infinite;
+  /* IE 10+ */ }
+
+@-webkit-keyframes infiniteSpin {
+  from {
+    -webkit-transform: rotate(0deg); }
+
+  to {
+    -webkit-transform: rotate(360deg); } }
+
+@-moz-keyframes infiniteSpin {
+  from {
+    -o-transform: rotate(0deg); }
+
+  to {
+    -moz-transform: rotate(360deg); } }
+
+@-o-keyframes infiniteSpin {
+  from {
+    -o-transform: rotate(0deg); }
+
+  to {
+    -o-transform: rotate(360deg); } }
+
+keyframes infiniteSpin from {
+  transform: rotate(0deg); }
+keyframes infiniteSpin to {
+  transform: rotate(360deg); }
 
 .apply-rhythm {
   margin-bottom: 20px !important; }

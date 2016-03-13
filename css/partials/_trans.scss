@@ -17,3 +17,50 @@
 	-webkit-transition:background-position .5s linear;
 	transition:background-position .5s linear;
 }
+
+
+
+
+
+.trans-spin {
+	background-position:#ddd;
+	-webkit-animation: infiniteSpin 1s linear infinite; /* Safari 4+ */
+	-moz-animation:    infiniteSpin 1s linear infinite; /* Fx 5+ */
+	-o-animation:      infiniteSpin 1s linear infinite; /* Opera 12+ */
+	animation:         infiniteSpin 1s linear infinite; /* IE 10+ */
+}
+
+
+
+@-webkit-keyframes infiniteSpin {
+	from{
+		-webkit-transform: rotate(0deg);
+	}
+	to{
+		-webkit-transform: rotate(360deg);
+	}
+}
+@-moz-keyframes infiniteSpin {
+	from{
+		-o-transform: rotate(0deg);
+	}
+	to{
+		-moz-transform: rotate(360deg);
+	}
+}
+@-o-keyframes infiniteSpin {
+	from{
+		-o-transform: rotate(0deg);
+	}
+	to{
+		-o-transform: rotate(360deg);
+	}
+}
+keyframes infiniteSpin {
+	from{
+		transform: rotate(0deg);
+	}
+	to{
+		transform: rotate(360deg);
+	}
+}

@@ -228,7 +228,7 @@ internal methods are called.
 
 				/* Putting it all together. */
 				//$badge.append( $("<i/>", { class: "glyphicon glyphicon-check" }) );
-				$heading.append( $title ).append( '<p><small class="timeline-subtext text-muted"><i class="glyphicon glyphicon-folder-open"></i> ' + dfd_sources[APP.events[i].source].name + '</small></p>' );
+				$heading.append( $title ).append( '<p><small class="timeline-subtext text-muted"><i class="glyphicon glyphicon-folder-open"></i>' + dfd_sources[APP.events[i].source].name + '</small></p>' );
 				$body.append( APP.events[i].desc );
 				$panel.append( $heading ).append( $body );
 				$li.append( $badge ).append( $panel );

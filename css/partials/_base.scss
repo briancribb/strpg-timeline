@@ -130,6 +130,11 @@ body {
 				content: " ";
 			}
 
+		.timeline-subtext {
+			.glyphicon {
+				margin-right:7px;
+			}
+		}
 		.timeline > li > .timeline-badge {
 			color: #fff;
 			width: 50px;

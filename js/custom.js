@@ -382,7 +382,7 @@ internal methods are called.
 			}
 		},
 		scrollToPosition : function(position) {
-			$('body').animate( { scrollTop: position }, 1000 );
+			$('html,body').animate( { scrollTop: position }, 1000 );
 		},
 		alternateFloats : function() {
 			/* Clear out the right-floats and reset them on every other visible timeline event. */

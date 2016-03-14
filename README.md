@@ -7,7 +7,7 @@ The experiment was to pull in data from a Google spreadsheet, process it, sort i
 
 I'm still using jQuery for the document fragments, but I'm no longer pulling from a Google sheet. Since the data won't change, I just saved the responses to some local files and included it in the project. The sources are still pulled separately, however, so we still have an example of multiple data sources being resolved before the app starts.
 
-##Spinner Troubles.
+##Spinner Troubles
 The app starts with a Glyphicon which spins via CSS3. When all of the data resolves, a "loading" class is removed from the body and the spinner is swapped out for the timeline.
 
 The only trouble is that webkit browsers hold off on the animation until the page is loaded. If the data comes in quickly (as it does locally) then you won't see the spin unless you're using Firefox. If the data takes longer, then the page will load and you'll see a bit of spinning.

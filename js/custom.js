@@ -121,19 +121,29 @@ internal methods are called.
 			/* Using deferred objects to make sure we get everything before proceeding. */
 
 			$.each( dfd_sources, function( key, value ) {
-				//console.log( key + ": " + value.path );
+				/*
+				key:	'UFP'
+				value:	{ path:'my/path.json', id: 'myID', name: 'My Name' }
+				*/
 				value.dfd = $.Deferred();
 				dfd_array.push(value.dfd);
 
+				/*
+				If I wanted to do something when each individual thingy resolves, then I would do that here. This done() 
+				function will fire whenever this deferred object is resolved.
+				
 				value.dfd.done(function() {
-					//console.log( key + ".dfd is resolved." );
+					// Do stuff.
 				});
+
+				*/
 
 				$.ajax({
 					url: value.path,
 					dataType: "json"
 				}).success(function(data) {
-					//console.log(key + " ajax call is complete.");
+
+					/* The data structure is straight from Google, so we still need to drill down into it to get our array. */
 					APP.data[key] = data.feed.entry;
 
 					/* Process data into the main timeline. */
@@ -154,6 +164,8 @@ internal methods are called.
 							desc		:	data.feed.entry[i].gsx$event.$t
 						});
 					};
+
+					/* All done with this JSON file, so we'll resolve its Deferred object. */
 					value.dfd.resolve();
 				});
 			});
@@ -195,6 +207,7 @@ internal methods are called.
 			});
 
 			/*
+			The markup for an event looks like this: 
 			<li>
 				<div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
 				<div class="timeline-panel">

@@ -1,0 +1,43 @@
+$colorBG--primary: #fff;
+$colorBG--panel: #fff;
+
+$ORC__badge--BG__color:#ffceb0;
+$ORC__badge--BG__url:'../img/orion_logo.png';
+
+$KLE__badge--BG__color:#f2dede;
+$KLE__badge--BG__url:'../img/klingon_logo_white.png';
+
+$RSA__badge--BG__color:#FDDEFC;
+$RSA__badge--BG__url:'../img/romulan_logo.png';
+
+$UFP__badge--BG__color:#d9edf7;
+$UFP__badge--BG__url:'../img/ufp_logo.png';
+
+$ST3__badge--BG__color:#d9edf7;
+$ST3__badge--BG__url:'../img/ufp_logo.png';
+
+$ST4__badge--BG__color:#d9edf7;
+$ST4__badge--BG__url:'../img/ufp_logo.png';
+
+$SFI__badge--BG__color:#dedede;
+$SFI__badge--BG__url:'../img/sfi_logo.png';
+
+$TRI__badge--BG__color:#fcf8e3;
+$TRI__badge--BG__url:'../img/mantiev_logo.png';
+
+$FYW__badge--BG__color:#f2dede;
+$FYW__badge--BG__url:'../img/fyw_logo.png';
+
+$RFW__badge--BG__color:#FDDEFC;
+$RFW__badge--BG__url:'../img/rfw_logo.png';
+
+$ITA__badge--BG__color:#fcf8e3;
+$ITA__badge--BG__url:'../img/ita_logo.png';
+
+
+@import "partials/base";
+@import "partials/overrides";
+@import "partials/trans";
+@import "partials/helper";
+//@import "partials/wa-typeahead";
+//@import "partials/map";

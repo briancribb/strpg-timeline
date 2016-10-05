@@ -1,6 +1,6 @@
 /*
 ===================================================================================================
-This module declares top-level methods and instantiates the AE object. It must be loaded first.
+This module declares top-level methods and instantiates the TL object. It must be loaded first.
 ===================================================================================================
 */
 

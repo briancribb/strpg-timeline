@@ -268,60 +268,6 @@ internal methods are called.
 				/* Add or subtract category classes depending upon which button was clicked or scroll to a position. */
 				switch (event.target.id) {
 
-					/* Major Governments */
-					case 'UFP-toggle':
-						toggleCategory('UFP');
-						break;
-					case 'KLE-toggle':
-						toggleCategory('KLE');
-						break;
-					case 'KLE-full':
-						toggleCategory('KLE-full');
-						break;
-
-
-					case 'RSA-toggle':
-						toggleCategory('RSA');
-						break;
-					case 'RSA-full':
-						toggleCategory('RSA-full');
-						break;
-
-
-					case 'ORC-toggle':
-						toggleCategory('ORC');
-						break;
-					case 'ORC-full':
-						toggleCategory('ORC-full');
-						break;
-
-
-					/* Miscellaneous */
-					case 'TRI-toggle':
-						toggleCategory('TRI');
-						break;
-					case 'ST3-toggle':
-						toggleCategory('ST3');
-						break;
-					case 'ST4-toggle':
-						toggleCategory('ST4');
-						break;
-					case 'SFI-toggle':
-						toggleCategory('SFI');
-						break;
-					case 'ITA-toggle':
-						toggleCategory('ITA');
-						break;
-
-
-					/* Wars */
-					case 'RFW-toggle':
-						toggleCategory('RFW');
-						break;
-					case 'FYW-toggle':
-						toggleCategory('FYW');
-						break;
-
 					/* Return to the top */
 					case 'btn-return-top':
 						//window.scroll(0, 0);

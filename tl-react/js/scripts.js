@@ -21,17 +21,17 @@ internal methods are called.
 	*/ 
 	var dfd_array = [],
 		dfd_sources = {
-			UFP: { path:'js/data/UFP.json', id: 'oesera6', name: 'United Federation of Planets' },
-			KLE: { path:'js/data/KLE.json', id: 'o15noc3', name: 'Klingon Empire' },
-			RSA: { path:'js/data/RSA.json', id: 'or7u0kt', name: 'Romulan Star Empire' },
-			TRI: { path:'js/data/TRI.json', id: 'ol08r1n', name: 'Triangle' },
-			ORC: { path:'js/data/ORC.json', id: 'ohu3d91', name: 'Orion Colonies' },
-			RFW: { path:'js/data/RFW.json', id: 'oypmvfb', name: 'Romulan/Federation War' },
-			FYW: { path:'js/data/FYW.json', id: 'oi1ju2s', name: 'Four Years War' },
-			ST3: { path:'js/data/ST3.json', id: 'o5oxeec', name: 'Star Trek 3 Update' },
-			ST4: { path:'js/data/ST4.json', id: 'oxxpvso', name: 'Star Trek 4 Update' },
-			SFI: { path:'js/data/SFI.json', id: 'ohqn30t', name: 'Starfleet Intelligence' },
-			ITA: { path:'js/data/ITA.json', id: 'orojt89', name: "UFP/Independent Traders' Association" }
+			UFP: { path:'js/data/UFP.json', id: 'oesera6', hasFull: false, name: 'United Federation of Planets' },
+			KLE: { path:'js/data/KLE.json', id: 'o15noc3', hasFull: true,  name: 'Klingon Empire' },
+			RSA: { path:'js/data/RSA.json', id: 'or7u0kt', hasFull: true,  name: 'Romulan Star Empire' },
+			TRI: { path:'js/data/TRI.json', id: 'ol08r1n', hasFull: false, name: 'Triangle' },
+			ORC: { path:'js/data/ORC.json', id: 'ohu3d91', hasFull: true,  name: 'Orion Colonies' },
+			RFW: { path:'js/data/RFW.json', id: 'oypmvfb', hasFull: false, name: 'Romulan/Federation War' },
+			FYW: { path:'js/data/FYW.json', id: 'oi1ju2s', hasFull: false, name: 'Four Years War' },
+			ST3: { path:'js/data/ST3.json', id: 'o5oxeec', hasFull: false, name: 'Star Trek 3 Update' },
+			ST4: { path:'js/data/ST4.json', id: 'oxxpvso', hasFull: false, name: 'Star Trek 4 Update' },
+			SFI: { path:'js/data/SFI.json', id: 'ohqn30t', hasFull: false, name: 'Starfleet Intelligence' },
+			ITA: { path:'js/data/ITA.json', id: 'orojt89', hasFull: false, name: "UFP/Independent Traders' Association" }
 		};
 
 
@@ -40,7 +40,6 @@ internal methods are called.
 	var APP = {
 		resizeTasks : [],
 		events : [],
-		data : {},
 		init : function() {
 			APP.props = {
 				$bodyElement		: $('body'),
@@ -119,7 +118,7 @@ internal methods are called.
 		},
 		getData : function() {
 			/* Using deferred objects to make sure we get everything before proceeding. */
-
+			var data = {};
 			$.each( dfd_sources, function( key, value ) {
 				/*
 				key:	'UFP'
@@ -144,7 +143,7 @@ internal methods are called.
 				}).success(function(data) {
 
 					/* The data structure is straight from Google, so we still need to drill down into it to get our array. */
-					APP.data[key] = data.feed.entry;
+					data[key] = data.feed.entry;
 
 					/* Process data into the main timeline. */
 					for (var i = 0; i < data.feed.entry.length; i++) {

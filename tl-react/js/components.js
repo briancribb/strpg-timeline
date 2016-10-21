@@ -23,6 +23,7 @@ class TLToggles extends React.Component {
 									<button id="UFP-toggle" type="button" className="btn btn-primary active UFP">UFP</button>
 								</div>
 
+
 								<div className="btn-group" role="group" aria-label="KLE">
 									<button id="KLE-toggle" type="button" className="btn btn-primary active KLE">KLE</button>
 									<button id="KLE-full" type="button" className="btn btn-primary KLE">Full</button>

@@ -40,6 +40,7 @@ internal methods are called.
 	var APP = {
 		resizeTasks : [],
 		events : [],
+		data : {},
 		init : function() {
 			APP.props = {
 				$bodyElement		: $('body'),
@@ -118,7 +119,7 @@ internal methods are called.
 		},
 		getData : function() {
 			/* Using deferred objects to make sure we get everything before proceeding. */
-			var data = {};
+
 			$.each( dfd_sources, function( key, value ) {
 				/*
 				key:	'UFP'
@@ -143,7 +144,7 @@ internal methods are called.
 				}).success(function(data) {
 
 					/* The data structure is straight from Google, so we still need to drill down into it to get our array. */
-					data[key] = data.feed.entry;
+					APP.data[key] = data.feed.entry;
 
 					/* Process data into the main timeline. */
 					for (var i = 0; i < data.feed.entry.length; i++) {

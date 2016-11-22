@@ -15,28 +15,6 @@ internal methods are called.
 	/* This is where we set variables and things that will only live inside the closure. */
 
 
-	/*
-	The id value is to identify the worksheets within the Google Sheet that this data came from. Since the data is unlikely to 
-	change, I just put the current response into some json files and called them locally.
-	*/ 
-	var dfd_array = [],
-		dfd_sources = {
-			UFP: { path:'js/data/UFP.json', id: 'oesera6', hasFull: false, name: 'United Federation of Planets' },
-			KLE: { path:'js/data/KLE.json', id: 'o15noc3', hasFull: true,  name: 'Klingon Empire' },
-			RSA: { path:'js/data/RSA.json', id: 'or7u0kt', hasFull: true,  name: 'Romulan Star Empire' },
-			TRI: { path:'js/data/TRI.json', id: 'ol08r1n', hasFull: false, name: 'Triangle' },
-			ORC: { path:'js/data/ORC.json', id: 'ohu3d91', hasFull: true,  name: 'Orion Colonies' },
-			RFW: { path:'js/data/RFW.json', id: 'oypmvfb', hasFull: false, name: 'Romulan/Federation War' },
-			FYW: { path:'js/data/FYW.json', id: 'oi1ju2s', hasFull: false, name: 'Four Years War' },
-			ST3: { path:'js/data/ST3.json', id: 'o5oxeec', hasFull: false, name: 'Star Trek 3 Update' },
-			ST4: { path:'js/data/ST4.json', id: 'oxxpvso', hasFull: false, name: 'Star Trek 4 Update' },
-			SFI: { path:'js/data/SFI.json', id: 'ohqn30t', hasFull: false, name: 'Starfleet Intelligence' },
-			ITA: { path:'js/data/ITA.json', id: 'orojt89', hasFull: false, name: "UFP/Independent Traders' Association" }
-		};
-
-
-
-
 	var APP = {
 		resizeTasks : [],
 		events : [],
@@ -96,7 +74,7 @@ internal methods are called.
 
 
 			APP.getData();
-			APP.addListeners();
+			//APP.addListeners();
 		},
 		addResizeTask : function(task) {
 			/*
@@ -117,8 +95,28 @@ internal methods are called.
 			task.args = task.args || [];
 			APP.resizeTasks.push(task);
 		},
-		getData : function() {
+		getData : function(dfd_ready) {
 			/* Using deferred objects to make sure we get everything before proceeding. */
+
+			/*
+			The id value is to identify the worksheets within the Google Sheet that this data came from. Since the data is unlikely to 
+			change, I just put the current response into some json files and called them locally.
+			*/ 
+			var dfd_array = [],
+				dfd_sources = {
+					UFP: { path:'js/data/UFP.json', id: 'oesera6', hasFull: false, name: 'United Federation of Planets' },
+					KLE: { path:'js/data/KLE.json', id: 'o15noc3', hasFull: true,  name: 'Klingon Empire' },
+					RSA: { path:'js/data/RSA.json', id: 'or7u0kt', hasFull: true,  name: 'Romulan Star Empire' },
+					TRI: { path:'js/data/TRI.json', id: 'ol08r1n', hasFull: false, name: 'Triangle' },
+					ORC: { path:'js/data/ORC.json', id: 'ohu3d91', hasFull: true,  name: 'Orion Colonies' },
+					RFW: { path:'js/data/RFW.json', id: 'oypmvfb', hasFull: false, name: 'Romulan/Federation War' },
+					FYW: { path:'js/data/FYW.json', id: 'oi1ju2s', hasFull: false, name: 'Four Years War' },
+					ST3: { path:'js/data/ST3.json', id: 'o5oxeec', hasFull: false, name: 'Star Trek 3 Update' },
+					ST4: { path:'js/data/ST4.json', id: 'oxxpvso', hasFull: false, name: 'Star Trek 4 Update' },
+					SFI: { path:'js/data/SFI.json', id: 'ohqn30t', hasFull: false, name: 'Starfleet Intelligence' },
+					ITA: { path:'js/data/ITA.json', id: 'orojt89', hasFull: false, name: "UFP/Independent Traders' Association" }
+				};
+
 
 			$.each( dfd_sources, function( key, value ) {
 				/*
@@ -173,7 +171,6 @@ internal methods are called.
 			$.when.apply(null, dfd_array).done(function() {
 				//console.log("All of the ajax calls are complete. Length is " + APP.events.length);
 				APP.events = _.sortBy(APP.events, 'year');
-				APP.buildTimeline( $('#tl-list') );
 			});
 
 			function starToDate(stardate) {
@@ -198,67 +195,6 @@ internal methods are called.
 				dateParts.date = ( dateParts.date === '00' ) ? '01' : dateParts.date
 				return dateParts;
 			}
-		},
-		buildTimeline : function($target) {
-			var allKeys = _.allKeys(dfd_sources);
-
-			_.each(dfd_sources, function(value, key, list){
-				$target.addClass(key);
-			});
-
-			/*
-			The markup for an event looks like this: 
-			<li>
-				<div class="tl-badge"><i class="glyphicon glyphicon-check"></i></div>
-				<div class="tl-panel">
-					<div class="tl-heading">
-						<h4 class="tl-title">Mussum ipsum cacilds</h4>
-						<p><small class="tl-subtext text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
-					</div>
-					<div class="tl-body">
-						<p>Body stuff here.</p>
-					</div>
-				</div>
-			</li>
-			*/
-
-			var documentFragment = $(document.createDocumentFragment());
-
-			for (var i = 0; i < APP.events.length; ++i) {
-
-				APP.events[i].id = i;
-
-				var $li = $("<li/>", { 
-										id: "tl-event-" + i,
-				 						class: "tl-event " + APP.events[i].source + " tl-full-" + APP.events[i].full,
-				 						'data-century': APP.events[i].century
-				 					}),
-					$badge = $("<div/>", { class: "tl-badge" }),
-					$panel = $("<div/>", { class: "tl-panel" }),
-					$heading = $("<div/>", { class: "tl-heading" }),
-					$title = $("<h4/>", { class: "tl-title", text: APP.events[i].stardate }),
-					$body = $("<div/>", { class: "tl-body" });
-
-				/* Putting it all together. */
-				//$badge.append( $("<i/>", { class: "glyphicon glyphicon-check" }) );
-				$heading.append( $title ).append( '<p><small class="tl-subtext text-muted"><i class="glyphicon glyphicon-folder-open"></i>' + dfd_sources[APP.events[i].source].name + '</small></p>' );
-				$body.append( APP.events[i].desc );
-				$panel.append( $heading ).append( $body );
-				$li.append( $badge ).append( $panel );
-
-				documentFragment.append($li);
-			}
-			$target.append(documentFragment);
-
-			/*
-			Remove the "loading" class to reveal the timeline and hide the spinner.
-
-			Webkit browsers don't animate until the page is loaded, resulting in no spin for me because the local 
-			content comes in pretty quick. Firefox spins immediately. This but isn't important enough for me to chase 
-			down right now, but I wanted to make a note of it.
-			*/
-			APP.props.$bodyElement.removeClass('loading');
-			APP.alternateFloats();
 		},
 		addListeners : function() {
 			/* One body listener controls the entire app. */

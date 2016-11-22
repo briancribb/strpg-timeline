@@ -1,11 +1,42 @@
 console.log('blah');
 
 class Timeline extends React.Component {
+	// In case we need initial states, which we will because we're waiting for data.
+	constructor() {
+		super(); // Gotta call this first when doing a constructor.
+		this.state = {
+			test: false
+		}
+	}
+
+
+
+
+
+
+
+
+	componentWillMount() {
+
+	}
+	_getData(){
+		this.setState({});
+	}
 	render() {
 		return(
 				<div id="timeline">
 					<TLToggles/>
 					<TLEvents/>
+				</div>
+			);
+	}
+}
+class ButtonGroup extends React.Component {
+	render() {
+		return(
+				<div className="btn-group" role="group" aria-label="KLE">
+					<button id="KLE-toggle" type="button" className="btn btn-primary active KLE">KLE</button>
+					<button id="KLE-full" type="button" className="btn btn-primary KLE">Full</button>
 				</div>
 			);
 	}
@@ -19,25 +50,10 @@ class TLToggles extends React.Component {
 						<div className="panel-body bg-info">
 							<p>Major Governments</p>
 							<div id="source-toolbar" className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-								<div className="btn-group" role="group" aria-label="UFP">
-									<button id="UFP-toggle" type="button" className="btn btn-primary active UFP">UFP</button>
-								</div>
-
-
-								<div className="btn-group" role="group" aria-label="KLE">
-									<button id="KLE-toggle" type="button" className="btn btn-primary active KLE">KLE</button>
-									<button id="KLE-full" type="button" className="btn btn-primary KLE">Full</button>
-								</div>
-
-								<div className="btn-group" role="group" aria-label="KLE">
-									<button id="RSA-toggle" type="button" className="btn btn-primary active RSA">RSA</button>
-									<button id="RSA-full" type="button" className="btn btn-primary RSA">Full</button>
-								</div>
-
-								<div className="btn-group" role="group" aria-label="ORC">
-									<button id="ORC-toggle" type="button" className="btn btn-primary active ORC">ORC</button>
-									<button id="ORC-full" type="button" className="btn btn-primary ORC">Full</button>
-								</div>
+								<ButtonGroup/>
+								<ButtonGroup/>
+								<ButtonGroup/>
+								<ButtonGroup/>
 							</div>
 							<div>
 								<span className="label label-primary">UFP: United Federation of Planets</span>
@@ -51,13 +67,11 @@ class TLToggles extends React.Component {
 						<div className="panel-body bg-warning">
 							<p>Misc</p>
 							<div id="source-toolbar" className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-								<div className="btn-group" role="group" aria-label="First group">
-									<button id="TRI-toggle" type="button" className="btn btn-warning active TRI">TRI</button>
-									<button id="SFI-toggle" type="button" className="btn btn-warning active SFI">SFI</button>
-									<button id="ITA-toggle" type="button" className="btn btn-warning active ITA">ITA</button>
-									<button id="ST3-toggle" type="button" className="btn btn-warning active ST3">ST3</button>
-									<button id="ST4-toggle" type="button" className="btn btn-warning active ST4">ST4</button>
-								</div>
+								<ButtonGroup/>
+								<ButtonGroup/>
+								<ButtonGroup/>
+								<ButtonGroup/>
+								<ButtonGroup/>
 							</div>
 							<div>
 								<span className="label label-warning">TRI: Triangle</span>
@@ -72,10 +86,8 @@ class TLToggles extends React.Component {
 						<div className="panel-body bg-danger">
 							<p>Wars</p>
 							<div id="source-toolbar" className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-								<div className="btn-group" role="group" aria-label="First group">
-									<button id="RFW-toggle" type="button" className="btn btn-danger active RFW">RFW</button>
-									<button id="FYW-toggle" type="button" className="btn btn-danger active FYW">FYW</button>
-								</div>
+								<ButtonGroup/>
+								<ButtonGroup/>
 							</div>
 							<div>
 								<span className="label label-danger">RFW: Romulan/Federation War</span>

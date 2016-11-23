@@ -9,6 +9,77 @@ class Timeline extends React.Component {
 		}
 	}
 
+	_getData() {
+		var dfd_array = [],
+			dfd_sources = {
+				UFP: { path:'js/data/UFP.json', id: 'oesera6', hasFull: false, name: 'United Federation of Planets' },
+				KLE: { path:'js/data/KLE.json', id: 'o15noc3', hasFull: true,  name: 'Klingon Empire' },
+				RSA: { path:'js/data/RSA.json', id: 'or7u0kt', hasFull: true,  name: 'Romulan Star Empire' },
+				TRI: { path:'js/data/TRI.json', id: 'ol08r1n', hasFull: false, name: 'Triangle' },
+				ORC: { path:'js/data/ORC.json', id: 'ohu3d91', hasFull: true,  name: 'Orion Colonies' },
+				RFW: { path:'js/data/RFW.json', id: 'oypmvfb', hasFull: false, name: 'Romulan/Federation War' },
+				FYW: { path:'js/data/FYW.json', id: 'oi1ju2s', hasFull: false, name: 'Four Years War' },
+				ST3: { path:'js/data/ST3.json', id: 'o5oxeec', hasFull: false, name: 'Star Trek 3 Update' },
+				ST4: { path:'js/data/ST4.json', id: 'oxxpvso', hasFull: false, name: 'Star Trek 4 Update' },
+				SFI: { path:'js/data/SFI.json', id: 'ohqn30t', hasFull: false, name: 'Starfleet Intelligence' },
+				ITA: { path:'js/data/ITA.json', id: 'orojt89', hasFull: false, name: "UFP/Independent Traders' Association" }
+			};
+
+		$.each( dfd_sources, function( key, value ) {
+			/*
+			key:	'UFP'
+			value:	{ path:'my/path.json', id: 'myID', name: 'My Name' }
+			*/
+			value.dfd = $.Deferred();
+			dfd_array.push(value.dfd);
+
+			/*
+			If I wanted to do something when each individual thingy resolves, then I would do that here. This done() 
+			function will fire whenever this deferred object is resolved.
+			
+			value.dfd.done(function() {
+				// Do stuff.
+			});
+
+			*/
+
+			$.ajax({
+				url: value.path,
+				dataType: "json"
+			}).success(function(data) {
+
+				/* The data structure is straight from Google, so we still need to drill down into it to get our array. */
+				APP.data[key] = data.feed.entry;
+
+				/* Process data into the main timeline. */
+				for (var i = 0; i < data.feed.entry.length; i++) {
+
+					var dateParts = starToDate( data.feed.entry[i].gsx$stardate.$t );
+
+					APP.events.push({
+						stardate	:	data.feed.entry[i].gsx$stardate.$t,
+						sortkey		:	Number(dateParts.year + '.' + dateParts.month + '' + dateParts.date),
+						end			:	data.feed.entry[i].gsx$stardateend.$t || null,
+						century		:	dateParts.century,
+						year		:	dateParts.year,
+						month		:	dateParts.month,
+						date		:	dateParts.date,
+						source		:	data.feed.title.$t,
+						full		:	(data.feed.entry[i].gsx$full.$t === "TRUE"),
+						desc		:	data.feed.entry[i].gsx$event.$t
+					});
+				};
+
+				/* All done with this JSON file, so we'll resolve its Deferred object. */
+				value.dfd.resolve();
+			});
+		});
+
+
+
+
+
+	}// End of _getData()
 
 
 
@@ -17,7 +88,7 @@ class Timeline extends React.Component {
 
 
 	componentWillMount() {
-
+		_getData();
 	}
 	_getData(){
 		this.setState({});

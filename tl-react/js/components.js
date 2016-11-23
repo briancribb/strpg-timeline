@@ -23,6 +23,11 @@ class Timeline extends React.Component {
 				ST4: { path:'js/data/ST4.json', id: 'oxxpvso', hasFull: false, name: 'Star Trek 4 Update' },
 				SFI: { path:'js/data/SFI.json', id: 'ohqn30t', hasFull: false, name: 'Starfleet Intelligence' },
 				ITA: { path:'js/data/ITA.json', id: 'orojt89', hasFull: false, name: "UFP/Independent Traders' Association" }
+			},
+			arrTemp: [],
+			objData:{
+				sources:{},
+				events:[]
 			};
 
 		$.each( dfd_sources, function( key, value ) {
@@ -49,14 +54,21 @@ class Timeline extends React.Component {
 			}).success(function(data) {
 
 				/* The data structure is straight from Google, so we still need to drill down into it to get our array. */
-				APP.data[key] = data.feed.entry;
+				//APP.data[key] = data.feed.entry;
+
+				/* Keep some stuff from the dfd_sources array. */
+				objData.sources[key] = {
+					name: value.name
+					hasFull : value.hasFull,
+				}
+
 
 				/* Process data into the main timeline. */
 				for (var i = 0; i < data.feed.entry.length; i++) {
 
 					var dateParts = starToDate( data.feed.entry[i].gsx$stardate.$t );
 
-					APP.events.push({
+					arrTemp.push({
 						stardate	:	data.feed.entry[i].gsx$stardate.$t,
 						sortkey		:	Number(dateParts.year + '.' + dateParts.month + '' + dateParts.date),
 						end			:	data.feed.entry[i].gsx$stardateend.$t || null,
@@ -75,9 +87,34 @@ class Timeline extends React.Component {
 			});
 		});
 
+		/* http://stackoverflow.com/questions/5627284/pass-in-an-array-of-deferreds-to-when */
+		$.when.apply(null, dfd_array).done(function() {
+			//console.log("All of the ajax calls are complete. Length is " + APP.events.length);
+			objData.events = _.sortBy(APP.events, 'year');
+		});
 
+		function starToDate(stardate) {
+			/* format: CC/YYMM.DD */
+			var starSplit, dateSplit, dateParts;
 
+			/* Split the year from the date. */
+			starSplit = stardate.replace(/,/g, '').split('/');
+			dateParts =  {
+				year : 2000 + (Number(starSplit[0]) * 100) + Number(starSplit[1].substring(0,2))
+			}
 
+			if (starSplit[1].length > 2) {
+				dateSplit = starSplit[1].split('.');
+			}
+
+			dateParts.century = starSplit[0];
+			dateParts.month = (dateSplit[0].substring(2,4));
+			dateParts.date = (dateSplit[1] || "00");
+
+			dateParts.month = ( dateParts.month === '00' ) ? '01' : dateParts.month
+			dateParts.date = ( dateParts.date === '00' ) ? '01' : dateParts.date
+			return dateParts;
+		}
 
 	}// End of _getData()
 

@@ -1,16 +1,17 @@
-console.log('blah');
-
 class Timeline extends React.Component {
 	// In case we need initial states, which we will because we're waiting for data.
 	constructor() {
+		console.log('constructor()');
 		super(); // Gotta call this first when doing a constructor.
 		this.state = {
 			test: false
 		}
 	}
 
+
 	_getData() {
-		var dfd_array = [],
+		var that = this,
+			dfd_array = [],
 			dfd_sources = {
 				UFP: { path:'js/data/UFP.json', id: 'oesera6', hasFull: false, name: 'United Federation of Planets' },
 				KLE: { path:'js/data/KLE.json', id: 'o15noc3', hasFull: true,  name: 'Klingon Empire' },
@@ -24,10 +25,9 @@ class Timeline extends React.Component {
 				SFI: { path:'js/data/SFI.json', id: 'ohqn30t', hasFull: false, name: 'Starfleet Intelligence' },
 				ITA: { path:'js/data/ITA.json', id: 'orojt89', hasFull: false, name: "UFP/Independent Traders' Association" }
 			},
-			arrTemp: [],
-			objData:{
+			objData = {
 				sources:{},
-				events:[]
+				entries:[]
 			};
 
 		$.each( dfd_sources, function( key, value ) {
@@ -58,8 +58,8 @@ class Timeline extends React.Component {
 
 				/* Keep some stuff from the dfd_sources array. */
 				objData.sources[key] = {
-					name: value.name
-					hasFull : value.hasFull,
+					name: value.name,
+					hasFull : value.hasFull
 				}
 
 
@@ -68,7 +68,7 @@ class Timeline extends React.Component {
 
 					var dateParts = starToDate( data.feed.entry[i].gsx$stardate.$t );
 
-					arrTemp.push({
+					objData.entries.push({
 						stardate	:	data.feed.entry[i].gsx$stardate.$t,
 						sortkey		:	Number(dateParts.year + '.' + dateParts.month + '' + dateParts.date),
 						end			:	data.feed.entry[i].gsx$stardateend.$t || null,
@@ -90,7 +90,10 @@ class Timeline extends React.Component {
 		/* http://stackoverflow.com/questions/5627284/pass-in-an-array-of-deferreds-to-when */
 		$.when.apply(null, dfd_array).done(function() {
 			//console.log("All of the ajax calls are complete. Length is " + APP.events.length);
-			objData.events = _.sortBy(APP.events, 'year');
+			objData.entries = _.sortBy(objData.entries, 'year');
+			that.setState(objData);
+			console.log('that.state');
+			console.log(that);
 		});
 
 		function starToDate(stardate) {
@@ -115,21 +118,13 @@ class Timeline extends React.Component {
 			dateParts.date = ( dateParts.date === '00' ) ? '01' : dateParts.date
 			return dateParts;
 		}
-
 	}// End of _getData()
 
-
-
-
-
-
-
 	componentWillMount() {
-		_getData();
+		console.log('componentWillMount()');
+		this._getData();
 	}
-	_getData(){
-		this.setState({});
-	}
+
 	render() {
 		return(
 				<div id="timeline">
@@ -149,7 +144,6 @@ class ButtonGroup extends React.Component {
 			);
 	}
 }
-
 class TLToggles extends React.Component {
 	render() {
 		return(
@@ -219,78 +213,77 @@ class TLEvents extends React.Component {
 			);
 	}
 }
-
 ReactDOM.render(
 	<Timeline />, document.getElementById('timeline-app')
 );
 
 
 /*
-				<div className="panel panel-primary">
-					<div className="panel-body bg-info">
-						<p>Major Governments</p>
-						<div id="source-toolbar" className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-							<div className="btn-group" role="group" aria-label="UFP">
-								<button id="UFP-toggle" type="button" className="btn btn-primary active UFP">UFP</button>
-							</div>
+<div className="panel panel-primary">
+	<div className="panel-body bg-info">
+		<p>Major Governments</p>
+		<div id="source-toolbar" className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+			<div className="btn-group" role="group" aria-label="UFP">
+				<button id="UFP-toggle" type="button" className="btn btn-primary active UFP">UFP</button>
+			</div>
 
-							<div className="btn-group" role="group" aria-label="KLE">
-								<button id="KLE-toggle" type="button" className="btn btn-primary active KLE">KLE</button>
-								<button id="KLE-full" type="button" className="btn btn-primary KLE">Full</button>
-							</div>
+			<div className="btn-group" role="group" aria-label="KLE">
+				<button id="KLE-toggle" type="button" className="btn btn-primary active KLE">KLE</button>
+				<button id="KLE-full" type="button" className="btn btn-primary KLE">Full</button>
+			</div>
 
-							<div className="btn-group" role="group" aria-label="KLE">
-								<button id="RSA-toggle" type="button" className="btn btn-primary active RSA">RSA</button>
-								<button id="RSA-full" type="button" className="btn btn-primary RSA">Full</button>
-							</div>
+			<div className="btn-group" role="group" aria-label="KLE">
+				<button id="RSA-toggle" type="button" className="btn btn-primary active RSA">RSA</button>
+				<button id="RSA-full" type="button" className="btn btn-primary RSA">Full</button>
+			</div>
 
-							<div className="btn-group" role="group" aria-label="ORC">
-								<button id="ORC-toggle" type="button" className="btn btn-primary active ORC">ORC</button>
-								<button id="ORC-full" type="button" className="btn btn-primary ORC">Full</button>
-							</div>
-						</div>
-						<div>
-							<span className="label label-primary">UFP: United Federation of Planets</span>
-							<span className="label label-primary">KLE: Klingon Empire</span>
-							<span className="label label-primary">RSA: Romulan Star Empire</span>
-							<span className="label label-primary">ORC: Orion Colonies</span>
-						</div>
-					</div>
-				</div>
-				<div className="panel panel-warning">
-					<div className="panel-body bg-warning">
-						<p>Misc</p>
-						<div id="source-toolbar" className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-							<div className="btn-group" role="group" aria-label="First group">
-								<button id="TRI-toggle" type="button" className="btn btn-warning active TRI">TRI</button>
-								<button id="SFI-toggle" type="button" className="btn btn-warning active SFI">SFI</button>
-								<button id="ITA-toggle" type="button" className="btn btn-warning active ITA">ITA</button>
-								<button id="ST3-toggle" type="button" className="btn btn-warning active ST3">ST3</button>
-								<button id="ST4-toggle" type="button" className="btn btn-warning active ST4">ST4</button>
-							</div>
-						</div>
-						<div>
-							<span className="label label-warning">TRI: Triangle</span>
-							<span className="label label-warning">SFI: Starfleet Intelligence</span>
-							<span className="label label-warning">ITA: Independent Traders&#39; Association</span>
-							<span className="label label-warning">ST3: Star Trek III Update</span>
-							<span className="label label-warning">ST4: Star Trek IV Update</span>
-						</div>
-					</div>
-				</div>
-				<div className="panel panel-danger">
-					<div className="panel-body bg-danger">
-						<p>Wars</p>
-						<div id="source-toolbar" className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-							<div className="btn-group" role="group" aria-label="First group">
-								<button id="RFW-toggle" type="button" className="btn btn-danger active RFW">RFW</button>
-								<button id="FYW-toggle" type="button" className="btn btn-danger active FYW">FYW</button>
-							</div>
-						</div>
-						<div>
-							<span className="label label-danger">RFW: Romulan/Federation War</span>
-							<span className="label label-danger">FYW: Four Years War</span>
-						</div>
-					</div>
-				</div>
+			<div className="btn-group" role="group" aria-label="ORC">
+				<button id="ORC-toggle" type="button" className="btn btn-primary active ORC">ORC</button>
+				<button id="ORC-full" type="button" className="btn btn-primary ORC">Full</button>
+			</div>
+		</div>
+		<div>
+			<span className="label label-primary">UFP: United Federation of Planets</span>
+			<span className="label label-primary">KLE: Klingon Empire</span>
+			<span className="label label-primary">RSA: Romulan Star Empire</span>
+			<span className="label label-primary">ORC: Orion Colonies</span>
+		</div>
+	</div>
+</div>
+<div className="panel panel-warning">
+	<div className="panel-body bg-warning">
+		<p>Misc</p>
+		<div id="source-toolbar" className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+			<div className="btn-group" role="group" aria-label="First group">
+				<button id="TRI-toggle" type="button" className="btn btn-warning active TRI">TRI</button>
+				<button id="SFI-toggle" type="button" className="btn btn-warning active SFI">SFI</button>
+				<button id="ITA-toggle" type="button" className="btn btn-warning active ITA">ITA</button>
+				<button id="ST3-toggle" type="button" className="btn btn-warning active ST3">ST3</button>
+				<button id="ST4-toggle" type="button" className="btn btn-warning active ST4">ST4</button>
+			</div>
+		</div>
+		<div>
+			<span className="label label-warning">TRI: Triangle</span>
+			<span className="label label-warning">SFI: Starfleet Intelligence</span>
+			<span className="label label-warning">ITA: Independent Traders&#39; Association</span>
+			<span className="label label-warning">ST3: Star Trek III Update</span>
+			<span className="label label-warning">ST4: Star Trek IV Update</span>
+		</div>
+	</div>
+</div>
+<div className="panel panel-danger">
+	<div className="panel-body bg-danger">
+		<p>Wars</p>
+		<div id="source-toolbar" className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+			<div className="btn-group" role="group" aria-label="First group">
+				<button id="RFW-toggle" type="button" className="btn btn-danger active RFW">RFW</button>
+				<button id="FYW-toggle" type="button" className="btn btn-danger active FYW">FYW</button>
+			</div>
+		</div>
+		<div>
+			<span className="label label-danger">RFW: Romulan/Federation War</span>
+			<span className="label label-danger">FYW: Four Years War</span>
+		</div>
+	</div>
+</div>
 */

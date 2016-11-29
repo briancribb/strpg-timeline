@@ -73,7 +73,7 @@ internal methods are called.
 			APP.addResizeTask(initTasks);
 
 
-			APP.getData();
+			//APP.getData();
 			//APP.addListeners();
 		},
 		addResizeTask : function(task) {
@@ -94,107 +94,6 @@ internal methods are called.
 
 			task.args = task.args || [];
 			APP.resizeTasks.push(task);
-		},
-		getData : function(dfd_ready) {
-			/* Using deferred objects to make sure we get everything before proceeding. */
-
-			/*
-			The id value is to identify the worksheets within the Google Sheet that this data came from. Since the data is unlikely to 
-			change, I just put the current response into some json files and called them locally.
-			*/ 
-			var dfd_array = [],
-				dfd_sources = {
-					UFP: { path:'js/data/UFP.json', id: 'oesera6', hasFull: false, name: 'United Federation of Planets' },
-					KLE: { path:'js/data/KLE.json', id: 'o15noc3', hasFull: true,  name: 'Klingon Empire' },
-					RSA: { path:'js/data/RSA.json', id: 'or7u0kt', hasFull: true,  name: 'Romulan Star Empire' },
-					TRI: { path:'js/data/TRI.json', id: 'ol08r1n', hasFull: false, name: 'Triangle' },
-					ORC: { path:'js/data/ORC.json', id: 'ohu3d91', hasFull: true,  name: 'Orion Colonies' },
-					RFW: { path:'js/data/RFW.json', id: 'oypmvfb', hasFull: false, name: 'Romulan/Federation War' },
-					FYW: { path:'js/data/FYW.json', id: 'oi1ju2s', hasFull: false, name: 'Four Years War' },
-					ST3: { path:'js/data/ST3.json', id: 'o5oxeec', hasFull: false, name: 'Star Trek 3 Update' },
-					ST4: { path:'js/data/ST4.json', id: 'oxxpvso', hasFull: false, name: 'Star Trek 4 Update' },
-					SFI: { path:'js/data/SFI.json', id: 'ohqn30t', hasFull: false, name: 'Starfleet Intelligence' },
-					ITA: { path:'js/data/ITA.json', id: 'orojt89', hasFull: false, name: "UFP/Independent Traders' Association" }
-				};
-
-
-			$.each( dfd_sources, function( key, value ) {
-				/*
-				key:	'UFP'
-				value:	{ path:'my/path.json', id: 'myID', name: 'My Name' }
-				*/
-				value.dfd = $.Deferred();
-				dfd_array.push(value.dfd);
-
-				/*
-				If I wanted to do something when each individual thingy resolves, then I would do that here. This done() 
-				function will fire whenever this deferred object is resolved.
-				
-				value.dfd.done(function() {
-					// Do stuff.
-				});
-
-				*/
-
-				$.ajax({
-					url: value.path,
-					dataType: "json"
-				}).success(function(data) {
-
-					/* The data structure is straight from Google, so we still need to drill down into it to get our array. */
-					APP.data[key] = data.feed.entry;
-
-					/* Process data into the main timeline. */
-					for (var i = 0; i < data.feed.entry.length; i++) {
-
-						var dateParts = starToDate( data.feed.entry[i].gsx$stardate.$t );
-
-						APP.events.push({
-							stardate	:	data.feed.entry[i].gsx$stardate.$t,
-							sortkey		:	Number(dateParts.year + '.' + dateParts.month + '' + dateParts.date),
-							end			:	data.feed.entry[i].gsx$stardateend.$t || null,
-							century		:	dateParts.century,
-							year		:	dateParts.year,
-							month		:	dateParts.month,
-							date		:	dateParts.date,
-							source		:	data.feed.title.$t,
-							full		:	(data.feed.entry[i].gsx$full.$t === "TRUE"),
-							desc		:	data.feed.entry[i].gsx$event.$t
-						});
-					};
-
-					/* All done with this JSON file, so we'll resolve its Deferred object. */
-					value.dfd.resolve();
-				});
-			});
-			/* http://stackoverflow.com/questions/5627284/pass-in-an-array-of-deferreds-to-when */
-			$.when.apply(null, dfd_array).done(function() {
-				//console.log("All of the ajax calls are complete. Length is " + APP.events.length);
-				APP.events = _.sortBy(APP.events, 'year');
-			});
-
-			function starToDate(stardate) {
-				/* format: CC/YYMM.DD */
-				var starSplit, dateSplit, dateParts;
-
-				/* Split the year from the date. */
-				starSplit = stardate.replace(/,/g, '').split('/');
-				dateParts =  {
-					year : 2000 + (Number(starSplit[0]) * 100) + Number(starSplit[1].substring(0,2))
-				}
-
-				if (starSplit[1].length > 2) {
-					dateSplit = starSplit[1].split('.');
-				}
-
-				dateParts.century = starSplit[0];
-				dateParts.month = (dateSplit[0].substring(2,4));
-				dateParts.date = (dateSplit[1] || "00");
-
-				dateParts.month = ( dateParts.month === '00' ) ? '01' : dateParts.month
-				dateParts.date = ( dateParts.date === '00' ) ? '01' : dateParts.date
-				return dateParts;
-			}
 		},
 		addListeners : function() {
 			/* One body listener controls the entire app. */

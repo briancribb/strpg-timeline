@@ -9,8 +9,8 @@ html {
 
 body {
   padding-top: 70px;
-  /* Margin bottom by footer height */
-  margin-bottom: 0; }
+  padding-bottom: 600px;
+  /* Margin bottom by footer height */ }
 
 .page-footer {
   position: absolute;
@@ -30,13 +30,22 @@ body {
 
 /* Loading Spinner */
 .page-load-message {
-  font-size: 20px;
-  display: none; }
+  font-size: 20px; }
 
 .page-load-spinner {
   font-size: 100px;
   margin-top: 40px; }
 
+/*
+.loading {
+	.page-header, .tl-list {
+		display:none;
+	}
+	.page-load-message {
+		display:block;
+	}
+}
+*/
 /* http://bootsnipp.com/snippets/featured/timeline-responsive */
 .tl-list {
   list-style: none;

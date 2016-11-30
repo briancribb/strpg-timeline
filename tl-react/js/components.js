@@ -6,8 +6,15 @@ class Timeline extends React.Component {
 		this.state = {
 			test: false
 		}
+		this._getData();
 	}
-
+	componentWillMount() {
+		console.log('componentWillMount()');
+	}
+	componentDidMount() {
+		console.log('componentDidMount()');
+		console.log(this.state);
+	}
 
 	_getData() {
 		var that = this,
@@ -92,6 +99,7 @@ class Timeline extends React.Component {
 			//console.log("All of the ajax calls are complete. Length is " + APP.events.length);
 			objData.entries = _.sortBy(objData.entries, 'year');
 			that.setState(objData);
+			TL.init();
 			console.log('that.state');
 			console.log(that);
 		});
@@ -120,26 +128,39 @@ class Timeline extends React.Component {
 		}
 	}// End of _getData()
 
-	componentWillMount() {
-		console.log('componentWillMount()');
-		this._getData();
-	}
 
 	render() {
-		return(
+		let markup = null, sources = this.state.sources;
+		console.log('--- sources');
+		console.log(sources);
+		if (sources) {
+			markup = 
 				<div id="timeline">
 					<TLToggles/>
 					<TLEvents/>
 				</div>
+		} else {
+			markup = 
+				<div id="page-load-message" className="page-load-message text-center">
+					<div id="page-load-spinner" className="page-load-spinner"><span className="glyphicon glyphicon-repeat trans-spin" aria-hidden="true"></span></div>
+					<p>Loading Timeline Events...</p>
+				</div>
+		}
+		return(
+				markup
 			);
 	}
 }
 class ButtonGroup extends React.Component {
 	render() {
+		let btnFull;
+		if (this.props.full === 'true') {
+			btnFull = <button id={this.props.source + "-full"} type="button" className={"btn btn-" + this.props.type + " " + this.props.source}>Full</button>
+		}
 		return(
-				<div className="btn-group" role="group" aria-label="KLE">
-					<button id="KLE-toggle" type="button" className="btn btn-primary active KLE">KLE</button>
-					<button id="KLE-full" type="button" className="btn btn-primary KLE">Full</button>
+				<div className="btn-group" role="group" aria-label={this.props.source}>
+					<button id={this.props.source + "-toggle"} type="button" className={"btn btn-" + this.props.type + " active " + this.props.source}>{this.props.source}</button>
+					{btnFull}
 				</div>
 			);
 	}
@@ -152,10 +173,10 @@ class TLToggles extends React.Component {
 						<div className="panel-body bg-info">
 							<p>Major Governments</p>
 							<div id="source-toolbar" className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-								<ButtonGroup/>
-								<ButtonGroup/>
-								<ButtonGroup/>
-								<ButtonGroup/>
+								<ButtonGroup source="UFP" type="primary" full="false" />
+								<ButtonGroup source="KLE" type="primary" full="true" />
+								<ButtonGroup source="RSA" type="primary" full="true" />
+								<ButtonGroup source="ORC" type="primary" full="true" />
 							</div>
 							<div>
 								<span className="label label-primary">UFP: United Federation of Planets</span>
@@ -169,11 +190,11 @@ class TLToggles extends React.Component {
 						<div className="panel-body bg-warning">
 							<p>Misc</p>
 							<div id="source-toolbar" className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-								<ButtonGroup/>
-								<ButtonGroup/>
-								<ButtonGroup/>
-								<ButtonGroup/>
-								<ButtonGroup/>
+								<ButtonGroup source="TRI" type="warning" full="false"/>
+								<ButtonGroup source="SFI" type="warning" full="false"/>
+								<ButtonGroup source="ITA" type="warning" full="false"/>
+								<ButtonGroup source="ST3" type="warning" full="false"/>
+								<ButtonGroup source="ST4" type="warning" full="false"/>
 							</div>
 							<div>
 								<span className="label label-warning">TRI: Triangle</span>
@@ -188,8 +209,8 @@ class TLToggles extends React.Component {
 						<div className="panel-body bg-danger">
 							<p>Wars</p>
 							<div id="source-toolbar" className="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-								<ButtonGroup/>
-								<ButtonGroup/>
+								<ButtonGroup source="RFW" type="danger" full="false"/>
+								<ButtonGroup source="FYW" type="danger" full="false"/>
 							</div>
 							<div>
 								<span className="label label-danger">RFW: Romulan/Federation War</span>

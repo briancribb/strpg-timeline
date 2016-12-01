@@ -209,19 +209,19 @@ body {
 
 
 /* Show categories by class and other contextual stuff. */
-.timeline > .timeline-event {
+.timeline > .timeline-entry {
 	display:none;
 }
 
 
 .timeline.UFP {
-	& > .timeline-event.UFP {
+	& > .timeline-entry.UFP {
 		display:list-item;
 	}
-	& > .timeline-event.UFP .timeline-badge {
+	& > .timeline-entry.UFP .timeline-badge {
 		background: url($UFP__badge--BG__url);
 	}
-	& > .timeline-event.UFP .timeline-panel {
+	& > .timeline-entry.UFP .timeline-panel {
 		background: $UFP__badge--BG__color;
 		&:after {
 			border-left-color:$UFP__badge--BG__color;
@@ -230,13 +230,13 @@ body {
 	}
 }
 .timeline.ST3 {
-	& > .timeline-event.ST3 {
+	& > .timeline-entry.ST3 {
 		display:list-item;
 	}
-	& > .timeline-event.ST3 .timeline-badge {
+	& > .timeline-entry.ST3 .timeline-badge {
 		background: url($ST3__badge--BG__url);
 	}
-	& > .timeline-event.ST3 .timeline-panel {
+	& > .timeline-entry.ST3 .timeline-panel {
 		background: $ST3__badge--BG__color;
 		&:after {
 			border-left-color:$ST3__badge--BG__color;
@@ -245,13 +245,13 @@ body {
 	}
 }
 .timeline.ST4 {
-	& > .timeline-event.ST4 {
+	& > .timeline-entry.ST4 {
 		display:list-item;
 	}
-	& > .timeline-event.ST4 .timeline-badge {
+	& > .timeline-entry.ST4 .timeline-badge {
 		background: url($ST4__badge--BG__url);
 	}
-	& > .timeline-event.ST4 .timeline-panel {
+	& > .timeline-entry.ST4 .timeline-panel {
 		background: $ST4__badge--BG__color;
 		&:after {
 			border-left-color:$ST4__badge--BG__color;
@@ -261,16 +261,16 @@ body {
 }
 
 .timeline.KLE {
-	& > .timeline-event.KLE {
+	& > .timeline-entry.KLE {
 		display:list-item;
 	}
-	& > .timeline-event.KLE .timeline-badge {
+	& > .timeline-entry.KLE .timeline-badge {
 		background: url($KLE__badge--BG__url);
 		background-color:#000000;
 		background-position-y: -2px;
 		border-radius:50%;
 	}
-	& > .timeline-event.KLE .timeline-panel {
+	& > .timeline-entry.KLE .timeline-panel {
 		background: $KLE__badge--BG__color;
 		&:after {
 			border-left-color:$KLE__badge--BG__color;
@@ -279,13 +279,13 @@ body {
 	}
 }
 .timeline.RSA {
-	& > .timeline-event.RSA {
+	& > .timeline-entry.RSA {
 		display:list-item;
 	}
-	& > .timeline-event.RSA .timeline-badge {
+	& > .timeline-entry.RSA .timeline-badge {
 		background: url($RSA__badge--BG__url);
 	}
-	& > .timeline-event.RSA .timeline-panel {
+	& > .timeline-entry.RSA .timeline-panel {
 		background: $RSA__badge--BG__color;
 		&:after {
 			border-left-color:$RSA__badge--BG__color;
@@ -294,13 +294,13 @@ body {
 	}
 }
 .timeline.ORC {
-	& > .timeline-event.ORC {
+	& > .timeline-entry.ORC {
 		display:list-item;
 	}
-	& > .timeline-event.ORC .timeline-badge {
+	& > .timeline-entry.ORC .timeline-badge {
 		background: url($ORC__badge--BG__url);
 	}
-	& > .timeline-event.ORC .timeline-panel {
+	& > .timeline-entry.ORC .timeline-panel {
 		background: $ORC__badge--BG__color;
 		&:after {
 			border-left-color:$ORC__badge--BG__color;
@@ -309,13 +309,13 @@ body {
 	}
 }
 .timeline.SFI {
-	& > .timeline-event.SFI {
+	& > .timeline-entry.SFI {
 		display:list-item;
 	}
-	& > .timeline-event.SFI .timeline-badge {
+	& > .timeline-entry.SFI .timeline-badge {
 		background: url($SFI__badge--BG__url);
 	}
-	& > .timeline-event.SFI .timeline-panel {
+	& > .timeline-entry.SFI .timeline-panel {
 		background: $SFI__badge--BG__color;
 		&:after {
 			border-left-color:$SFI__badge--BG__color;
@@ -324,13 +324,13 @@ body {
 	}
 }
 .timeline.ITA {
-	& > .timeline-event.ITA {
+	& > .timeline-entry.ITA {
 		display:list-item;
 	}
-	& > .timeline-event.ITA .timeline-badge {
+	& > .timeline-entry.ITA .timeline-badge {
 		background: url($ITA__badge--BG__url);
 	}
-	& > .timeline-event.ITA .timeline-panel {
+	& > .timeline-entry.ITA .timeline-panel {
 		background: $ITA__badge--BG__color;
 		&:after {
 			border-left-color:$ITA__badge--BG__color;
@@ -339,13 +339,13 @@ body {
 	}
 }
 .timeline.TRI {
-	& > .timeline-event.TRI {
+	& > .timeline-entry.TRI {
 		display:list-item;
 	}
-	& > .timeline-event.TRI .timeline-badge {
+	& > .timeline-entry.TRI .timeline-badge {
 		background: url($TRI__badge--BG__url);
 	}
-	& > .timeline-event.TRI .timeline-panel {
+	& > .timeline-entry.TRI .timeline-panel {
 		background: $TRI__badge--BG__color;
 		&:after {
 			border-left-color:$TRI__badge--BG__color;
@@ -354,13 +354,13 @@ body {
 	}
 }
 .timeline.RFW {
-	& > .timeline-event.RFW {
+	& > .timeline-entry.RFW {
 		display:list-item;
 	}
-	& > .timeline-event.RFW .timeline-badge {
+	& > .timeline-entry.RFW .timeline-badge {
 		background: url($RFW__badge--BG__url);
 	}
-	& > .timeline-event.RFW .timeline-panel {
+	& > .timeline-entry.RFW .timeline-panel {
 		background: $RFW__badge--BG__color;
 		&:after {
 			border-left-color:$RFW__badge--BG__color;
@@ -369,13 +369,13 @@ body {
 	}
 }
 .timeline.FYW {
-	& > .timeline-event.FYW {
+	& > .timeline-entry.FYW {
 		display:list-item;
 	}
-	& > .timeline-event.FYW .timeline-badge {
+	& > .timeline-entry.FYW .timeline-badge {
 		background: url($FYW__badge--BG__url);
 	}
-	& > .timeline-event.FYW .timeline-panel {
+	& > .timeline-entry.FYW .timeline-panel {
 		background: $FYW__badge--BG__color;
 		&:after {
 			border-left-color:$FYW__badge--BG__color;
@@ -385,19 +385,19 @@ body {
 }
 
 /* More Contextual stuff. */
-.timeline.KLE > .timeline-event.KLE.timeline-full-true,
-.timeline.RSA > .timeline-event.RSA.timeline-full-true,
-.timeline.ORC > .timeline-event.ORC.timeline-full-true {
+.timeline.KLE > .timeline-entry.KLE.timeline-full-true,
+.timeline.RSA > .timeline-entry.RSA.timeline-full-true,
+.timeline.ORC > .timeline-entry.ORC.timeline-full-true {
 	display:none;
 }
-.timeline.KLE.KLE-full > .timeline-event.KLE.timeline-full-true,
-.timeline.RSA.RSA-full > .timeline-event.RSA.timeline-full-true,
-.timeline.ORC.ORC-full > .timeline-event.ORC.timeline-full-true {
+.timeline.KLE.KLE-full > .timeline-entry.KLE.timeline-full-true,
+.timeline.RSA.RSA-full > .timeline-entry.RSA.timeline-full-true,
+.timeline.ORC.ORC-full > .timeline-entry.ORC.timeline-full-true {
 	display:list-item;
 }
-.timeline.KLE.KLE-full > .timeline-event.KLE.timeline-full-false,
-.timeline.RSA.RSA-full > .timeline-event.RSA.timeline-full-false,
-.timeline.ORC.ORC-full > .timeline-event.ORC.timeline-full-false {
+.timeline.KLE.KLE-full > .timeline-entry.KLE.timeline-full-false,
+.timeline.RSA.RSA-full > .timeline-entry.RSA.timeline-full-false,
+.timeline.ORC.ORC-full > .timeline-entry.ORC.timeline-full-false {
 	display:none;
 }
 

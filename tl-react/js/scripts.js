@@ -13,20 +13,11 @@ internal methods are called.
 */
 ;var TL = TL || (function(){
 	/* This is where we set variables and things that will only live inside the closure. */
-
-
 	var APP = {
-		resizeTasks : [],
-		events : [],
-		data : {},
 		init : function() {
 			APP.props = {
 				$bodyElement		: $('body'),
 				$navbar				: $('#navbar'),
-				$inputCentury		: $('#century-search'),
-				$sourceToolbar		: $('#source-toolbar'),
-				$timeline			: $('#timeline'),
-				$pageHeader			: $('#page-header'),
 				$pageFooter			: $('#page-footer'),
 				$pageFooterContent	: $('#page-footer-content')
 			};
@@ -39,85 +30,6 @@ internal methods are called.
 			var throttled = _.throttle(APP.manageResize, 250);
 			$(window).resize(throttled);
 			APP.manageResize();
-		},
-		addListeners : function() {
-			/* One body listener controls the entire app. */
-			APP.props.$bodyElement.on( "click", function(event) {
-				var $target = $(event.target);
-
-				/* Add or subtract category classes depending upon which button was clicked or scroll to a position. */
-				switch (event.target.id) {
-
-					/* Return to the top */
-					case 'btn-return-top':
-						//window.scroll(0, 0);
-						APP.scrollToPosition(0);
-						break;
-					case 'navbar-brand':
-						//window.scroll(0, 0);
-						window.scrollTo(0, 0);
-						break;
-
-					/* Return to the top */
-					case 'btn-footer':
-						//window.scroll(0, 0);
-						APP.scrollToPosition( APP.props.$pageFooter.position().top );
-						break;
-
-					/* Search for Century */
-					case 'btn-search':
-						scrollToCentury();
-						break;
-
-					default:
-						/* If there's no id or it doesn't match anything, then do nothing. */
-						break;
-				}
-				APP.alternateFloats();
-
-				/* This function must be inside the on() block because it uses the event target's jQuery collection. */
-				function toggleCategory(category) {
-					if ( $target.hasClass('active') ) {
-						$target.removeClass('active');
-						APP.props.$timeline.removeClass( category );
-					} else {
-						$target.addClass('active');
-						APP.props.$timeline.addClass(category);
-					}
-				}
-			});
-
-			APP.props.$inputCentury.on( "keypress", function(event) {
-				if (event.which == '13') {
-					event.preventDefault();
-					scrollToCentury();
-				}
-			});
-
-			function scrollToCentury() {
-
-				var century = APP.props.$inputCentury.val();
-				if ( century !== '' ) {
-					if ( Number(century) === NaN ) {
-						APP.props.$inputCentury.val('');
-					} else {
-						var scrollTarget = null,
-							offset =	APP.props.$pageHeader.outerHeight(true);// + 
-
-						$('.tl-event:visible').each(function (i) {
-							var currentCentury = $(this).data('century');
-							if ( currentCentury >= century ) {
-								scrollTarget = offset + $(this).position().top;
-								return false;
-							}
-						});
-						if (scrollTarget !== null) {
-							APP.scrollToPosition(scrollTarget);
-							APP.props.$inputCentury.val('');
-						}
-					}
-				}
-			}
 		},
 		scrollToPosition : function(position) {
 			$('html,body').animate( { scrollTop: position }, 1000 );

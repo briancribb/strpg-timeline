@@ -129,23 +129,27 @@ class Timeline extends React.Component {
 	}// End of _getData()
 
 	_getEntries() {
+		let key = 0;
 		return this.state.entries.map((entry) => {
-			return (
-				<TLEntry />
-				);
+			entry.key = key;
+			let markup = <TLEntry obj={entry} name={this.state.sources[entry.source].name} key={key} />;
+			key ++;
+			return(markup);
 		});
+
 	}
+
 
 	render() {
 		let markup = null, sources = this.state.sources;
-		//const entries = this._getEntries();
 
 		if (sources) {
+			const entries = this._getEntries();
 			markup = 
 				<div id="timeline">
 					<TLToggles sources={this.state.sources} />
-					<ul id="tl-list" className="tl-list">
-						<TLEntry />
+					<ul id="tl-list" className="tl-list UFP KLE RSA TRI ORC RFW FYW ST3 ST4 SFI ITA">
+						{entries}
 					</ul>
 				</div>
 		} else {
@@ -156,8 +160,8 @@ class Timeline extends React.Component {
 				</div>
 		}
 		return(
-				markup
-			); 
+			markup
+		); 
 	}
 }
 class ButtonGroup extends React.Component {
@@ -235,9 +239,54 @@ class TLToggles extends React.Component {
 }
 class TLEntry extends React.Component {
 	render() {
-		return(<li>Stuff and things.</li>);
+		let entry = this.props.obj;
+		return(
+			//<li>{this.props.obj.century}</li>
+			<li id={"tl-entry-" + entry.key} className={"tl-entry " + entry.source + " tl-full-" + entry.full} data-century={entry.century}>
+				<div className="tl-badge"></div>
+				<div className="tl-panel">
+					<div className="tl-heading">
+						<h4 className="tl-title">{entry.stardate}</h4>
+						<p><small className="tl-subtext text-muted"><i className="glyphicon glyphicon-folder-open"></i>{this.props.name}</small></p>
+					</div>
+					<div className="tl-body">{entry.desc}</div>
+				</div>
+			</li>
+		);
 	}
 }
+
+
+
+
 ReactDOM.render(
 	<Timeline />, document.getElementById('timeline-app')
 );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

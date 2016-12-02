@@ -180,158 +180,158 @@ body {
   margin-top: 5px; }
 
 /* Show categories by class and other contextual stuff. */
-.tl-list > .tl-event {
+.tl-list > .tl-entry {
   display: none; }
 
-.tl-list.UFP > .tl-event.UFP {
+.tl-list.UFP > .tl-entry.UFP {
   display: list-item; }
 
-.tl-list.UFP > .tl-event.UFP .tl-badge {
+.tl-list.UFP > .tl-entry.UFP .tl-badge {
   background: url("../img/ufp_logo.png"); }
 
-.tl-list.UFP > .tl-event.UFP .tl-panel {
+.tl-list.UFP > .tl-entry.UFP .tl-panel {
   background: #d9edf7; }
-  .tl-list.UFP > .tl-event.UFP .tl-panel:after {
+  .tl-list.UFP > .tl-entry.UFP .tl-panel:after {
     border-left-color: #d9edf7;
     border-right-color: #d9edf7; }
 
-.tl-list.ST3 > .tl-event.ST3 {
+.tl-list.ST3 > .tl-entry.ST3 {
   display: list-item; }
 
-.tl-list.ST3 > .tl-event.ST3 .tl-badge {
+.tl-list.ST3 > .tl-entry.ST3 .tl-badge {
   background: url("../img/ufp_logo.png"); }
 
-.tl-list.ST3 > .tl-event.ST3 .tl-panel {
+.tl-list.ST3 > .tl-entry.ST3 .tl-panel {
   background: #d9edf7; }
-  .tl-list.ST3 > .tl-event.ST3 .tl-panel:after {
+  .tl-list.ST3 > .tl-entry.ST3 .tl-panel:after {
     border-left-color: #d9edf7;
     border-right-color: #d9edf7; }
 
-.tl-list.ST4 > .tl-event.ST4 {
+.tl-list.ST4 > .tl-entry.ST4 {
   display: list-item; }
 
-.tl-list.ST4 > .tl-event.ST4 .tl-badge {
+.tl-list.ST4 > .tl-entry.ST4 .tl-badge {
   background: url("../img/ufp_logo.png"); }
 
-.tl-list.ST4 > .tl-event.ST4 .tl-panel {
+.tl-list.ST4 > .tl-entry.ST4 .tl-panel {
   background: #d9edf7; }
-  .tl-list.ST4 > .tl-event.ST4 .tl-panel:after {
+  .tl-list.ST4 > .tl-entry.ST4 .tl-panel:after {
     border-left-color: #d9edf7;
     border-right-color: #d9edf7; }
 
-.tl-list.KLE > .tl-event.KLE {
+.tl-list.KLE > .tl-entry.KLE {
   display: list-item; }
 
-.tl-list.KLE > .tl-event.KLE .tl-badge {
+.tl-list.KLE > .tl-entry.KLE .tl-badge {
   background: url("../img/klingon_logo_white.png");
   background-color: #000000;
   background-position-y: -2px;
   border-radius: 50%; }
 
-.tl-list.KLE > .tl-event.KLE .tl-panel {
+.tl-list.KLE > .tl-entry.KLE .tl-panel {
   background: #f2dede; }
-  .tl-list.KLE > .tl-event.KLE .tl-panel:after {
+  .tl-list.KLE > .tl-entry.KLE .tl-panel:after {
     border-left-color: #f2dede;
     border-right-color: #f2dede; }
 
-.tl-list.RSA > .tl-event.RSA {
+.tl-list.RSA > .tl-entry.RSA {
   display: list-item; }
 
-.tl-list.RSA > .tl-event.RSA .tl-badge {
+.tl-list.RSA > .tl-entry.RSA .tl-badge {
   background: url("../img/romulan_logo.png"); }
 
-.tl-list.RSA > .tl-event.RSA .tl-panel {
+.tl-list.RSA > .tl-entry.RSA .tl-panel {
   background: #FDDEFC; }
-  .tl-list.RSA > .tl-event.RSA .tl-panel:after {
+  .tl-list.RSA > .tl-entry.RSA .tl-panel:after {
     border-left-color: #FDDEFC;
     border-right-color: #FDDEFC; }
 
-.tl-list.ORC > .tl-event.ORC {
+.tl-list.ORC > .tl-entry.ORC {
   display: list-item; }
 
-.tl-list.ORC > .tl-event.ORC .tl-badge {
+.tl-list.ORC > .tl-entry.ORC .tl-badge {
   background: url("../img/orion_logo.png"); }
 
-.tl-list.ORC > .tl-event.ORC .tl-panel {
+.tl-list.ORC > .tl-entry.ORC .tl-panel {
   background: #ffceb0; }
-  .tl-list.ORC > .tl-event.ORC .tl-panel:after {
+  .tl-list.ORC > .tl-entry.ORC .tl-panel:after {
     border-left-color: #ffceb0;
     border-right-color: #ffceb0; }
 
-.tl-list.SFI > .tl-event.SFI {
+.tl-list.SFI > .tl-entry.SFI {
   display: list-item; }
 
-.tl-list.SFI > .tl-event.SFI .tl-badge {
+.tl-list.SFI > .tl-entry.SFI .tl-badge {
   background: url("../img/sfi_logo.png"); }
 
-.tl-list.SFI > .tl-event.SFI .tl-panel {
+.tl-list.SFI > .tl-entry.SFI .tl-panel {
   background: #dedede; }
-  .tl-list.SFI > .tl-event.SFI .tl-panel:after {
+  .tl-list.SFI > .tl-entry.SFI .tl-panel:after {
     border-left-color: #dedede;
     border-right-color: #dedede; }
 
-.tl-list.ITA > .tl-event.ITA {
+.tl-list.ITA > .tl-entry.ITA {
   display: list-item; }
 
-.tl-list.ITA > .tl-event.ITA .tl-badge {
+.tl-list.ITA > .tl-entry.ITA .tl-badge {
   background: url("../img/ita_logo.png"); }
 
-.tl-list.ITA > .tl-event.ITA .tl-panel {
+.tl-list.ITA > .tl-entry.ITA .tl-panel {
   background: #fcf8e3; }
-  .tl-list.ITA > .tl-event.ITA .tl-panel:after {
+  .tl-list.ITA > .tl-entry.ITA .tl-panel:after {
     border-left-color: #fcf8e3;
     border-right-color: #fcf8e3; }
 
-.tl-list.TRI > .tl-event.TRI {
+.tl-list.TRI > .tl-entry.TRI {
   display: list-item; }
 
-.tl-list.TRI > .tl-event.TRI .tl-badge {
+.tl-list.TRI > .tl-entry.TRI .tl-badge {
   background: url("../img/mantiev_logo.png"); }
 
-.tl-list.TRI > .tl-event.TRI .tl-panel {
+.tl-list.TRI > .tl-entry.TRI .tl-panel {
   background: #fcf8e3; }
-  .tl-list.TRI > .tl-event.TRI .tl-panel:after {
+  .tl-list.TRI > .tl-entry.TRI .tl-panel:after {
     border-left-color: #fcf8e3;
     border-right-color: #fcf8e3; }
 
-.tl-list.RFW > .tl-event.RFW {
+.tl-list.RFW > .tl-entry.RFW {
   display: list-item; }
 
-.tl-list.RFW > .tl-event.RFW .tl-badge {
+.tl-list.RFW > .tl-entry.RFW .tl-badge {
   background: url("../img/rfw_logo.png"); }
 
-.tl-list.RFW > .tl-event.RFW .tl-panel {
+.tl-list.RFW > .tl-entry.RFW .tl-panel {
   background: #FDDEFC; }
-  .tl-list.RFW > .tl-event.RFW .tl-panel:after {
+  .tl-list.RFW > .tl-entry.RFW .tl-panel:after {
     border-left-color: #FDDEFC;
     border-right-color: #FDDEFC; }
 
-.tl-list.FYW > .tl-event.FYW {
+.tl-list.FYW > .tl-entry.FYW {
   display: list-item; }
 
-.tl-list.FYW > .tl-event.FYW .tl-badge {
+.tl-list.FYW > .tl-entry.FYW .tl-badge {
   background: url("../img/fyw_logo.png"); }
 
-.tl-list.FYW > .tl-event.FYW .tl-panel {
+.tl-list.FYW > .tl-entry.FYW .tl-panel {
   background: #f2dede; }
-  .tl-list.FYW > .tl-event.FYW .tl-panel:after {
+  .tl-list.FYW > .tl-entry.FYW .tl-panel:after {
     border-left-color: #f2dede;
     border-right-color: #f2dede; }
 
 /* More Contextual stuff. */
-.tl-list.KLE > .tl-event.KLE.tl-full-true,
-.tl-list.RSA > .tl-event.RSA.tl-full-true,
-.tl-list.ORC > .tl-event.ORC.tl-full-true {
+.tl-list.KLE > .tl-entry.KLE.tl-full-true,
+.tl-list.RSA > .tl-entry.RSA.tl-full-true,
+.tl-list.ORC > .tl-entry.ORC.tl-full-true {
   display: none; }
 
-.tl-list.KLE.KLE-full > .tl-event.KLE.tl-full-true,
-.tl-list.RSA.RSA-full > .tl-event.RSA.tl-full-true,
-.tl-list.ORC.ORC-full > .tl-event.ORC.tl-full-true {
+.tl-list.KLE.KLE-full > .tl-entry.KLE.tl-full-true,
+.tl-list.RSA.RSA-full > .tl-entry.RSA.tl-full-true,
+.tl-list.ORC.ORC-full > .tl-entry.ORC.tl-full-true {
   display: list-item; }
 
-.tl-list.KLE.KLE-full > .tl-event.KLE.tl-full-false,
-.tl-list.RSA.RSA-full > .tl-event.RSA.tl-full-false,
-.tl-list.ORC.ORC-full > .tl-event.ORC.tl-full-false {
+.tl-list.KLE.KLE-full > .tl-entry.KLE.tl-full-false,
+.tl-list.RSA.RSA-full > .tl-entry.RSA.tl-full-false,
+.tl-list.ORC.ORC-full > .tl-entry.ORC.tl-full-false {
   display: none; }
 
 @media (max-width: 767px) {

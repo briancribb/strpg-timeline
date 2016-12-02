@@ -209,19 +209,19 @@ body {
 
 
 /* Show categories by class and other contextual stuff. */
-.tl-list > .tl-event {
+.tl-list > .tl-entry {
 	display:none;
 }
 
 
 .tl-list.UFP {
-	& > .tl-event.UFP {
+	& > .tl-entry.UFP {
 		display:list-item;
 	}
-	& > .tl-event.UFP .tl-badge {
+	& > .tl-entry.UFP .tl-badge {
 		background: url($UFP__badge--BG__url);
 	}
-	& > .tl-event.UFP .tl-panel {
+	& > .tl-entry.UFP .tl-panel {
 		background: $UFP__badge--BG__color;
 		&:after {
 			border-left-color:$UFP__badge--BG__color;
@@ -230,13 +230,13 @@ body {
 	}
 }
 .tl-list.ST3 {
-	& > .tl-event.ST3 {
+	& > .tl-entry.ST3 {
 		display:list-item;
 	}
-	& > .tl-event.ST3 .tl-badge {
+	& > .tl-entry.ST3 .tl-badge {
 		background: url($ST3__badge--BG__url);
 	}
-	& > .tl-event.ST3 .tl-panel {
+	& > .tl-entry.ST3 .tl-panel {
 		background: $ST3__badge--BG__color;
 		&:after {
 			border-left-color:$ST3__badge--BG__color;
@@ -245,13 +245,13 @@ body {
 	}
 }
 .tl-list.ST4 {
-	& > .tl-event.ST4 {
+	& > .tl-entry.ST4 {
 		display:list-item;
 	}
-	& > .tl-event.ST4 .tl-badge {
+	& > .tl-entry.ST4 .tl-badge {
 		background: url($ST4__badge--BG__url);
 	}
-	& > .tl-event.ST4 .tl-panel {
+	& > .tl-entry.ST4 .tl-panel {
 		background: $ST4__badge--BG__color;
 		&:after {
 			border-left-color:$ST4__badge--BG__color;
@@ -261,16 +261,16 @@ body {
 }
 
 .tl-list.KLE {
-	& > .tl-event.KLE {
+	& > .tl-entry.KLE {
 		display:list-item;
 	}
-	& > .tl-event.KLE .tl-badge {
+	& > .tl-entry.KLE .tl-badge {
 		background: url($KLE__badge--BG__url);
 		background-color:#000000;
 		background-position-y: -2px;
 		border-radius:50%;
 	}
-	& > .tl-event.KLE .tl-panel {
+	& > .tl-entry.KLE .tl-panel {
 		background: $KLE__badge--BG__color;
 		&:after {
 			border-left-color:$KLE__badge--BG__color;
@@ -279,13 +279,13 @@ body {
 	}
 }
 .tl-list.RSA {
-	& > .tl-event.RSA {
+	& > .tl-entry.RSA {
 		display:list-item;
 	}
-	& > .tl-event.RSA .tl-badge {
+	& > .tl-entry.RSA .tl-badge {
 		background: url($RSA__badge--BG__url);
 	}
-	& > .tl-event.RSA .tl-panel {
+	& > .tl-entry.RSA .tl-panel {
 		background: $RSA__badge--BG__color;
 		&:after {
 			border-left-color:$RSA__badge--BG__color;
@@ -294,13 +294,13 @@ body {
 	}
 }
 .tl-list.ORC {
-	& > .tl-event.ORC {
+	& > .tl-entry.ORC {
 		display:list-item;
 	}
-	& > .tl-event.ORC .tl-badge {
+	& > .tl-entry.ORC .tl-badge {
 		background: url($ORC__badge--BG__url);
 	}
-	& > .tl-event.ORC .tl-panel {
+	& > .tl-entry.ORC .tl-panel {
 		background: $ORC__badge--BG__color;
 		&:after {
 			border-left-color:$ORC__badge--BG__color;
@@ -309,13 +309,13 @@ body {
 	}
 }
 .tl-list.SFI {
-	& > .tl-event.SFI {
+	& > .tl-entry.SFI {
 		display:list-item;
 	}
-	& > .tl-event.SFI .tl-badge {
+	& > .tl-entry.SFI .tl-badge {
 		background: url($SFI__badge--BG__url);
 	}
-	& > .tl-event.SFI .tl-panel {
+	& > .tl-entry.SFI .tl-panel {
 		background: $SFI__badge--BG__color;
 		&:after {
 			border-left-color:$SFI__badge--BG__color;
@@ -324,13 +324,13 @@ body {
 	}
 }
 .tl-list.ITA {
-	& > .tl-event.ITA {
+	& > .tl-entry.ITA {
 		display:list-item;
 	}
-	& > .tl-event.ITA .tl-badge {
+	& > .tl-entry.ITA .tl-badge {
 		background: url($ITA__badge--BG__url);
 	}
-	& > .tl-event.ITA .tl-panel {
+	& > .tl-entry.ITA .tl-panel {
 		background: $ITA__badge--BG__color;
 		&:after {
 			border-left-color:$ITA__badge--BG__color;
@@ -339,13 +339,13 @@ body {
 	}
 }
 .tl-list.TRI {
-	& > .tl-event.TRI {
+	& > .tl-entry.TRI {
 		display:list-item;
 	}
-	& > .tl-event.TRI .tl-badge {
+	& > .tl-entry.TRI .tl-badge {
 		background: url($TRI__badge--BG__url);
 	}
-	& > .tl-event.TRI .tl-panel {
+	& > .tl-entry.TRI .tl-panel {
 		background: $TRI__badge--BG__color;
 		&:after {
 			border-left-color:$TRI__badge--BG__color;
@@ -354,13 +354,13 @@ body {
 	}
 }
 .tl-list.RFW {
-	& > .tl-event.RFW {
+	& > .tl-entry.RFW {
 		display:list-item;
 	}
-	& > .tl-event.RFW .tl-badge {
+	& > .tl-entry.RFW .tl-badge {
 		background: url($RFW__badge--BG__url);
 	}
-	& > .tl-event.RFW .tl-panel {
+	& > .tl-entry.RFW .tl-panel {
 		background: $RFW__badge--BG__color;
 		&:after {
 			border-left-color:$RFW__badge--BG__color;
@@ -369,13 +369,13 @@ body {
 	}
 }
 .tl-list.FYW {
-	& > .tl-event.FYW {
+	& > .tl-entry.FYW {
 		display:list-item;
 	}
-	& > .tl-event.FYW .tl-badge {
+	& > .tl-entry.FYW .tl-badge {
 		background: url($FYW__badge--BG__url);
 	}
-	& > .tl-event.FYW .tl-panel {
+	& > .tl-entry.FYW .tl-panel {
 		background: $FYW__badge--BG__color;
 		&:after {
 			border-left-color:$FYW__badge--BG__color;
@@ -385,19 +385,19 @@ body {
 }
 
 /* More Contextual stuff. */
-.tl-list.KLE > .tl-event.KLE.tl-full-true,
-.tl-list.RSA > .tl-event.RSA.tl-full-true,
-.tl-list.ORC > .tl-event.ORC.tl-full-true {
+.tl-list.KLE > .tl-entry.KLE.tl-full-true,
+.tl-list.RSA > .tl-entry.RSA.tl-full-true,
+.tl-list.ORC > .tl-entry.ORC.tl-full-true {
 	display:none;
 }
-.tl-list.KLE.KLE-full > .tl-event.KLE.tl-full-true,
-.tl-list.RSA.RSA-full > .tl-event.RSA.tl-full-true,
-.tl-list.ORC.ORC-full > .tl-event.ORC.tl-full-true {
+.tl-list.KLE.KLE-full > .tl-entry.KLE.tl-full-true,
+.tl-list.RSA.RSA-full > .tl-entry.RSA.tl-full-true,
+.tl-list.ORC.ORC-full > .tl-entry.ORC.tl-full-true {
 	display:list-item;
 }
-.tl-list.KLE.KLE-full > .tl-event.KLE.tl-full-false,
-.tl-list.RSA.RSA-full > .tl-event.RSA.tl-full-false,
-.tl-list.ORC.ORC-full > .tl-event.ORC.tl-full-false {
+.tl-list.KLE.KLE-full > .tl-entry.KLE.tl-full-false,
+.tl-list.RSA.RSA-full > .tl-entry.RSA.tl-full-false,
+.tl-list.ORC.ORC-full > .tl-entry.ORC.tl-full-false {
 	display:none;
 }
 

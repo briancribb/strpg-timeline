@@ -1,7 +1,7 @@
 class Timeline extends React.Component {
 	// In case we need initial states, which we will because we're waiting for data.
 	constructor() {
-		console.log('constructor()');
+		//console.log('constructor()');
 		super(); // Gotta call this first when doing a constructor.
 		this.state = {
 			test: false
@@ -9,13 +9,17 @@ class Timeline extends React.Component {
 		this._getData();
 	}
 	componentWillMount() {
-		console.log('componentWillMount()');
+		//console.log('componentWillMount()');
 	}
 	componentDidMount() {
-		console.log('componentDidMount()');
-		console.log(this.state);
+		//console.log('componentDidMount()');
+		//console.log(this.state);
 	}
-
+	componentDidUpdate() {
+		if (this.state.sources) {
+			this._alternateFloats();
+		}
+	}
 	_getData() {
 		var that = this,
 			dfd_array = [],
@@ -76,6 +80,7 @@ class Timeline extends React.Component {
 					var dateParts = starToDate( data.feed.entry[i].gsx$stardate.$t );
 
 					objData.entries.push({
+						show		:	true,
 						stardate	:	data.feed.entry[i].gsx$stardate.$t,
 						sortkey		:	Number(dateParts.year + '.' + dateParts.month + '' + dateParts.date),
 						end			:	data.feed.entry[i].gsx$stardateend.$t || null,
@@ -99,9 +104,19 @@ class Timeline extends React.Component {
 			//console.log("All of the ajax calls are complete. Length is " + APP.events.length);
 			objData.entries = _.sortBy(objData.entries, 'year');
 			that.setState(objData);
-			TL.init();
+
+			that._manageLayout();
 			console.log('that.state');
 			console.log(that);
+
+			// Hide anything with a key over 50, as a test.
+			let arrTemp = _.map(that.state.entries, function(entry){
+				entry.show = (entry.key < 50) ? true : false;
+				return entry;
+			});
+			that.setState({entries: arrTemp});
+
+
 		});
 
 		function starToDate(stardate) {
@@ -136,8 +151,41 @@ class Timeline extends React.Component {
 			key ++;
 			return(markup);
 		});
-
 	}
+
+	_manageLayout() {
+		var $bodyElement		= $('body'),
+			$navbar				= $('#navbar'),
+			$pageFooter			= $('#page-footer'),
+			$pageFooterContent	= $('#page-footer-content');
+
+		var throttled = _.throttle(function(){
+			/* Correct footer height upon resize */
+			var footerHeight = $pageFooterContent.outerHeight(true);
+			$pageFooter.height( footerHeight );
+			$bodyElement.css( 'padding-bottom', footerHeight );
+
+			/* Correct top body padding for navbar height */
+			$bodyElement.css( 'padding-top', $navbar.outerHeight(true) );
+		}, 250);
+		$(window).resize(throttled);
+	}
+
+	_alternateFloats() {
+		/* Clear out the right-floats and reset them on every other visible timeline event. */
+		$('.tl-entry:visible').each(function (i) {
+			/* Test for i+1 because i will start as zero. */
+			if ( (i+1) % 2 === 0) {
+				$(this).addClass('tl-inverted');
+			} else {
+				$(this).removeClass('tl-inverted');
+			}
+		});
+	}
+	_scrollToPosition(position) {
+		$('html,body').stop().animate( { scrollTop: position }, 1000 );
+	}
+
 
 
 	render() {
@@ -180,8 +228,6 @@ class ButtonGroup extends React.Component {
 }
 class TLToggles extends React.Component {
 	render() {
-		console.log('this.props');
-		console.log(this.props);
 		return(
 				<div id="tl-toggles" className="source-toggles">
 					<div className="panel panel-primary">
@@ -239,10 +285,12 @@ class TLToggles extends React.Component {
 }
 class TLEntry extends React.Component {
 	render() {
-		let entry = this.props.obj;
+		let entry = this.props.obj
+		let showHide = (entry.show)  ? ' show' : ' hidden' ;
+
 		return(
 			//<li>{this.props.obj.century}</li>
-			<li id={"tl-entry-" + entry.key} className={"tl-entry " + entry.source + " tl-full-" + entry.full} data-century={entry.century}>
+			<li id={"tl-entry-" + entry.key} className={"tl-entry " + entry.source + " tl-full-" + entry.full + showHide} data-century={entry.century}>
 				<div className="tl-badge"></div>
 				<div className="tl-panel">
 					<div className="tl-heading">

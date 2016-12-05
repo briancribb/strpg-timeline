@@ -54,7 +54,11 @@
 	padding: .3em .7em .4em;
 }
 
-span.label {
+.btn-toolbar {
+	margin-left:0;
+}
+
+.btn-toolbar > .btn-group, span.label {
 	display:inline-block;
-	margin: 6px 3px 0 3px;
+	margin: 6px 6px 0 0;
 }

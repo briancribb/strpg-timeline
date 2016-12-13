@@ -113,6 +113,7 @@ class Timeline extends React.Component {
 			that._manageLayout();
 
 			that._alternateFloats();
+			that._addListeners();
 
 			//that._updateSource('ORC');
 			//that._updateSource('RSA', 'full');
@@ -158,6 +159,83 @@ class Timeline extends React.Component {
 		}
 	}// End of _getData()
 
+	_addListeners() {
+		let $pageHeader		= $('#page-header'),
+			$pageFooter		= $('#page-footer'),
+			$inputCentury	= $('#century-search');
+
+		$('body').on( "click", function(event) {
+			var $target = $(event.target);
+			switch (event.target.id) {
+
+
+				// Return to the top
+				case 'navbar-brand':
+					window.scroll(0, 0);
+					break;
+
+				// Return to the top
+				case 'btn-return-top':
+					scrollToPosition(0);
+					break;
+
+				// Scroll to the footer
+				case 'btn-footer':
+					scrollToPosition( $pageFooter.position().top );
+					break;
+
+				// Search for a century
+				case 'btn-search':
+					scrollToCentury();
+					break;
+
+				default:
+					/* If there's no id or it doesn't match anything, then do nothing. */
+					break;
+			}
+		});
+
+		// Submit the century search when the user presses Enter while focused on the input.
+		$inputCentury.on( "keypress", function(event) {
+			if (event.which == '13') {
+				event.preventDefault();
+				scrollToCentury();
+			}
+		});
+
+		// Scroll to the first visible entry which has a century data attribute matching the value of the search input.
+		function scrollToCentury() {
+			console.log('scrollToCentury()');
+			var century = $inputCentury.val();
+			if ( century !== '' ) {
+				if ( Number(century) === NaN ) {
+					$inputCentury.val('');
+				} else {
+					var scrollTarget = null,
+						offset	= $pageHeader.outerHeight(true);
+
+					$('.tl-entry:visible').each(function (i) {
+						var currentCentury = $(this).data('century');
+						if ( currentCentury >= century ) {
+							scrollTarget = offset + $(this).position().top;
+							return false;
+						}
+					});
+					if (scrollTarget !== null) {
+						scrollToPosition(scrollTarget);
+						$inputCentury.val('');
+					}
+				}
+			}
+		}
+
+		// Scroll to a given vertical position. Used to find entries and to skip to the top or bottom.
+		function scrollToPosition(position) {
+			console.log('scrollToPosition()');
+			$('html,body').stop().animate( { scrollTop: position }, 1000 );
+		}
+	}
+
 	_getEntries() {
 		let key = 0;
 		return this.state.entries.map((entry) => {
@@ -177,13 +255,15 @@ class Timeline extends React.Component {
 			$pageFooterContent	= $('#page-footer-content');
 
 		var throttled = _.throttle(function(){
-			/* Correct footer height upon resize */
+			/* Correct footer height upon resize and correct top body padding for navbar height*/
 			var footerHeight = $pageFooterContent.outerHeight(true);
 			$pageFooter.height( footerHeight );
-			$bodyElement.css( 'padding-bottom', footerHeight );
 
-			/* Correct top body padding for navbar height */
-			$bodyElement.css( 'padding-top', $navbar.outerHeight(true) );
+			$bodyElement.css({
+				'padding-bottom':footerHeight,
+				'padding-top':$navbar.outerHeight(true)
+			});
+
 		}, 250);
 		$(window).resize(throttled);
 	}
@@ -226,10 +306,6 @@ class Timeline extends React.Component {
 			}
 		});
 	}
-	_scrollToPosition(position) {
-		$('html,body').stop().animate( { scrollTop: position }, 1000 );
-	}
-
 
 	render() {
 		let markup = null;

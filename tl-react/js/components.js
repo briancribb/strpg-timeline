@@ -25,17 +25,17 @@ class Timeline extends React.Component {
 		var that = this,
 			dfd_array = [],
 			dfd_sources = {
-				UFP: { path:'js/data/UFP.json', id: 'oesera6', hasFull: false, show:true, name: 'United Federation of Planets' },
-				KLE: { path:'js/data/KLE.json', id: 'o15noc3', hasFull: true,  show:true, name: 'Klingon Empire' },
-				RSA: { path:'js/data/RSA.json', id: 'or7u0kt', hasFull: true,  show:true, name: 'Romulan Star Empire' },
-				TRI: { path:'js/data/TRI.json', id: 'ol08r1n', hasFull: false, show:true, name: 'Triangle' },
-				ORC: { path:'js/data/ORC.json', id: 'ohu3d91', hasFull: true,  show:true, name: 'Orion Colonies' },
-				RFW: { path:'js/data/RFW.json', id: 'oypmvfb', hasFull: false, show:true, name: 'Romulan/Federation War' },
-				FYW: { path:'js/data/FYW.json', id: 'oi1ju2s', hasFull: false, show:true, name: 'Four Years War' },
-				ST3: { path:'js/data/ST3.json', id: 'o5oxeec', hasFull: false, show:true, name: 'Star Trek 3 Update' },
-				ST4: { path:'js/data/ST4.json', id: 'oxxpvso', hasFull: false, show:true, name: 'Star Trek 4 Update' },
-				SFI: { path:'js/data/SFI.json', id: 'ohqn30t', hasFull: false, show:true, name: 'Starfleet Intelligence' },
-				ITA: { path:'js/data/ITA.json', id: 'orojt89', hasFull: false, show:true, name: "UFP/Independent Traders' Association" }
+				UFP: { path:'js/data/UFP.json', id: 'oesera6', hasFull: true,  show:true, showFull:false, name: 'United Federation of Planets' },
+				KLE: { path:'js/data/KLE.json', id: 'o15noc3', hasFull: true,  show:true, showFull:false, name: 'Klingon Empire' },
+				RSA: { path:'js/data/RSA.json', id: 'or7u0kt', hasFull: true,  show:true, showFull:false, name: 'Romulan Star Empire' },
+				TRI: { path:'js/data/TRI.json', id: 'ol08r1n', hasFull: false, show:true, showFull:true,  name: 'Triangle' },
+				ORC: { path:'js/data/ORC.json', id: 'ohu3d91', hasFull: true,  show:true, showFull:false, name: 'Orion Colonies' },
+				RFW: { path:'js/data/RFW.json', id: 'oypmvfb', hasFull: false, show:true, showFull:true,  name: 'Romulan/Federation War' },
+				FYW: { path:'js/data/FYW.json', id: 'oi1ju2s', hasFull: false, show:true, showFull:true,  name: 'Four Years War' },
+				ST3: { path:'js/data/ST3.json', id: 'o5oxeec', hasFull: false, show:true, showFull:true,  name: 'Star Trek 3 Update' },
+				ST4: { path:'js/data/ST4.json', id: 'oxxpvso', hasFull: false, show:true, showFull:true,  name: 'Star Trek 4 Update' },
+				SFI: { path:'js/data/SFI.json', id: 'ohqn30t', hasFull: false, show:true, showFull:true,  name: 'Starfleet Intelligence' },
+				ITA: { path:'js/data/ITA.json', id: 'orojt89', hasFull: false, show:true, showFull:true,  name: "UFP/Independent Traders' Association" }
 			},
 			objData = {
 				sources:{},
@@ -73,7 +73,7 @@ class Timeline extends React.Component {
 					name: value.name,
 					hasFull : value.hasFull,
 					show : value.show,
-					showFull : false
+					showFull : value.showFull
 				}
 
 				/* Process data into the main timeline. */
@@ -82,7 +82,6 @@ class Timeline extends React.Component {
 					var dateParts = starToDate( data.feed.entry[i].gsx$stardate.$t );
 
 					objData.entries.push({
-						show		:	true,
 						inverted	:	false,
 						stardate	:	data.feed.entry[i].gsx$stardate.$t,
 						sortkey		:	Number(dateParts.year + '.' + dateParts.month + '' + dateParts.date),
@@ -131,8 +130,6 @@ class Timeline extends React.Component {
 
 			console.log('that.state');
 			console.log(that);
-
-
 		});
 
 		function starToDate(stardate) {
@@ -296,7 +293,6 @@ class Timeline extends React.Component {
 
 	_alternateFloats() {
 		// Clear out the right-floats and reset them on every other visible timeline event.
-
 		$('.tl-entry:visible').each(function (i) {
 			// Test for i+1 because i will start as zero.
 			if ( (i+1) % 2 === 0) {

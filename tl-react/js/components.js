@@ -8,24 +8,25 @@ class Timeline extends React.Component {
 		}
 		this._getData();
 	}
-	componentWillMount() {
-		//console.log('componentWillMount()');
-	}
-	componentDidMount() {
-		//console.log('componentDidMount()');
-		//console.log(this.state);
-	}
+	/*
+	After the app updates, we run some jQuery to put every other entry on the right side. This could have been done by 
+	looping through the entries array and checking to see who's visible, but we're already paying for jQuery in our page 
+	load so we should just go ahead and use it where appropriate.
+	*/
 	componentDidUpdate() {
 		if (this.state.initialized) {
 			this._alternateFloats();
 		}
 	}
 
+	/*
+	The app has some basic code that runs when there's no data. Once this stuff comes in, the timeline events will render.
+	*/
 	_getData() {
 		var that = this,
 			dfd_array = [],
 			dfd_sources = {
-				UFP: { path:'js/data/UFP.json', id: 'oesera6', hasFull: true,  show:true, showFull:false, name: 'United Federation of Planets' },
+				UFP: { path:'js/data/UFP.json', id: 'oesera6', hasFull: false, show:true, showFull:true,  name: 'United Federation of Planets' },
 				KLE: { path:'js/data/KLE.json', id: 'o15noc3', hasFull: true,  show:true, showFull:false, name: 'Klingon Empire' },
 				RSA: { path:'js/data/RSA.json', id: 'or7u0kt', hasFull: true,  show:true, showFull:false, name: 'Romulan Star Empire' },
 				TRI: { path:'js/data/TRI.json', id: 'ol08r1n', hasFull: false, show:true, showFull:true,  name: 'Triangle' },
@@ -102,34 +103,28 @@ class Timeline extends React.Component {
 		});
 
 		/* http://stackoverflow.com/questions/5627284/pass-in-an-array-of-deferreds-to-when */
+		/* 
+		Sort the entries by their sortkey, which is basically a date. We're not picky about events with the same sortkey value. 
+		Once that's done, we set the 'initialized' property to true for objData. We then pass this object into the app state. The 
+		initialized property is used elsewhere to see if the app has data. If that property is true, then we have our sorted 
+		entries, sources, etc.
+		*/
 		$.when.apply(null, dfd_array).done(function() {
 			//console.log("All of the ajax calls are complete. Length is " + APP.events.length);
-			objData.entries = _.sortBy(objData.entries, 'year');
+
+			objData.entries = _.sortBy(objData.entries, 'sortkey');
+			objData.initialized = true;
 			that.setState(objData);
 
-			that.setState({initialized:true});
-			//that._updateEntries();
+			//that.setState({initialized:true});
 			that._manageLayout();
 
 			that._alternateFloats();
 			that._addListeners();
 
-			//that._updateSource('ORC');
-			//that._updateSource('RSA', 'full');
 
-
-
-			/*
-			let newObj = _.clone(that.state.sources);
-			newObj.ORC.show = false;
-			newObj.RSA.showFull = true;
-			that.setState({
-				sources: newObj
-			});
-			*/
-
-			console.log('that.state');
-			console.log(that);
+			//console.log('that.state');
+			//console.log(that);
 		});
 
 		function starToDate(stardate) {
@@ -161,6 +156,10 @@ class Timeline extends React.Component {
 			$pageFooter		= $('#page-footer'),
 			$inputCentury	= $('#century-search');
 
+		/*
+		Our nav buttons are used to scroll in the browser, and have nothing to do with the data. They're also outside of 
+		the app. Using jQuery to move between the top and bottom of the page.  
+		*/
 		$('body').on( "click", function(event) {
 			var $target = $(event.target);
 			switch (event.target.id) {
@@ -181,7 +180,7 @@ class Timeline extends React.Component {
 					scrollToPosition( $pageFooter.position().top );
 					break;
 
-				// Search for a century
+				// Search for a the first entry in a given century
 				case 'btn-search':
 					scrollToCentury();
 					break;
@@ -202,7 +201,6 @@ class Timeline extends React.Component {
 
 		// Scroll to the first visible entry which has a century data attribute matching the value of the search input.
 		function scrollToCentury() {
-			console.log('scrollToCentury()');
 			var century = $inputCentury.val();
 			if ( century !== '' ) {
 				if ( Number(century) === NaN ) {
@@ -228,7 +226,6 @@ class Timeline extends React.Component {
 
 		// Scroll to a given vertical position. Used to find entries and to skip to the top or bottom.
 		function scrollToPosition(position) {
-			console.log('scrollToPosition()');
 			$('html,body').stop().animate( { scrollTop: position }, 1000 );
 		}
 	}
@@ -245,6 +242,10 @@ class Timeline extends React.Component {
 		});
 	}
 
+	/*
+	Also powered by jQuery because it has nothing to do with the data. This function corrects the app's padding 
+	and margins on the top/bottom to make room for the nav and our sticky footer.
+	*/
 	_manageLayout() {
 		var $bodyElement		= $('body'),
 			$navbar				= $('#navbar'),
@@ -252,10 +253,10 @@ class Timeline extends React.Component {
 			$pageFooterContent	= $('#page-footer-content');
 
 		var throttled = _.throttle(function(){
-			/* Correct footer height upon resize and correct top body padding for navbar height*/
 			var footerHeight = $pageFooterContent.outerHeight(true);
 			$pageFooter.height( footerHeight );
 
+			// Correct footer height upon resize and correct top body padding for navbar height
 			$bodyElement.css({
 				'padding-bottom':footerHeight,
 				'padding-top':$navbar.outerHeight(true)
@@ -265,9 +266,22 @@ class Timeline extends React.Component {
 		$(window).resize(throttled);
 	}
 
+	/*
+	Visibility of the entries depends upon the state object, which is driven by the toggle buttons at the 
+	top of the app. This function toggles two propeties: show and showFull. The 'show' property determines 
+	whether entries will appear at all, and 'showFull' determines which kind of entries to show.
+
+	The major governments have two timelines to pick from, which cannot be viewed at the same time. The 
+	'full' entries are factual data about a culture, while the regular entries reflect what the UFP knows 
+	about them. Obviously, the full entries are more accurate.
+
+	To avoid writing extra logic, timelines with only one set of entries are have their 'showFull' property 
+	set to true. The UFP knows all about itself, so every entry is considered to be a 'full' entry. And of 
+	course, some of the smaller game suppliments from FASA way-back-when didn't have double timelines. That 
+	was more of a literary device used for the Klingons, Romulans and Orions in the game.
+	*/
 	_updateSource(source, full) {
-		console.log('--- _updateSource(' + source + ', ' + full + ')');
-		//console.log(this.state);
+		//console.log('--- _updateSource(' + source + ', ' + full + ')');
 
 		// Toggles the boolean value of a source object's "show" property.
 		let that = this;
@@ -277,8 +291,6 @@ class Timeline extends React.Component {
 		if (full !== undefined) {
 			// Deciding whether to show full or regular.
 			newObj[source].showFull = !newObj[source].showFull;
-			console.log('newObj[source].showFull: ' + newObj[source].showFull);
-			console.log(' --- ');
 		} else {
 			// Deciding whether to show at all
 			newObj[source].show = !newObj[source].show;
@@ -286,9 +298,6 @@ class Timeline extends React.Component {
 		this.setState({
 			sources: newObj
 		});
-		console.log('* this.state.sources[source].showFull: ' + this.state.sources[source].showFull);
-		console.log(that.state);
-		console.log(' --- ');
 	}
 
 	_alternateFloats() {
@@ -329,14 +338,10 @@ class Timeline extends React.Component {
 }
 class ButtonGroup extends React.Component {
 	_handleToggle() {
-		console.log('_handleToggle()');
 		this.props.updateSource(this.props.source);
-		console.log(this.props);
 	}
 	_handleFull() {
-		console.log('_handleFull()');
 		this.props.updateSource(this.props.source, this.props.showFull);
-		console.log(this.props);
 	}
 	render() {
 		let activeShow = (this.props.show) ? ' active' : '';
@@ -432,9 +437,6 @@ class TLEntry extends React.Component {
 		);
 	}
 }
-
-
-
 
 ReactDOM.render(
 	<Timeline />, document.getElementById('timeline-app')

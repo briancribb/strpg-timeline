@@ -29,23 +29,25 @@ body {
   background: #ddd; }
 
 /* Loading Spinner */
-.page-load-message {
+.page-load {
   font-size: 20px; }
+
+.page-load.assets {
+  display: none; }
+
+.page-load-message {
+  display: none; }
 
 .page-load-spinner {
   font-size: 100px;
   margin-top: 40px; }
 
-/*
-.loading {
-	.page-header, .tl-list {
-		display:none;
-	}
-	.page-load-message {
-		display:block;
-	}
-}
-*/
+.loading .page-header, .loading .timeline-app {
+  display: none; }
+
+.loading .page-load.assets {
+  display: block; }
+
 /* http://bootsnipp.com/snippets/featured/timeline-responsive */
 .tl-list {
   list-style: none;
@@ -434,8 +436,11 @@ body {
   -webkit-transition: background-position .5s linear;
   transition: background-position .5s linear; }
 
+.trans-up-down {
+  animation: upDown 1s linear infinite;
+  /* IE 10+ */ }
+
 .trans-spin {
-  background-position: #ddd;
   -webkit-animation: infiniteSpin 1s linear infinite;
   /* Safari 4+ */
   -moz-animation: infiniteSpin 1s linear infinite;
@@ -468,6 +473,36 @@ keyframes infiniteSpin from {
 
 keyframes infiniteSpin to {
   transform: rotate(360deg); }
+
+@-webkit-keyframes upDown {
+  0% {
+    top: 1px; }
+  25% {
+    top: -5px; }
+  75% {
+    top: 5px; }
+  100% {
+    top: 1px; } }
+
+@-moz-keyframes upDown {
+  0% {
+    top: 1px; }
+  25% {
+    top: -5px; }
+  75% {
+    top: 5px; }
+  100% {
+    top: 1px; } }
+
+@keyframes upDown {
+  0% {
+    top: 1px; }
+  25% {
+    top: -5px; }
+  75% {
+    top: 5px; }
+  100% {
+    top: 1px; } }
 
 .apply-rhythm {
   margin-bottom: 20px !important; }

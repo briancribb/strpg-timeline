@@ -8,6 +8,15 @@ class Timeline extends React.Component {
 		}
 		this._getData();
 	}
+
+	/*
+	Showing a download icon while the assets load, and then a round arrow spinner while the data loads. When the "loading" 
+	class is removed, the initial loader container is hidden and the Timeline app container is shown. 
+	*/
+	componentDidMount() {
+		$('body').removeClass('loading');
+	}
+
 	/*
 	After the app updates, we run some jQuery to put every other entry on the right side. This could have been done by 
 	looping through the entries array and checking to see who's visible, but we're already paying for jQuery in our page 
@@ -117,11 +126,10 @@ class Timeline extends React.Component {
 			that.setState(objData);
 
 			//that.setState({initialized:true});
-			that._manageLayout();
+			//that._manageLayout();
 
 			that._alternateFloats();
 			that._addListeners();
-
 
 			//console.log('that.state');
 			//console.log(that);
@@ -230,7 +238,12 @@ class Timeline extends React.Component {
 		}
 	}
 
-	_getEntries() {
+
+	/*
+	Returns an array of JSX React components to be used as timeline entries. Since this function is a top-level 
+	method of the Timeline component, it has access to the component state.
+	*/
+ 	_getEntries() {
 		let key = 0;
 		return this.state.entries.map((entry) => {
 			entry.key = key;
@@ -240,30 +253,6 @@ class Timeline extends React.Component {
 			key ++;
 			return(markup);
 		});
-	}
-
-	/*
-	Also powered by jQuery because it has nothing to do with the data. This function corrects the app's padding 
-	and margins on the top/bottom to make room for the nav and our sticky footer.
-	*/
-	_manageLayout() {
-		var $bodyElement		= $('body'),
-			$navbar				= $('#navbar'),
-			$pageFooter			= $('#page-footer'),
-			$pageFooterContent	= $('#page-footer-content');
-
-		var throttled = _.throttle(function(){
-			var footerHeight = $pageFooterContent.outerHeight(true);
-			$pageFooter.height( footerHeight );
-
-			// Correct footer height upon resize and correct top body padding for navbar height
-			$bodyElement.css({
-				'padding-bottom':footerHeight,
-				'padding-top':$navbar.outerHeight(true)
-			});
-
-		}, 250);
-		$(window).resize(throttled);
 	}
 
 	/*
@@ -289,7 +278,7 @@ class Timeline extends React.Component {
 
 
 		if (full !== undefined) {
-			// Deciding whether to show full or regular.
+			// Deciding whether to show full or regular. Single timelines are listed as always being "full".
 			newObj[source].showFull = !newObj[source].showFull;
 		} else {
 			// Deciding whether to show at all
@@ -300,8 +289,13 @@ class Timeline extends React.Component {
 		});
 	}
 
+	/*
+	Every other visible entry gets floated to the right. I could do this by altering the entries and setting 
+	state, but jQuery can do this pretty well and I'm already paying for its page load weight. This function 
+	runs during the componentDidUpdate() lifecycle method, so it always works with the most recently updated 
+	set of entries.
+	*/
 	_alternateFloats() {
-		// Clear out the right-floats and reset them on every other visible timeline event.
 		$('.tl-entry:visible').each(function (i) {
 			// Test for i+1 because i will start as zero.
 			if ( (i+1) % 2 === 0) {
@@ -326,7 +320,7 @@ class Timeline extends React.Component {
 				</div>
 		} else {
 			markup = 
-				<div id="page-load-message" className="page-load-message text-center">
+				<div className="page-load text-center">
 					<div id="page-load-spinner" className="page-load-spinner"><span className="glyphicon glyphicon-repeat trans-spin" aria-hidden="true"></span></div>
 					<p>Loading Timeline Events...</p>
 				</div>
@@ -336,6 +330,11 @@ class Timeline extends React.Component {
 		); 
 	}
 }
+
+/*
+Individual button groups for an individual timeline source. If the source has a "full" timeline in addition 
+to the regular one, then it will have an extra button for toggling between the entry types.
+*/
 class ButtonGroup extends React.Component {
 	_handleToggle() {
 		this.props.updateSource(this.props.source);
@@ -358,6 +357,10 @@ class ButtonGroup extends React.Component {
 			);
 	}
 }
+
+/*
+Groups of toggle buttons which turn timeline entries on and off according to the category of the button.
+*/
 class TLToggles extends React.Component {
 	render() {
 		return(
@@ -415,6 +418,10 @@ class TLToggles extends React.Component {
 			);
 	}
 }
+
+/*
+An individual timeline entry.
+*/
 class TLEntry extends React.Component {
 	render() {
 		let entry = this.props.obj
@@ -441,31 +448,3 @@ class TLEntry extends React.Component {
 ReactDOM.render(
 	<Timeline />, document.getElementById('timeline-app')
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

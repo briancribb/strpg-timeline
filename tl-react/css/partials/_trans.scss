@@ -19,11 +19,12 @@
 }
 
 
-
+.trans-up-down {
+	animation:         upDown 1s linear infinite; /* IE 10+ */
+}
 
 
 .trans-spin {
-	background-position:#ddd;
 	-webkit-animation: infiniteSpin 1s linear infinite; /* Safari 4+ */
 	-moz-animation:    infiniteSpin 1s linear infinite; /* Fx 5+ */
 	-o-animation:      infiniteSpin 1s linear infinite; /* Opera 12+ */
@@ -63,4 +64,24 @@ keyframes infiniteSpin {
 	to{
 		transform: rotate(360deg);
 	}
+}
+
+
+@-webkit-keyframes upDown {
+    0%   {top: 1px;}
+    25%  {top: -5px;}
+    75%  {top: 5px;}
+    100% {top: 1px;}
+}
+@-moz-keyframes upDown {
+    0%   {top: 1px;}
+    25%  {top: -5px;}
+    75%  {top: 5px;}
+    100% {top: 1px;}
+}
+@keyframes upDown {
+    0%   {top: 1px;}
+    25%  {top: -5px;}
+    75%  {top: 5px;}
+    100% {top: 1px;}
 }

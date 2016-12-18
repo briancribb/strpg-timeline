@@ -33,23 +33,28 @@ body {
 
 
 /* Loading Spinner */
-.page-load-message {
+.page-load {
 	font-size: 20px;
+}
+.page-load.assets {
+	display:none;
+}
+
+.page-load-message, {
+	display:none;
 }
 	.page-load-spinner {
 		font-size: 100px;
 		margin-top: 40px;
 	}
-/*
 .loading {
-	.page-header, .tl-list {
+	.page-header, .timeline-app {
 		display:none;
 	}
-	.page-load-message {
+	.page-load.assets {
 		display:block;
 	}
 }
-*/
 
 /* http://bootsnipp.com/snippets/featured/timeline-responsive */
 .tl-list {

@@ -9,144 +9,25 @@
 		<meta name="description" content="A fan-made timeline using content from the FASA Star Trek RPG">
 		<meta name="author" content="Brian Cribb">
 		<link rel="icon" href="img/favicon.ico">
-
+		<style>
+			body {padding-top:20px;}
+			h1 {margin-top:0!important;}
+		</style>
 		<title>STRPG Timeline</title>
 
 		<!-- Bootstrap core CSS -->
 		<link href="vendor/bootstrap-3.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/styles.css" rel="stylesheet">
 	</head>
 
-	<body class="loading">
-		<!-- Fixed navbar -->
-		<nav id="navbar" class="navbar navbar-info navbar-fixed-top">
-			<div class="container">
-				<div class="col-xs-12 col-sm-6 col-md-8">
-					<a id="navbar-brand" class="navbar-brand" href="#">STRPG Timeline</a>
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-4">
-					<form class="navbar-form navbar-right" role="search">
-						<div class="input-group">
-							<div class="input-group-btn">
-								<button id="btn-return-top" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true" aria-label="Return to Top"></span></button>
-								<button id="btn-footer" type="button" class="btn btn-warning"><span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true" aria-label="Scroll to the footer"></span></button>
-							</div>
-							<input type="number" id="century-search" class="form-control" placeholder="Century">
-							<div class="input-group-btn">
-								<button id="btn-search" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true" aria-label="Search for Century"></span></button>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div><!-- /.container -->
-		</nav>
+	<body>
 		<div class="container">
-			<div id="page-load-message" class="page-load-message text-center">
-				<div id="page-load-spinner" class="page-load-spinner"><span class="glyphicon glyphicon-repeat trans-spin" aria-hidden="true"></span></div>
-				<p>Loading Timeline Events...</p>
+			<div class="jumbotron">
+				<h1>STRPG Timeline</h1>
+				<p>There's an older version that I made with jQuery alone, and a newer version that I made with React. They both work so pick whichever one you like.</p>
+				<a href="tl-jquery/" class="btn btn-danger btn-lg" role="button">jQuery</a>
+				<a href="tl-react/" class="btn btn-primary btn-lg" role="button">React</a>
 			</div>
-
-			<div id="page-header" class="page-header">
-				<h1>Timeline</h1>
-				<div id="source-toggles" class="source-toggles">
-					<p class="lead">This is a collection of timelines from the old <a title="Star Trek Role-playing Game" target="_blank" href="https://en.wikipedia.org/wiki/Star_Trek:_The_Role_Playing_Game">Star Trek Role-playing Game</a>, made by FASA in the 1980's. Nothing is changed or edited. Aside from the correction of typos, this is the text that you would get from directly from the books.</p>
-					<p>Use the toggle buttons below to toggle the various timelines. The <code>full</code> buttons toggle between the full account of events from the subject's perspective and what Starfleet knows about them. For an explanation of how stardates work, see the <a href="#page-footer">footer</a> of this page.</p>
-					<p>The search bar at the top has two functions:</p>
-					<ul class="list-unstyled">
-						<li><span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true" aria-label="Return to Top"></span> Return to the top.</li>
-						<li><span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true" aria-label="Scroll to the footer"></span> Scroll to the footer.</li>
-						<li><span class="glyphicon glyphicon-search" aria-hidden="true" aria-label="Return to Top"></span> Scroll to the century listed in the search input.</li>
-					</ul>
-					<small><strong>Note:</strong> Certain events appear on more than one timeline, so there may be some repetition if you have more than one timeline active.</small>
-					<hr>
-					<div class="panel panel-primary">
-						<div class="panel-body bg-info">
-							<p>Major Governments</p>
-							<div id="source-toolbar" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-								<div class="btn-group" role="group" aria-label="UFP">
-									<button id="UFP-toggle" type="button" class="btn btn-primary active UFP">UFP</button>
-								</div>
-
-								<div class="btn-group" role="group" aria-label="KLE">
-									<button id="KLE-toggle" type="button" class="btn btn-primary active KLE">KLE</button>
-									<button id="KLE-full" type="button" class="btn btn-primary KLE">Full</button>
-								</div>
-
-								<div class="btn-group" role="group" aria-label="KLE">
-									<button id="RSA-toggle" type="button" class="btn btn-primary active RSA">RSA</button>
-									<button id="RSA-full" type="button" class="btn btn-primary RSA">Full</button>
-								</div>
-
-								<div class="btn-group" role="group" aria-label="ORC">
-									<button id="ORC-toggle" type="button" class="btn btn-primary active ORC">ORC</button>
-									<button id="ORC-full" type="button" class="btn btn-primary ORC">Full</button>
-								</div>
-							</div>
-							<div>
-								<span class="label label-primary">UFP: United Federation of Planets</span>
-								<span class="label label-primary">KLE: Klingon Empire</span>
-								<span class="label label-primary">RSA: Romulan Star Empire</span>
-							</div>
-						</div>
-					</div>
-					<div class="panel panel-warning">
-						<div class="panel-body bg-warning">
-							<p>Misc</p>
-							<div id="source-toolbar" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-								<div class="btn-group" role="group" aria-label="First group">
-									<button id="TRI-toggle" type="button" class="btn btn-warning active TRI">TRI</button>
-									<button id="SFI-toggle" type="button" class="btn btn-warning active SFI">SFI</button>
-									<button id="ITA-toggle" type="button" class="btn btn-warning active ITA">ITA</button>
-									<button id="ST3-toggle" type="button" class="btn btn-warning active ST3">ST3</button>
-									<button id="ST4-toggle" type="button" class="btn btn-warning active ST4">ST4</button>
-								</div>
-							</div>
-							<div>
-								<span class="label label-warning">TRI: Triangle</span>
-								<span class="label label-warning">SFI: Starfleet Intelligence</span>
-								<span class="label label-warning">ITA: Independent Traders' Association</span>
-								<span class="label label-warning">ST3: Star Trek III Update</span>
-								<span class="label label-warning">ST4: Star Trek IV Update</span>
-							</div>
-						</div>
-					</div>
-					<div class="panel panel-danger">
-						<div class="panel-body bg-danger">
-							<p>Wars</p>
-							<div id="source-toolbar" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-								<div class="btn-group" role="group" aria-label="First group">
-									<button id="RFW-toggle" type="button" class="btn btn-danger active RFW">RFW</button>
-									<button id="FYW-toggle" type="button" class="btn btn-danger active FYW">FYW</button>
-								</div>
-							</div>
-							<div>
-								<span class="label label-danger">RFW: Romulan/Federation War</span>
-								<span class="label label-danger">FYW: Four Years War</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<ul id="timeline" class="timeline"></ul>
 		</div>
-
-		<footer id="page-footer" class="page-footer bg-info">
-			<div id="page-footer-content" class="page-footer-content">
-				<div class="container">
-					<h3>How Stardates Work</h3>
-					<p class="lead">[century]/[year][month].[day]</p>
-					<p>To make things easier for real-life readers, stardates were set up to be just another way to write a regular date. The first number in a stardate is the century, which is based upon the year 2000. A value of "-2" would mean "1800", or the 19th century. Next there's a two-digit year followed by a two-digit month. Lastly, the day is placed after a decimal point.</p>
-					<p>Example: <strong>-3/2307.15</strong> is the same as <strong>July 15th, 1723</strong>. That's three centuries before the year 2000, "23" is the year, "07" is the month and "15" is the day.</p>
-					<p>Since this is just a format change, there's no consideration for zero. The month still starts with "1" as the first day. If you see a trailing zero, it indicates that the day or month was omitted from the original entry. A stardate of <strong>-5/22</strong> would be seen here as <strong>-5/2200.00</strong> for sorting purposes.</p>
-					<hr class="hr-primary">
-					<p><small>App by Brian Cribb 2016, but the content belongs to FASA or Paramount or some lawyer somewhere.</small></p>
-				</div>
-			</div>
-		</footer>
-
 		<script src="vendor/jquery/jquery-2.2.0.min.js"></script>
-		<script src="vendor/underscore/underscore.1.8.3.min.js"></script>
-		<script src="vendor/bootstrap-3.3.6/dist/js/bootstrap.min.js"></script>
-		<script src="js/custom.js"></script>
 	</body>
 </html>

@@ -347,11 +347,11 @@ class ButtonGroup extends React.Component {
 		let activeFull = (this.props.showFull) ? ' active' : '';
 		let btnFull;
 		if (this.props.hasFull) {
-			btnFull = <button onClick={this._handleFull.bind(this)} id={this.props.source + "-full"} type="button" className={"btn btn-" + this.props.type + " " + this.props.source + activeFull}>Full</button>
+			btnFull = <button onClick={this._handleFull.bind(this)} id={this.props.source + "-full"} type="button" className={"btn btn-" + this.props.type + " btn-lg " + this.props.source + activeFull}>Full</button>
 		}
 		return(
 				<div className="btn-group" role="group" aria-label={this.props.source}>
-					<button onClick={this._handleToggle.bind(this)} id={this.props.source + "-toggle"} type="button" className={"btn btn-" + this.props.type + " " + this.props.source + activeShow}>{this.props.source}</button>
+					<button onClick={this._handleToggle.bind(this)} id={this.props.source + "-toggle"} type="button" className={"btn btn-" + this.props.type + " btn-lg " + this.props.source + activeShow}>{this.props.source}</button>
 					{btnFull}
 				</div>
 			);

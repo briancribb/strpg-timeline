@@ -420,6 +420,19 @@ body {
   display: inline-block;
   margin: 6px 6px 0 0; }
 
+/* Active buttons should be darker. */
+.btn-primary.active, .btn-primary:active, .open > .dropdown-toggle.btn-primary {
+  background-color: #1c4467;
+  border-color: #122c42; }
+
+.btn-warning.active, .btn-warning:active, .open > .dropdown-toggle.btn-warning {
+  background-color: #b77416;
+  border-color: #A5660C; }
+
+.btn-danger.active, .btn-danger:active, .open > .dropdown-toggle.btn-danger {
+  background-color: #9e2623;
+  border-color: #86201d; }
+
 .trans-left {
   -webkit-transition: left .25s linear;
   transition: left .25s linear; }

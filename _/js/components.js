@@ -35,17 +35,17 @@ class Timeline extends React.Component {
 		var that = this,
 			dfd_array = [],
 			dfd_sources = {
-				UFP: { path:'js/data/UFP.json', id: 'oesera6', hasFull: false, show:true, showFull:true,  name: 'United Federation of Planets' },
-				KLE: { path:'js/data/KLE.json', id: 'o15noc3', hasFull: true,  show:true, showFull:false, name: 'Klingon Empire' },
-				RSA: { path:'js/data/RSA.json', id: 'or7u0kt', hasFull: true,  show:true, showFull:false, name: 'Romulan Star Empire' },
-				TRI: { path:'js/data/TRI.json', id: 'ol08r1n', hasFull: false, show:true, showFull:true,  name: 'Triangle' },
-				ORC: { path:'js/data/ORC.json', id: 'ohu3d91', hasFull: true,  show:true, showFull:false, name: 'Orion Colonies' },
-				RFW: { path:'js/data/RFW.json', id: 'oypmvfb', hasFull: false, show:true, showFull:true,  name: 'Romulan/Federation War' },
-				FYW: { path:'js/data/FYW.json', id: 'oi1ju2s', hasFull: false, show:true, showFull:true,  name: 'Four Years War' },
-				ST3: { path:'js/data/ST3.json', id: 'o5oxeec', hasFull: false, show:true, showFull:true,  name: 'Star Trek 3 Update' },
-				ST4: { path:'js/data/ST4.json', id: 'oxxpvso', hasFull: false, show:true, showFull:true,  name: 'Star Trek 4 Update' },
-				SFI: { path:'js/data/SFI.json', id: 'ohqn30t', hasFull: false, show:true, showFull:true,  name: 'Starfleet Intelligence' },
-				ITA: { path:'js/data/ITA.json', id: 'orojt89', hasFull: false, show:true, showFull:true,  name: "UFP/Independent Traders' Association" }
+				UFP: { path:'_/js/data/UFP.json', id: 'oesera6', hasFull: false, show:true, showFull:true,  name: 'United Federation of Planets' },
+				KLE: { path:'_/js/data/KLE.json', id: 'o15noc3', hasFull: true,  show:true, showFull:false, name: 'Klingon Empire' },
+				RSA: { path:'_/js/data/RSA.json', id: 'or7u0kt', hasFull: true,  show:true, showFull:false, name: 'Romulan Star Empire' },
+				TRI: { path:'_/js/data/TRI.json', id: 'ol08r1n', hasFull: false, show:true, showFull:true,  name: 'Triangle' },
+				ORC: { path:'_/js/data/ORC.json', id: 'ohu3d91', hasFull: true,  show:true, showFull:false, name: 'Orion Colonies' },
+				RFW: { path:'_/js/data/RFW.json', id: 'oypmvfb', hasFull: false, show:true, showFull:true,  name: 'Romulan/Federation War' },
+				FYW: { path:'_/js/data/FYW.json', id: 'oi1ju2s', hasFull: false, show:true, showFull:true,  name: 'Four Years War' },
+				ST3: { path:'_/js/data/ST3.json', id: 'o5oxeec', hasFull: false, show:true, showFull:true,  name: 'Star Trek 3 Update' },
+				ST4: { path:'_/js/data/ST4.json', id: 'oxxpvso', hasFull: false, show:true, showFull:true,  name: 'Star Trek 4 Update' },
+				SFI: { path:'_/js/data/SFI.json', id: 'ohqn30t', hasFull: false, show:true, showFull:true,  name: 'Starfleet Intelligence' },
+				ITA: { path:'_/js/data/ITA.json', id: 'orojt89', hasFull: false, show:true, showFull:true,  name: "UFP/Independent Traders' Association" }
 			},
 			objData = {
 				sources:{},
@@ -290,8 +290,23 @@ class Timeline extends React.Component {
 	}
 
 	/*
+	Started this with classes for show/hidden on the timeline entries, because I wanted to learn how to 
+	pass functions as props down to a child component. Now that I've learned it, I'm switching back to a 
+	CSS-powered approach. The CSS is already there from the previous jQuery version of this app. Entries 
+	will show (or not) based upon a parent class. It's more performant for React to just update the class 
+	string on the parent element rather than zooming through all of the entries to update them on an 
+	individual basis.
+	*/
+	_updateParentClasses() {
+		var classes = ["Banana", "Orange", "Apple", "Mango"];
+		var str = classes.toString().replace(/,/g, " ");
+		return str;
+	}
+
+
+	/*
 	Every other visible entry gets floated to the right. I could do this by altering the entries and setting 
-	state, but jQuery can do this pretty well and I'm already paying for its page load weight. This function 
+	state, but jQuery can do this pretty well and I'm already paying for it in my page load speed. This function 
 	runs during the componentDidUpdate() lifecycle method, so it always works with the most recently updated 
 	set of entries.
 	*/
@@ -305,6 +320,7 @@ class Timeline extends React.Component {
 			}
 		});
 	}
+
 
 	render() {
 		let markup = null;

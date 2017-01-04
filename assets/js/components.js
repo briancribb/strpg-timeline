@@ -131,8 +131,16 @@ class Timeline extends React.Component {
 			that._alternateFloats();
 			that._addListeners();
 
-			//console.log('that.state');
-			//console.log(that);
+			console.log('that.state');
+			console.log(that);
+
+			var test = _.map( that.state.sources, function(item, key){
+				//console.log(item);
+				//console.log(key);
+				return key;
+			});
+
+
 		});
 
 		function starToDate(stardate) {

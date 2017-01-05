@@ -123,23 +123,16 @@ class Timeline extends React.Component {
 
 			objData.entries = _.sortBy(objData.entries, 'sortkey');
 			objData.initialized = true;
-			that.setState(objData);
 
-			//that.setState({initialized:true});
-			//that._manageLayout();
+			objData.parentClasses = that._getParentClasses( objData.sources );
+
+			that.setState(objData);
 
 			that._alternateFloats();
 			that._addListeners();
 
 			console.log('that.state');
 			console.log(that);
-
-			var test = _.map( that.state.sources, function(item, key){
-				//console.log(item);
-				//console.log(key);
-				return key;
-			});
-
 
 		});
 
@@ -282,19 +275,24 @@ class Timeline extends React.Component {
 
 		// Toggles the boolean value of a source object's "show" property.
 		let that = this;
-		let newObj = _.clone(this.state.sources);
+		let newSources = _.clone(that.state.sources);
+		let strClasses = '';
 
 
 		if (full !== undefined) {
 			// Deciding whether to show full or regular. Single timelines are listed as always being "full".
-			newObj[source].showFull = !newObj[source].showFull;
+			newSources[source].showFull = !newSources[source].showFull;
 		} else {
 			// Deciding whether to show at all
-			newObj[source].show = !newObj[source].show;
+			newSources[source].show = !newSources[source].show;
 		}
-		this.setState({
-			sources: newObj
+		strClasses = that._getParentClasses( newSources );
+
+		that.setState({
+			sources: newSources,
+			parentClasses: strClasses
 		});
+		console.log(that.state.parentClasses);
 	}
 
 	/*
@@ -305,10 +303,25 @@ class Timeline extends React.Component {
 	string on the parent element rather than zooming through all of the entries to update them on an 
 	individual basis.
 	*/
-	_updateParentClasses() {
-		var classes = ["Banana", "Orange", "Apple", "Mango"];
-		var str = classes.toString().replace(/,/g, " ");
-		return str;
+	_getParentClasses(sources) {
+		var arrClasses = [];
+		var test = _.map( sources, function(item, key){
+
+			// Add the source name as a class if needed.
+			if ( item.show === true ) {
+				arrClasses.push(key);
+			}
+
+			// Only add the 'full' class when the sources with two versions.
+			if ( item.hasFull === true && item.showFull === true ) {
+				arrClasses.push(key+'-full');
+			}
+			return;
+		});
+		var strClasses = arrClasses.toString().replace(/,/g, " ");
+
+		// Return the final string of classes.
+		return strClasses;
 	}
 
 
@@ -338,7 +351,7 @@ class Timeline extends React.Component {
 			markup = 
 				<div id="timeline">
 					<TLToggles sources={this.state.sources} updateSource={this._updateSource.bind(this)} />
-					<ul id="tl-list" className="tl-list UFP KLE RSA TRI ORC RFW FYW ST3 ST4 SFI ITA">
+					<ul id="tl-list" className={"tl-list " + this.state.parentClasses}>
 						{entries}
 					</ul>
 				</div>
@@ -449,13 +462,10 @@ An individual timeline entry.
 class TLEntry extends React.Component {
 	render() {
 		let entry = this.props.obj
-		//let showHide = (entry.show)  ? ' show' : ' hidden' ;
-		let show = (this.props.show)  ? ' show' : ' hidden' ;
-		let inverted = (entry.inverted)  ? ' tl-inverted' : '' ;
 
 		return(
 			//<li>{this.props.obj.century}</li>
-			<li id={"tl-entry-" + entry.key} className={"tl-entry " + entry.source + " tl-full-" + entry.full + show + inverted} data-century={entry.century}>
+			<li id={"tl-entry-" + entry.key} className={"tl-entry " + entry.source + " tl-full-" + entry.full} data-century={entry.century}>
 				<div className="tl-badge"></div>
 				<div className="tl-panel">
 					<div className="tl-heading">

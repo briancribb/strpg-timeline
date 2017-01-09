@@ -1,9 +1,9 @@
 (function(){
 
 	/*
-	Powered by jQuery because it has nothing to do with the data. This function corrects the app's padding 
-	and margins on the top/bottom to make room for the nav and our sticky footer.
-	*/
+	 Layout management is powered by jQuery because it has nothing to do with the data. This function 
+	 corrects the app's padding and margins on the top/bottom to make room for the nav and our sticky footer.
+	 */
 
 	var $bodyElement		= $('body'),
 		$navbar				= $('#navbar'),

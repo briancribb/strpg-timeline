@@ -8,46 +8,53 @@ var jshint = require('gulp-jshint');
 	uglify = require('gulp-uglify'),
 	cleanCSS = require('gulp-clean-css'),
 	//gutil = require('gulp-util'),
-	rename = require('gulp-rename');
+	rename = require('gulp-rename'),
+	babel = require('gulp-babel');
 
 // Lint Task
 gulp.task('lint', function() {
-	return gulp.src('_/js/*.js')
+	return gulp.src('assets/js/*.js')
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'));
 });
 
 // Compile Our Sass
 gulp.task('sass', function() {
-	return gulp.src('_/css/styles.scss')
+	return gulp.src('assets/css/styles.scss')
 		.pipe(sass())
-		.pipe(gulp.dest('_/css'))
+		.pipe(gulp.dest('assets/css'))
 		.pipe(rename('style.min.css'))
 		.pipe(cleanCSS())
-		.pipe(gulp.dest('_/css'));
+		.pipe(gulp.dest('assets/css'));
 });
 
 // Concatenate & Minify JS
 gulp.task('scripts', function() {
 	return gulp
 		.src([
-			'_/js/scripts.js'
+			'assets/js/manage-layout.js',
+			'assets/js/components.js'
 		])
+		.pipe( babel({
+			only: ['assets/js/components.js'],
+			presets: ['react', 'es2015'],
+			compact:false
+		}) )
 		.pipe(concat('all.js'))
-		.pipe(gulp.dest('_/js'))
+		.pipe(gulp.dest('assets/js'))
 		.pipe(rename('all.min.js'))
 		.pipe(uglify())
 		//.pipe(uglify().on('error', gutil.log))
-		.pipe(gulp.dest('_/js'));
+		.pipe(gulp.dest('assets/js'));
 });
 
 // Watch Files For Changes
 gulp.task('watch', function() {
 	//gulp.watch('js/theme/*.js', ['lint', 'scripts']);
-	gulp.watch('_/js/scripts.js', ['scripts']);
-	gulp.watch('_/js/components.js', ['scripts']);
-	gulp.watch('_/css/partials/*.scss', ['sass']);
-	gulp.watch('_/css/styles.scss', ['sass']);
+	gulp.watch('assets/js/scripts.js', ['scripts']);
+	gulp.watch('assets/js/components.js', ['scripts']);
+	gulp.watch('assets/css/partials/*.scss', ['sass']);
+	gulp.watch('assets/css/styles.scss', ['sass']);
 });
 
 // Default Task

@@ -1,29 +1,27 @@
-'use strict';
-
-(function () {
+(function(){
 
 	/*
-  Layout management is powered by jQuery because it has nothing to do with the data. This function 
-  corrects the app's padding and margins on the top/bottom to make room for the nav and our sticky footer.
-  */
+	 Layout management is powered by jQuery because it has nothing to do with the data. This function 
+	 corrects the app's padding and margins on the top/bottom to make room for the nav and our sticky footer.
+	 */
 
-	var $bodyElement = $('body'),
-	    $navbar = $('#navbar'),
-	    $pageFooter = $('#page-footer'),
-	    $pageFooterContent = $('#page-footer-content');
+	var $bodyElement		= $('body'),
+		$navbar				= $('#navbar'),
+		$pageFooter			= $('#page-footer'),
+		$pageFooterContent	= $('#page-footer-content');
 
-	var throttled = _.throttle(function () {
+	var throttled = _.throttle(function(){
 		manageResize();
 	}, 250);
 
 	function manageResize() {
 		var footerHeight = $pageFooterContent.outerHeight(true);
-		$pageFooter.height(footerHeight);
+		$pageFooter.height( footerHeight );
 
 		// Correct footer height upon resize and correct top body padding for navbar height
 		$bodyElement.css({
-			'padding-bottom': footerHeight,
-			'padding-top': $navbar.outerHeight(true)
+			'padding-bottom':footerHeight,
+			'padding-top':$navbar.outerHeight(true)
 		});
 	}
 
@@ -32,7 +30,7 @@
 
 	// Now start throttling.
 	$(window).resize(throttled);
-})();
+}());
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();

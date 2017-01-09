@@ -479,6 +479,6 @@ class TLEntry extends React.Component {
 	}
 }
 
-ReactDOM.render(
+React.render(
 	<Timeline />, document.getElementById('timeline-app')
 );

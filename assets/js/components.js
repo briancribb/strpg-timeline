@@ -131,8 +131,8 @@ class Timeline extends React.Component {
 			that._alternateFloats();
 			that._addListeners();
 
-			console.log('that.state');
-			console.log(that);
+			//console.log('that.state');
+			//console.log(that);
 
 		});
 
@@ -292,7 +292,7 @@ class Timeline extends React.Component {
 			sources: newSources,
 			parentClasses: strClasses
 		});
-		console.log(that.state.parentClasses);
+		//console.log(that.state.parentClasses);
 	}
 
 	/*
@@ -479,6 +479,6 @@ class TLEntry extends React.Component {
 	}
 }
 
-React.render(
+ReactDOM.render(
 	<Timeline />, document.getElementById('timeline-app')
 );

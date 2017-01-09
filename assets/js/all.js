@@ -190,8 +190,8 @@ var Timeline = function (_React$Component) {
 				that._alternateFloats();
 				that._addListeners();
 
-				console.log('that.state');
-				console.log(that);
+				//console.log('that.state');
+				//console.log(that);
 			});
 
 			function starToDate(stardate) {
@@ -355,7 +355,7 @@ var Timeline = function (_React$Component) {
 				sources: newSources,
 				parentClasses: strClasses
 			});
-			console.log(that.state.parentClasses);
+			//console.log(that.state.parentClasses);
 		}
 
 		/*

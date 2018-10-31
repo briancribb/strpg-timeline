@@ -96,17 +96,17 @@ var Timeline = function (_React$Component) {
 			var that = this,
 			    dfd_array = [],
 			    dfd_sources = {
-				UFP: { path: 'assets/js/data/UFP.json', id: 'oesera6', hasFull: false, show: true, showFull: true, name: 'United Federation of Planets' },
-				KLE: { path: 'assets/js/data/KLE.json', id: 'o15noc3', hasFull: true, show: true, showFull: false, name: 'Klingon Empire' },
-				RSA: { path: 'assets/js/data/RSA.json', id: 'or7u0kt', hasFull: true, show: true, showFull: false, name: 'Romulan Star Empire' },
-				TRI: { path: 'assets/js/data/TRI.json', id: 'ol08r1n', hasFull: false, show: true, showFull: true, name: 'Triangle' },
-				ORC: { path: 'assets/js/data/ORC.json', id: 'ohu3d91', hasFull: true, show: true, showFull: false, name: 'Orion Colonies' },
-				RFW: { path: 'assets/js/data/RFW.json', id: 'oypmvfb', hasFull: false, show: true, showFull: true, name: 'Romulan/Federation War' },
-				FYW: { path: 'assets/js/data/FYW.json', id: 'oi1ju2s', hasFull: false, show: true, showFull: true, name: 'Four Years War' },
-				ST3: { path: 'assets/js/data/ST3.json', id: 'o5oxeec', hasFull: false, show: true, showFull: true, name: 'Star Trek 3 Update' },
-				ST4: { path: 'assets/js/data/ST4.json', id: 'oxxpvso', hasFull: false, show: true, showFull: true, name: 'Star Trek 4 Update' },
-				SFI: { path: 'assets/js/data/SFI.json', id: 'ohqn30t', hasFull: false, show: true, showFull: true, name: 'Starfleet Intelligence' },
-				ITA: { path: 'assets/js/data/ITA.json', id: 'orojt89', hasFull: false, show: true, showFull: true, name: "UFP/Independent Traders' Association" }
+				UFP: { path: '../assets/data/UFP.json', id: 'oesera6', hasFull: false, show: true, showFull: true, name: 'United Federation of Planets' },
+				KLE: { path: '../assets/data/KLE.json', id: 'o15noc3', hasFull: true, show: true, showFull: false, name: 'Klingon Empire' },
+				RSA: { path: '../assets/data/RSA.json', id: 'or7u0kt', hasFull: true, show: true, showFull: false, name: 'Romulan Star Empire' },
+				TRI: { path: '../assets/data/TRI.json', id: 'ol08r1n', hasFull: false, show: true, showFull: true, name: 'Triangle' },
+				ORC: { path: '../assets/data/ORC.json', id: 'ohu3d91', hasFull: true, show: true, showFull: false, name: 'Orion Colonies' },
+				RFW: { path: '../assets/data/RFW.json', id: 'oypmvfb', hasFull: false, show: true, showFull: true, name: 'Romulan/Federation War' },
+				FYW: { path: '../assets/data/FYW.json', id: 'oi1ju2s', hasFull: false, show: true, showFull: true, name: 'Four Years War' },
+				ST3: { path: '../assets/data/ST3.json', id: 'o5oxeec', hasFull: false, show: true, showFull: true, name: 'Star Trek 3 Update' },
+				ST4: { path: '../assets/data/ST4.json', id: 'oxxpvso', hasFull: false, show: true, showFull: true, name: 'Star Trek 4 Update' },
+				SFI: { path: '../assets/data/SFI.json', id: 'ohqn30t', hasFull: false, show: true, showFull: true, name: 'Starfleet Intelligence' },
+				ITA: { path: '../assets/data/ITA.json', id: 'orojt89', hasFull: false, show: true, showFull: true, name: "UFP/Independent Traders' Association" }
 			},
 			    objData = {
 				sources: {},

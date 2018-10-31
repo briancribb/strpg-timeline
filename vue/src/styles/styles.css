@@ -134,20 +134,25 @@ body {
   background-color: #999999;
   z-index: 100; }
 
-.tl-list > li.tl-inverted > .tl-panel {
+
+
+.tl-list > li.tl-entry:nth-child(even) > .tl-panel {
   float: right; }
 
-.tl-list > li.tl-inverted > .tl-panel:before {
+.tl-list > li.tl-entry:nth-child(even) > .tl-panel:before {
   border-left-width: 0;
   border-right-width: 15px;
   left: -15px;
   right: auto; }
 
-.tl-list > li.tl-inverted > .tl-panel:after {
+.tl-list > li.tl-entry:nth-child(even) > .tl-panel:after {
   border-left-width: 0;
   border-right-width: 14px;
   left: -14px;
   right: auto; }
+
+
+
 
 /*
 .tl-badge.primary {
@@ -189,7 +194,7 @@ body {
   display: list-item; }
 
 .tl-list.UFP > .tl-entry.UFP .tl-badge {
-  background: url("../img/ufp_logo.png"); }
+  background: url("../../../assets/img/ufp_logo.png"); }
 
 .tl-list.UFP > .tl-entry.UFP .tl-panel {
   background: #d9edf7; }
@@ -201,7 +206,7 @@ body {
   display: list-item; }
 
 .tl-list.ST3 > .tl-entry.ST3 .tl-badge {
-  background: url("../img/ufp_logo.png"); }
+  background: url("../../../assets/img/ufp_logo.png"); }
 
 .tl-list.ST3 > .tl-entry.ST3 .tl-panel {
   background: #d9edf7; }
@@ -213,7 +218,7 @@ body {
   display: list-item; }
 
 .tl-list.ST4 > .tl-entry.ST4 .tl-badge {
-  background: url("../img/ufp_logo.png"); }
+  background: url("../../../assets/img/ufp_logo.png"); }
 
 .tl-list.ST4 > .tl-entry.ST4 .tl-panel {
   background: #d9edf7; }
@@ -225,7 +230,7 @@ body {
   display: list-item; }
 
 .tl-list.KLE > .tl-entry.KLE .tl-badge {
-  background: url("../img/klingon_logo_white.png");
+  background: url("../../../assets/img/klingon_logo_white.png");
   background-color: #000000;
   background-position-y: -2px;
   border-radius: 50%; }
@@ -240,7 +245,7 @@ body {
   display: list-item; }
 
 .tl-list.RSA > .tl-entry.RSA .tl-badge {
-  background: url("../img/romulan_logo.png"); }
+  background: url("../../../assets/img/romulan_logo.png"); }
 
 .tl-list.RSA > .tl-entry.RSA .tl-panel {
   background: #FDDEFC; }
@@ -252,7 +257,7 @@ body {
   display: list-item; }
 
 .tl-list.ORC > .tl-entry.ORC .tl-badge {
-  background: url("../img/orion_logo.png"); }
+  background: url("../../../assets/img/orion_logo.png"); }
 
 .tl-list.ORC > .tl-entry.ORC .tl-panel {
   background: #ffceb0; }
@@ -264,7 +269,7 @@ body {
   display: list-item; }
 
 .tl-list.SFI > .tl-entry.SFI .tl-badge {
-  background: url("../img/sfi_logo.png"); }
+  background: url("../../../assets/img/sfi_logo.png"); }
 
 .tl-list.SFI > .tl-entry.SFI .tl-panel {
   background: #dedede; }
@@ -276,7 +281,7 @@ body {
   display: list-item; }
 
 .tl-list.ITA > .tl-entry.ITA .tl-badge {
-  background: url("../img/ita_logo.png"); }
+  background: url("../../../assets/img/ita_logo.png"); }
 
 .tl-list.ITA > .tl-entry.ITA .tl-panel {
   background: #fcf8e3; }
@@ -288,7 +293,7 @@ body {
   display: list-item; }
 
 .tl-list.TRI > .tl-entry.TRI .tl-badge {
-  background: url("../img/mantiev_logo.png"); }
+  background: url("../../../assets/img/mantiev_logo.png"); }
 
 .tl-list.TRI > .tl-entry.TRI .tl-panel {
   background: #fcf8e3; }
@@ -300,7 +305,7 @@ body {
   display: list-item; }
 
 .tl-list.RFW > .tl-entry.RFW .tl-badge {
-  background: url("../img/rfw_logo.png"); }
+  background: url("../../../assets/img/rfw_logo.png"); }
 
 .tl-list.RFW > .tl-entry.RFW .tl-panel {
   background: #FDDEFC; }
@@ -312,7 +317,7 @@ body {
   display: list-item; }
 
 .tl-list.FYW > .tl-entry.FYW .tl-badge {
-  background: url("../img/fyw_logo.png"); }
+  background: url("../../../assets/img/fyw_logo.png"); }
 
 .tl-list.FYW > .tl-entry.FYW .tl-panel {
   background: #f2dede; }

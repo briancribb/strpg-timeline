@@ -89,8 +89,9 @@ let Timeline = new Vue({
 		document.body.className = "";
 		window.addEventListener('resize', this.manageResize);
 		let that = this;
-		// PreloadJS stuff will go here.
 
+		that.manageResize();
+		// PreloadJS stuff will go here.
 		handleFileLoad = (evt)=> {
 			evt.result.feed.entry.map((entry)=>{
 				let dateParts = that.starToDate( entry.gsx$stardate.$t );

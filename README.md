@@ -1,5 +1,5 @@
 # STRPG-timeline
-This was going to be another AngularJS experiment, but then I realized that it wasn't complex enough for that. I just built it with jQuery and JSON, and then built it again with React. And then again with VueJS.<a href="http://briancribb.github.io/STRPG-timeline" title="project page">Anyway, here's the project page</a>.
+This was going to be another AngularJS experiment, but then I realized that it wasn't complex enough for that. I just built it with jQuery and JSON, and then built it again with React. And then again with VueJS. <a href="http://briancribb.github.io/STRPG-timeline" title="project page">Anyway, here's the project page</a>.
 
 Through OCR scanning and a bit of typing, I've put together a collection of all of the timelines from the old FASA Star Trek Role-Playing Game. I thought it would be fun to have them all organized in a simple web app. The layout is based upon <a title="" href="http://bootsnipp.com/snippets/featured/timeline-responsive">this Bootsnip</a> by Luis Rudge (luisrudge).
 

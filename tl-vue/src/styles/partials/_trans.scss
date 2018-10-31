@@ -1,0 +1,87 @@
+// Transitions and Transformations
+// ================================
+
+.trans-left {
+	-webkit-transition:left .25s linear;
+	transition:left .25s linear;
+}
+.trans-right {
+	-webkit-transition:right .25s linear;
+	transition:right .25s linear;
+}
+.trans-padding {
+	-webkit-transition:padding .25s linear;
+	transition:padding .25s linear;
+}
+.trans-bg-position {
+	-webkit-transition:background-position .5s linear;
+	transition:background-position .5s linear;
+}
+
+
+.trans-up-down {
+	animation:         upDown 1s linear infinite; /* IE 10+ */
+}
+
+
+.trans-spin {
+	-webkit-animation: infiniteSpin 1s linear infinite; /* Safari 4+ */
+	-moz-animation:    infiniteSpin 1s linear infinite; /* Fx 5+ */
+	-o-animation:      infiniteSpin 1s linear infinite; /* Opera 12+ */
+	animation:         infiniteSpin 1s linear infinite; /* IE 10+ */
+}
+
+
+
+@-webkit-keyframes infiniteSpin {
+	from{
+		-webkit-transform: rotate(0deg);
+	}
+	to{
+		-webkit-transform: rotate(360deg);
+	}
+}
+@-moz-keyframes infiniteSpin {
+	from{
+		-o-transform: rotate(0deg);
+	}
+	to{
+		-moz-transform: rotate(360deg);
+	}
+}
+@-o-keyframes infiniteSpin {
+	from{
+		-o-transform: rotate(0deg);
+	}
+	to{
+		-o-transform: rotate(360deg);
+	}
+}
+keyframes infiniteSpin {
+	from{
+		transform: rotate(0deg);
+	}
+	to{
+		transform: rotate(360deg);
+	}
+}
+
+
+@-webkit-keyframes upDown {
+    0%   {top: 1px;}
+    25%  {top: -5px;}
+    75%  {top: 5px;}
+    100% {top: 1px;}
+}
+@-moz-keyframes upDown {
+    0%   {top: 1px;}
+    25%  {top: -5px;}
+    75%  {top: 5px;}
+    100% {top: 1px;}
+}
+@keyframes upDown {
+    0%   {top: 1px;}
+    25%  {top: -5px;}
+    75%  {top: 5px;}
+    100% {top: 1px;}
+}

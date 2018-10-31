@@ -1,0 +1,78 @@
+// Bootstrap overrides.
+// ================================
+
+.navbar-info {
+	background-color:#d9edf7;
+	border-bottom: 1px solid #337ab7;
+}
+.hr-primary {
+	border-top: 1px solid #337ab7;
+}
+
+.btn > .glyphicon, a > .glyphicon {
+	pointer-events:none; // The nested span can capture the click and screw up delegated event handlers.
+}
+.row.small-gutters {
+	margin-left:5px;
+	margin-right:5px;
+	& > [class^="col-"], & > [class*=" col-"] {
+		padding-right: 5px;
+		padding-left: 5px;
+	}
+}
+.page-header {
+	margin-top:0;
+}
+
+
+.list-group:last-child {
+	margin-bottom: 0;
+}
+.list-group a.list-group-item {
+	cursor:pointer;
+}
+.list-group .list-group-item .btn {
+	margin-top:-7px;
+}
+.list-group .list-group-item .btn-sm {
+	margin-top:-5px;
+}
+
+.list-group-item-btn {
+	padding-right:50px;
+	button.btn {
+		margin-right:-40px;
+		float:right;
+	}
+}
+
+.panel {
+	border-radius:0;
+}
+.label {
+	font-weight:normal;
+	padding: .3em .7em .4em;
+}
+
+.btn-toolbar {
+	margin-left:0;
+}
+
+.btn-toolbar > .btn-group, span.label {
+	display:inline-block;
+	margin: 6px 6px 0 0;
+}
+
+/* Active buttons should be darker. */
+.btn-primary.active, .btn-primary:active, .open>.dropdown-toggle.btn-primary {
+	background-color: #1c4467;
+	border-color: #122c42;
+}
+.btn-warning.active, .btn-warning:active, .open>.dropdown-toggle.btn-warning {
+	background-color: #b77416;
+	border-color: #A5660C;
+}
+.btn-danger.active, .btn-danger:active, .open>.dropdown-toggle.btn-danger {
+	background-color: #9e2623;
+	border-color: #86201d;
+}

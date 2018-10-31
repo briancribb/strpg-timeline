@@ -18,11 +18,28 @@
 	</head>
 
 	<body class="loading">
-		<!-- Fixed navbar -->
+		<div class="container">
+			<div id="page-header" class="page-header">
+				<h1>Timeline</h1>
+				<p class="lead">This is a collection of timelines from the old <a title="Star Trek Role-playing Game" target="_blank" href="https://en.wikipedia.org/wiki/Star_Trek:_The_Role_Playing_Game">Star Trek Role-playing Game</a>, made by FASA in the 1980's. Nothing is changed or edited. Aside from the correction of typos, this is the text that you would get from directly from the books.</p>
+				<p>Use the toggle buttons below to toggle the various timelines. The <code>full</code> buttons toggle between the full account of events from the subject's perspective and what Starfleet knows about them. For an explanation of how stardates work, see the <a href="#page-footer">footer</a> of this page.</p>
+				<p>The search bar at the top has two functions:</p>
+				<ul class="list-unstyled">
+					<li><span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true" aria-label="Return to Top"></span> Return to the top.</li>
+					<li><span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true" aria-label="Scroll to the footer"></span> Scroll to the footer.</li>
+					<li><span class="glyphicon glyphicon-search" aria-hidden="true" aria-label="Return to Top"></span> Scroll to the century listed in the search input.</li>
+				</ul>
+				<small><strong>Note:</strong> Certain events appear on more than one timeline, so there may be some repetition if you have more than one timeline active.</small>
+			</div>
+			<div class="page-load assets text-center">
+				<div id="page-load-spinner" class="page-load-spinner"><span class="glyphicon glyphicon-download trans-up-down" aria-hidden="true"></span></div>
+				<p>Loading Assets...</p>
+			</div>
+		</div>
 		<div id="timeline-app">
 			<header-nav @scroll-to="scrollTo"></header-nav>
 			<div class="container">
-				<h2>Timeline</h2>
+
 				<toggles :sources="sources"></toggles>
 				<timeline v-if="initialized" :entries="entries" :sources="sources"></timeline>
 			</div>

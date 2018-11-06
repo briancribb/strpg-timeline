@@ -1,10 +1,12 @@
 //export default (function(){
 //}());
 //https://gist.github.com/andjosh/6764939
+let eventBus = new Vue();
 let Timeline = new Vue({
 	el: '#timeline-app',
 	data: {
 		initialized: false,
+		sourceclasses: '',
 		sources: {
 			UFP: { id:'UFP', file:'UFP.json', gid: 'oesera6', hasFull: false, show:true, showFull:true,  name: 'United Federation of Planets' },
 			KLE: { id:'KLE', file:'KLE.json', gid: 'o15noc3', hasFull: true,  show:true, showFull:false, name: 'Klingon Empire' },
@@ -21,7 +23,6 @@ let Timeline = new Vue({
 		entries: []
 	},
 	methods: {
-		
 		scrollTo: function(to = 0) {
 			// Props to this GitHub gist: https://gist.github.com/andjosh/6764939
 
@@ -77,6 +78,13 @@ let Timeline = new Vue({
 			dateParts.date = ( dateParts.date === '00' ) ? '01' : dateParts.date
 			return dateParts;
 		},
+		updateSourceClasses: function() {
+			//for(let source of Object.keys(this.sources)) {
+			//	console.log(source);
+			//}
+			this.sourceclasses = Object.keys(this.sources).join(' ');
+
+		},
 		manageResize: function() {
 			let navHeight = document.getElementById('navbar').offsetHeight;
 			document.body.style.paddingTop = navHeight+"px";
@@ -112,8 +120,22 @@ let Timeline = new Vue({
 			});
 		}
 		handleComplete = (evt)=> {
-			this.entries.sort( (a,b)=>{return a.sortkey - b.sortkey} );
-			this.initialized = true;
+			let that = this;
+			that.entries.sort( (a,b)=>{return a.sortkey - b.sortkey} );
+			that.updateSourceClasses();
+			that.initialized = true;
+
+			eventBus.$on('toggle-source', function(sourceID, method) {
+				let source = that.sources[sourceID];
+				switch(method) {
+					case "showFull":
+						source.showFull = !source.showFull;
+						break;
+					default: // show
+						source.show = !source.show;
+				}
+				that.updateSourceClasses();
+			});
 		}
 
 		let queue = new createjs.LoadQueue();

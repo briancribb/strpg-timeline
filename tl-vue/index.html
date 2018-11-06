@@ -39,9 +39,8 @@
 		<div id="timeline-app">
 			<header-nav @scroll-to="scrollTo"></header-nav>
 			<div class="container">
-
 				<toggles :sources="sources"></toggles>
-				<timeline v-if="initialized" :entries="entries" :sources="sources"></timeline>
+				<timeline v-if="initialized" :entries="entries" :sources="sources" :sourceclasses="sourceclasses"></timeline>
 			</div>
 		</div>
 		<footer id="page-footer" class="page-footer bg-info">

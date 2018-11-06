@@ -136,16 +136,16 @@ body {
 
 
 
-.tl-list > li.tl-entry:nth-child(even) > .tl-panel {
+.tl-list > li.tl-inverted > .tl-panel {
   float: right; }
 
-.tl-list > li.tl-entry:nth-child(even) > .tl-panel:before {
+.tl-list > li.tl-inverted > .tl-panel:before {
   border-left-width: 0;
   border-right-width: 15px;
   left: -15px;
   right: auto; }
 
-.tl-list > li.tl-entry:nth-child(even) > .tl-panel:after {
+.tl-list > li.tl-inverted > .tl-panel:after {
   border-left-width: 0;
   border-right-width: 14px;
   left: -14px;

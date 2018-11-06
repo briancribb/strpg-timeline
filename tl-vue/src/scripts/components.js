@@ -2,8 +2,6 @@
 	return 'one';
 }());*/
 
-
-
 Vue.component('header-nav', {
 	template:`
 		<nav id="navbar" class="navbar navbar-info navbar-fixed-top">
@@ -97,10 +95,10 @@ Vue.component('button-group', {
 	},
 	methods: {
 		toggleSource: function() {
-			this.source.show = !this.source.show
+			eventBus.$emit('toggle-source', this.source.id, 'show');
 		},
 		toggleFull: function() {
-			this.source.showFull = !this.source.showFull
+			eventBus.$emit('toggle-source', this.source.id, 'showFull');
 		}
 	}
 });
@@ -186,17 +184,20 @@ Vue.component('timeline', {
 			type: Object,
 			required: true
 		},
+		sourceclasses: {
+			type: String,
+			required: true
+		}
 	},
 	template: `
 		<div id="timeline">
-			<ul id="tl-list" class="tl-list" :class="Object.keys(sources).join(' ')">
+			<ul id="tl-list" class="tl-list" :class="sourceclasses">
 				<li 
 					v-for="(entry, index) in entries" 
 					:key="index" 
 					class="tl-entry" 
 					:class="[entry.source, entry.full ? 'tl-full-true' : 'tl-full-false']" 
 					:data-century="entry.century"
-					v-if="sources[entry.source].show && sources[entry.source].showFull === entry.full" 
 				>
 					<div class="tl-badge"></div>
 					<div class="tl-panel">

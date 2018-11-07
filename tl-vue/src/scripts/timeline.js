@@ -79,11 +79,25 @@ let Timeline = new Vue({
 			return dateParts;
 		},
 		updateSourceClasses: function() {
-			//for(let source of Object.keys(this.sources)) {
-			//	console.log(source);
-			//}
-			this.sourceclasses = Object.keys(this.sources).join(' ');
+			let arrClasses = [];
+			for(let source of Object.keys(this.sources)) {
+				let objSource = this.sources[source];
+				if (objSource.show) { arrClasses.push(source)	}
+				if (objSource.showFull) { arrClasses.push(source+'-full')	}
+			}
+			this.sourceclasses = arrClasses.join(' ');
+			if (this.initialized) this.alternateEntries();
+		},
+		alternateEntries: function() {
+			let shouldInvert = false;
+			for (let entry of this.entries) {
+				let source = this.sources[entry.source];
 
+				if (source.show && entry.full === source.showFull) {
+					entry.inverted = shouldInvert;
+					shouldInvert = !shouldInvert;
+				}
+			}
 		},
 		manageResize: function() {
 			let navHeight = document.getElementById('navbar').offsetHeight;
@@ -97,14 +111,16 @@ let Timeline = new Vue({
 		document.body.className = "";
 		window.addEventListener('resize', this.manageResize);
 		let that = this;
+		let initInverted = false;
 
 		that.manageResize();
 		// PreloadJS stuff will go here.
 		handleFileLoad = (evt)=> {
+			let that = this;
+
 			evt.result.feed.entry.map((entry)=>{
 				let dateParts = that.starToDate( entry.gsx$stardate.$t );
-
-				that.entries.push({
+				let tempEntry = {
 					inverted	:	false,
 					stardate	:	entry.gsx$stardate.$t,
 					sortkey		:	Number(dateParts.year + '.' + dateParts.month + '' + dateParts.date),
@@ -116,13 +132,16 @@ let Timeline = new Vue({
 					source		:	evt.result.feed.title.$t,
 					full		:	(entry.gsx$full.$t === "TRUE"),
 					desc		:	entry.gsx$event.$t
-				});
+				};
+				that.entries.push(tempEntry);
 			});
 		}
+
 		handleComplete = (evt)=> {
 			let that = this;
 			that.entries.sort( (a,b)=>{return a.sortkey - b.sortkey} );
 			that.updateSourceClasses();
+			that.alternateEntries();
 			that.initialized = true;
 
 			eventBus.$on('toggle-source', function(sourceID, method) {

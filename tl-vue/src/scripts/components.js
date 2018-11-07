@@ -196,7 +196,7 @@ Vue.component('timeline', {
 					v-for="(entry, index) in entries" 
 					:key="index" 
 					class="tl-entry" 
-					:class="[entry.source, entry.full ? 'tl-full-true' : 'tl-full-false']" 
+					:class="[entry.source, entry.full ? 'tl-full-true' : 'tl-full-false', entry.inverted ? 'tl-inverted' : '' ]" 
 					:data-century="entry.century"
 				>
 					<div class="tl-badge"></div>

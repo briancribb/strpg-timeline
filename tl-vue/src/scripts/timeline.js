@@ -1,10 +1,12 @@
 //export default (function(){
 //}());
 //https://gist.github.com/andjosh/6764939
+let eventBus = new Vue();
 let Timeline = new Vue({
 	el: '#timeline-app',
 	data: {
 		initialized: false,
+		sourceclasses: '',
 		sources: {
 			UFP: { id:'UFP', file:'UFP.json', gid: 'oesera6', hasFull: false, show:true, showFull:true,  name: 'United Federation of Planets' },
 			KLE: { id:'KLE', file:'KLE.json', gid: 'o15noc3', hasFull: true,  show:true, showFull:false, name: 'Klingon Empire' },
@@ -21,7 +23,6 @@ let Timeline = new Vue({
 		entries: []
 	},
 	methods: {
-		
 		scrollTo: function(to = 0) {
 			// Props to this GitHub gist: https://gist.github.com/andjosh/6764939
 
@@ -77,6 +78,27 @@ let Timeline = new Vue({
 			dateParts.date = ( dateParts.date === '00' ) ? '01' : dateParts.date
 			return dateParts;
 		},
+		updateSourceClasses: function() {
+			let arrClasses = [];
+			for(let source of Object.keys(this.sources)) {
+				let objSource = this.sources[source];
+				if (objSource.show) { arrClasses.push(source)	}
+				if (objSource.showFull) { arrClasses.push(source+'-full')	}
+			}
+			this.sourceclasses = arrClasses.join(' ');
+			if (this.initialized) this.alternateEntries();
+		},
+		alternateEntries: function() {
+			let shouldInvert = false;
+			for (let entry of this.entries) {
+				let source = this.sources[entry.source];
+
+				if (source.show && entry.full === source.showFull) {
+					entry.inverted = shouldInvert;
+					shouldInvert = !shouldInvert;
+				}
+			}
+		},
 		manageResize: function() {
 			let navHeight = document.getElementById('navbar').offsetHeight;
 			document.body.style.paddingTop = navHeight+"px";
@@ -89,14 +111,16 @@ let Timeline = new Vue({
 		document.body.className = "";
 		window.addEventListener('resize', this.manageResize);
 		let that = this;
+		let initInverted = false;
 
 		that.manageResize();
 		// PreloadJS stuff will go here.
 		handleFileLoad = (evt)=> {
+			let that = this;
+
 			evt.result.feed.entry.map((entry)=>{
 				let dateParts = that.starToDate( entry.gsx$stardate.$t );
-
-				that.entries.push({
+				let tempEntry = {
 					inverted	:	false,
 					stardate	:	entry.gsx$stardate.$t,
 					sortkey		:	Number(dateParts.year + '.' + dateParts.month + '' + dateParts.date),
@@ -108,12 +132,29 @@ let Timeline = new Vue({
 					source		:	evt.result.feed.title.$t,
 					full		:	(entry.gsx$full.$t === "TRUE"),
 					desc		:	entry.gsx$event.$t
-				});
+				};
+				that.entries.push(tempEntry);
 			});
 		}
+
 		handleComplete = (evt)=> {
-			this.entries.sort( (a,b)=>{return a.sortkey - b.sortkey} );
-			this.initialized = true;
+			let that = this;
+			that.entries.sort( (a,b)=>{return a.sortkey - b.sortkey} );
+			that.updateSourceClasses();
+			that.alternateEntries();
+			that.initialized = true;
+
+			eventBus.$on('toggle-source', function(sourceID, method) {
+				let source = that.sources[sourceID];
+				switch(method) {
+					case "showFull":
+						source.showFull = !source.showFull;
+						break;
+					default: // show
+						source.show = !source.show;
+				}
+				that.updateSourceClasses();
+			});
 		}
 
 		let queue = new createjs.LoadQueue();
